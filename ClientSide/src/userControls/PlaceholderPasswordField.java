@@ -5,26 +5,39 @@
  */
 package userControls;
 
+import helpers.MyConstants;
+import helpers.MyStyle;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import javax.swing.BorderFactory;
 import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
 import javax.swing.text.Document;
 
 /**
  *
  * @author Duy
  */
-public class PlaceholderPasswordField extends JPasswordField{
+public class PlaceholderPasswordField extends JPasswordField implements FocusListener{
+
     private String placeholder;
+    private boolean isFocused = false;
+
     public PlaceholderPasswordField() {
+        setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, MyStyle.DisableColor));
+        addFocusListener(this);
+
     }
 
     public PlaceholderPasswordField(
-        final Document pDoc,
-        final String pText,
-        final int pColumns)
-    {
+            final Document pDoc,
+            final String pText,
+            final int pColumns) {
         super(pDoc, pText, pColumns);
     }
 
@@ -43,7 +56,15 @@ public class PlaceholderPasswordField extends JPasswordField{
     public String getPlaceholder() {
         return placeholder;
     }
-
+    public String getStringPassword()
+    {
+        String content = "";
+        for(int i= 0;i<getPassword().length;i++)
+        {
+            content += getPassword()[i];
+        }
+        return content;
+    }
     @Override
     protected void paintComponent(final Graphics pG) {
         super.paintComponent(pG);
@@ -52,16 +73,31 @@ public class PlaceholderPasswordField extends JPasswordField{
             return;
         }
 
-        final Graphics2D g = (Graphics2D) pG;
-        g.setRenderingHint(
-            RenderingHints.KEY_ANTIALIASING,
-            RenderingHints.VALUE_ANTIALIAS_ON);
-        g.setColor(getDisabledTextColor());
-        g.drawString(placeholder, getInsets().left, pG.getFontMetrics()
-            .getMaxAscent() + getInsets().bottom);
+        if (getStringPassword().trim().equals("")&&!isFocused) {
+            final Graphics2D g = (Graphics2D) pG;
+            g.setRenderingHint(
+                    RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON);
+            g.setColor(MyStyle.DisableColor);
+            g.drawString(placeholder, MyConstants.VerySmallMargin, pG.getFontMetrics().getMaxAscent() + (MyConstants.TextFieldHeight - pG.getFontMetrics().getHeight()) / 2);
+        }
+
     }
 
     public void setPlaceholder(final String s) {
         placeholder = s;
     }
+
+    @Override
+    public void focusGained(FocusEvent e) {
+        isFocused = true;
+        repaint();
+    }
+
+    @Override
+    public void focusLost(FocusEvent e) {
+        isFocused = false;
+        repaint();
+    }
+
 }

@@ -7,8 +7,6 @@ package helpers;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 
 /**
  *
@@ -18,40 +16,78 @@ public class MyConstants {
 
     public static String SplashScreenImage = "/images/SplashScreen.jpg";
     public static String LoginTitleBackgroundImage = "/images/LoginTitleImage.jpg";
-    public static String LoginImage = "/images/LoginImage.jpg";
-    //Margin
-    public static int verySmallMargin = 50;
-    public static int smallMargin = 75;
-    public static int mediumMargin = 100;
-    public static int largeMargin = 150;
-    public static int veryLargeMargin = 200;
-
+    public static String LoginImage = "/images/LoginTitleImageOrange.jpg";
+    public static String CloseImage = "/images/CloseIcon.png";
+    public static String CheckedImage = "/images/Checked.png";
+    public static String UnCheckedImage = "/images/Unchecked.png";
+    public static String PressedImage = "/images/PressedIcon.png";
+    public static String DisableSelectedImage = "/images/DisabledSelectedIcon.png";
     //
-    public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    public static int screenWidth = screenSize.width;
-    public static int screenHeight = screenSize.height;
+    public static Dimension ScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    public static int ScreenWidth = ScreenSize.width;
+    public static int ScreenHeight = ScreenSize.height;
 
-    public static int splashScreenWidth = screenWidth / 3;
-    public static int splashScreenHeight = screenHeight / 3;
+    public static int SplashScreenWidth = ScreenWidth / 3;
+    public static int SplashScreenHeight = ScreenHeight / 3;
 
-    public static int loginWidth = screenWidth / 3;
-    public static int loginHeight = screenHeight / 3;
-    public static int loginTitleHeight = loginHeight / 3;
-    public static int loginInputContentHeight = loginTitleHeight * 2;
+    public static int LoginWidth = ScreenWidth / 5;
+    public static int LoginHeight = ScreenHeight / 2;
+    public static int LoginTitleHeight = LoginHeight / 4;
+    public static int LoginInputContentHeight = LoginTitleHeight * 3;
 
-    public static int loginPositionX = (screenWidth - loginWidth) / 2;
-    public static int loginPositionY = (screenHeight - loginHeight) / 2;
+    public static int LoginPositionX = (ScreenWidth - LoginWidth) / 2;
+    public static int LoginPositionY = (ScreenHeight - LoginHeight) / 2;
 
     //loginView
-    public static int itemSize = loginInputContentHeight / 9;
-    public static int doubleItemSize = itemSize * 2;
-    public static int tripItemSize = itemSize * 3;
-    public static int quadItemSize = itemSize * 4;
+    public static int VerySmallMargin = ScreenHeight / 72;
+    public static int SmallMargin = VerySmallMargin * 2;
+    public static int MediumMargin = SmallMargin * 2;
+    public static int LargeMargin = MediumMargin * 2;
+
+    public static int LabelHeight = ScreenHeight / 36;
+    public static int LabelWidth = LabelHeight * 4;
+
+    public static int TextFieldHeight = ScreenHeight / 18;
+    public static int TextFieldWidth = LoginWidth - 2 * SmallMargin;
+
+    public static int LoginButtonHeight = ScreenHeight / 18;
+    public static int LoginButtonWidth = LoginWidth - 2 * SmallMargin;
+
+    public static int OptionPaneWidth = LoginWidth;
+    public static int OptionPaneHeight = LoginHeight / 3;
+    public static int OptionPaneX = (ScreenWidth - OptionPaneWidth) / 2;
+    public static int OPtionPaneY = (ScreenHeight - OptionPaneHeight) / 2;
+    public static int OptionPaneButtonWidth = OptionPaneWidth / 5;
+    public static int OptionPaneButtonHeight = LabelHeight;
+
+    //mainview
+    public static int ToolbarHeight = ScreenHeight / 36;
+    public static int LeftPanelWidth = ScreenWidth / 6;
+    public static int LeftPanelHeight = ScreenHeight - ToolbarHeight - SmallMargin;
+
+    public static int InfoPanelWidth = ScreenWidth / 4;
+    public static int InfoPanelHEight = LeftPanelHeight * 2 / 3 - SmallMargin;
+
+    public static int MainPanelWidth = ScreenWidth - InfoPanelWidth - LeftPanelWidth - MediumMargin;
+    public static int MainPanelHeight = LeftPanelHeight * 2 / 3 - SmallMargin;
+
+    public static int BottonPanelWidth = ScreenWidth - VerySmallMargin * 3 - LeftPanelWidth;
+    public static int BottomPanelHeight = LeftPanelHeight / 3 + VerySmallMargin;
+    //
 
     //loginMessage
-    public static String emptyUsername= "You have to input your Username to login";
-    public static JLabel emptyUserLabel = new JLabel(emptyUsername, SwingConstants.CENTER);
-    public static String emptyPassword= "You have to input your Password to login";
-    public static String warningMessage = "Warning";
-    
+    public static String EmptyUsername = "Empty Username";
+    public static String EmptyPassword = "Empty Password";
+    public static String QuitMessage = "Do you want to quit";
+    public static String WarningMessage = "Warning";
+    public static String ExitTitle = "Exit";
+    public static String YesText = "Yes";
+    public static String NoText = "No";
+    public static String OKText = "OK";
+
+    public static enum OptionDialogType {
+        Confirm,
+        Message
+    }
+
 }

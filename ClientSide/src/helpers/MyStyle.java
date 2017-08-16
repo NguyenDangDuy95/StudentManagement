@@ -5,6 +5,7 @@
  */
 package helpers;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -14,12 +15,20 @@ import java.awt.Toolkit;
  * @author Duy
  */
 public class MyStyle {
-    private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    private static int screenWidth = screenSize.width;
-    private static int screenHeight = screenSize.height;
+
     public static Font SplashLabelFont = new Font("Sans Serif", Font.PLAIN, 30);
-    public static Font MediumTextFont = new Font("Sans Serif", Font.BOLD, screenHeight/50);
-    public static Font SmallLabelFont = new Font("Sans Serif", Font.PLAIN, 10);
-    public static Font MediumLabelFont = new Font("Sans Serif", Font.PLAIN, 25);
-    public static Font BigLabelFont = new Font("Sans Serif", Font.PLAIN, 30);
+    public static Font MediumTextFont = new Font("Sans Serif", Font.BOLD, MyConstants.ScreenHeight/50);
+    public static Font SmallLabelFont = new Font("Sans Serif", Font.PLAIN, MyConstants.ScreenHeight/90);
+    public static Font MediumLabelFont = new Font("Sans Serif", Font.PLAIN, MyConstants.ScreenHeight/60);
+    public static Font BigLabelFont = new Font("Sans Serif", Font.PLAIN, 40);
+    
+    
+    public static Color DisableColor = Color.decode("#BDBDBD");
+    public static Color Transparent = new Color(0, 0, 0, 0);
+    public static Color CloseButtonHoverColor = Color.decode("#FF5722");
+    public static Color PrimaryColor = Color.ORANGE;
+    public static Color PressedColor = Color.decode("#FB8C00");
+    public static Color BackgroundColor = Color.WHITE;
+    
+    //public static Color enableColor = 
 }

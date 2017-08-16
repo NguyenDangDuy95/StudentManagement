@@ -25,7 +25,7 @@ public class ServerConnection {
 			// socket.getOutputStream());
 			// Student std1 = new Student(1, "Duy", "21");
 			// oos.writeObject(std1);
-			stdList = new ArrayList<Student>();
+			stdList = new ArrayList<>();
 			ois = new ObjectInputStream(socket.getInputStream());
 			stdList = (ArrayList<Student>) ois.readObject();
 
@@ -35,13 +35,11 @@ public class ServerConnection {
 
 			ois.close();
 			ps.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (IOException | ClassNotFoundException e) {
+                    // TODO Auto-generated catch block
+
 		}
+            // TODO Auto-generated catch block
 		return stdList;
 	}
 }

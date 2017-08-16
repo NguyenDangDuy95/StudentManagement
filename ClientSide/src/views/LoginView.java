@@ -8,23 +8,17 @@ package views;
 import helpers.MyConstants;
 import helpers.MyStyle;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
+import javax.swing.BorderFactory;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
+import test.ClientSideMain;
 import userControls.*;
 import views.base.BaseView;
 
@@ -37,29 +31,18 @@ public class LoginView extends JDialog implements BaseView {
     private JPanel container;
     private BackgroundImagePanel titlePanel;
     private JLabel lbTitle, lbUsername, lbPassword;
-    private PlaceholderTextField tfUsername;
+    private PlaceHolderTextField tfUsername;
     private PlaceholderPasswordField tfPassword;
-    private JButton btnLogin, btnCancel;
+    private CustomButton btnLogin;
+    private CloseButton btnClose;
     private String username = "";
     private String password = "";
+    private JCheckBox saveCredential;
 
     public LoginView() {
-        System.out.println(MyConstants.loginHeight);
-        System.out.println(MyConstants.loginWidth);
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                int result = JOptionPane.showConfirmDialog(null, "Do you want to quit", null, JOptionPane.YES_NO_OPTION);
-            if(result == JOptionPane.YES_OPTION)
-            {
-                System.exit(0);
-            }
-            }
-            
-        });
-        
-        setResizable(false);
-        this.setBounds(MyConstants.loginPositionX, MyConstants.loginPositionY, MyConstants.loginWidth, MyConstants.loginHeight);
+        ClientSideMain.CurrentState = "Login";
+        System.out.println(MyConstants.LoginHeight);
+        System.out.println(MyConstants.LoginWidth);
         initView();
         initCommand();
         draw();
@@ -67,27 +50,32 @@ public class LoginView extends JDialog implements BaseView {
 
     @Override
     public void initView() {
+        setBackground(Color.WHITE);
+        setUndecorated(true);
+        setBounds(MyConstants.LoginPositionX, MyConstants.LoginPositionY, MyConstants.LoginWidth, MyConstants.LoginHeight);
+        setResizable(false);
         container = new JPanel();
         container.setLayout(null);
-        //container.setBackground(Color.white);
-        container.setSize(MyConstants.loginWidth, MyConstants.loginHeight);
+        container.setBorder(BorderFactory.createMatteBorder(0, 1, 1, 1, MyStyle.DisableColor));
+        container.setBackground(Color.white);
+        container.setSize(MyConstants.LoginWidth, MyConstants.LoginHeight);
         setContentPane(container);
         try {
             titlePanel = new BackgroundImagePanel(getClass().getResource(MyConstants.LoginImage).toURI());
         } catch (URISyntaxException | IOException ex) {
             Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        lbTitle = new JLabel("Login",JLabel.LEFT);
+        lbTitle = new JLabel("Login", JLabel.CENTER);
         lbTitle.setForeground(Color.WHITE);
-        lbTitle.setFont(MyStyle.SplashLabelFont);
+        lbTitle.setFont(MyStyle.BigLabelFont);
 
-        lbUsername = new JLabel("Username: ",JLabel.LEFT);
+        lbUsername = new JLabel("Username: ", JLabel.LEFT);
         lbUsername.setFont(MyStyle.MediumLabelFont);
 
-        lbPassword = new JLabel("Password: ",JLabel.LEFT);
+        lbPassword = new JLabel("Password: ", JLabel.LEFT);
         lbPassword.setFont(MyStyle.MediumLabelFont);
 
-        tfUsername = new PlaceholderTextField();
+        tfUsername = new PlaceHolderTextField();
         tfUsername.setPlaceholder("Input your username");
         tfUsername.setFont(MyStyle.MediumLabelFont);
 
@@ -95,22 +83,25 @@ public class LoginView extends JDialog implements BaseView {
         tfPassword.setPlaceholder("Input your password");
         tfPassword.setFont(MyStyle.MediumLabelFont);
 
-        btnLogin = new JButton("Login");
+        btnLogin = new CustomButton("Login");
+        btnLogin.setForeground(Color.WHITE);
+        btnLogin.setBackground(Color.ORANGE);
+        System.out.println(Color.ORANGE.toString());
         btnLogin.setFont(MyStyle.MediumLabelFont);
-        btnCancel = new JButton("Cancel");
-        btnCancel.setFont(MyStyle.MediumLabelFont);
+
+        btnClose = new CloseButton();
+        btnClose.setWidthOfView(MyConstants.LoginWidth);
+        btnClose.setOpaque(false);
+
+        saveCredential = new CustomCheckBox("Save credential");
     }
 
     @Override
     public void initCommand() {
         btnLogin.addActionListener((ActionEvent e) -> {
-            checkValidation();
-        });
-        btnCancel.addActionListener((ActionEvent e) -> {
-            int result = JOptionPane.showConfirmDialog(this, "Do you want to quit", null, JOptionPane.YES_NO_OPTION);
-            if(result == JOptionPane.YES_OPTION)
-            {
-                System.exit(0);
+            if (checkValidation()) {
+                setVisible(false);
+                new MainView().setVisible(true);
             }
         });
     }
@@ -118,47 +109,84 @@ public class LoginView extends JDialog implements BaseView {
     @Override
     public void draw() {
         titlePanel.setLayout(null);
-        titlePanel.setBounds(0, 0, MyConstants.loginWidth, MyConstants.loginTitleHeight);
-        lbTitle.setBounds(MyConstants.itemSize, (MyConstants.loginTitleHeight - MyConstants.itemSize) / 2, MyConstants.tripItemSize, MyConstants.itemSize);
+        titlePanel.setBounds(0, 0, MyConstants.LoginWidth, MyConstants.LoginTitleHeight);
 
-        lbUsername.setBounds(MyConstants.doubleItemSize, MyConstants.itemSize * 6, MyConstants.tripItemSize, MyConstants.itemSize);
-        lbPassword.setBounds(MyConstants.doubleItemSize, MyConstants.itemSize * 8, MyConstants.tripItemSize, MyConstants.itemSize);
+        lbTitle.setBounds((MyConstants.LoginWidth - MyConstants.LabelWidth) / 2,
+                (MyConstants.LoginTitleHeight - MyConstants.LabelHeight) / 2,
+                MyConstants.LabelWidth,
+                MyConstants.LabelHeight
+        );
+        lbUsername.setBounds(
+                MyConstants.SmallMargin,
+                MyConstants.LoginTitleHeight + MyConstants.VerySmallMargin,
+                MyConstants.LabelWidth,
+                MyConstants.LabelHeight
+        );
 
-        tfUsername.setBounds(MyConstants.itemSize * 6, MyConstants.itemSize * 6, MyConstants.loginWidth - MyConstants.quadItemSize * 2, MyConstants.itemSize);
-        tfPassword.setBounds(MyConstants.itemSize * 6, MyConstants.itemSize * 8, MyConstants.loginWidth - MyConstants.quadItemSize * 2, MyConstants.itemSize);
+        tfUsername.setBounds(
+                MyConstants.SmallMargin,
+                lbUsername.getY() + MyConstants.LabelHeight + MyConstants.VerySmallMargin,
+                MyConstants.TextFieldWidth,
+                MyConstants.TextFieldHeight
+        );
+        lbPassword.setBounds(
+                MyConstants.SmallMargin,
+                tfUsername.getY() + MyConstants.TextFieldHeight + MyConstants.VerySmallMargin,
+                MyConstants.LabelWidth,
+                MyConstants.LabelHeight
+        );
 
-        btnCancel.setBounds(MyConstants.loginWidth - MyConstants.itemSize * 5, MyConstants.itemSize * 10, MyConstants.tripItemSize, MyConstants.itemSize);
-        btnLogin.setBounds(MyConstants.loginWidth - MyConstants.itemSize * 9, MyConstants.itemSize * 10, MyConstants.tripItemSize, MyConstants.itemSize);
+        tfPassword.setBounds(
+                MyConstants.SmallMargin,
+                lbPassword.getY() + MyConstants.LabelHeight + MyConstants.VerySmallMargin,
+                MyConstants.TextFieldWidth,
+                MyConstants.TextFieldHeight
+        );
+
+        saveCredential.setBounds(MyConstants.SmallMargin,
+                tfPassword.getY() + MyConstants.TextFieldHeight + MyConstants.VerySmallMargin,
+                MyConstants.LoginButtonWidth / 2 + MyConstants.VerySmallMargin,
+                MyConstants.LabelHeight
+        );
+
+        btnLogin.setBounds(
+                MyConstants.SmallMargin,
+                saveCredential.getY() + MyConstants.LabelHeight + MyConstants.VerySmallMargin,
+                MyConstants.LoginButtonWidth,
+                MyConstants.LoginButtonHeight
+        );
+        btnLogin.setFocusPainted(false);
 
         titlePanel.add(lbTitle);
+        titlePanel.add(btnClose);
         container.add(titlePanel);
         container.add(lbUsername);
         container.add(lbPassword);
         container.add(tfUsername);
         container.add(tfPassword);
+        container.add(saveCredential);
         container.add(btnLogin);
-        container.add(btnCancel);
     }
 
-    private void checkValidation() {
+    private boolean checkValidation() {
         username = tfUsername.getText();
         for (int i = 0; i < tfPassword.getPassword().length; i++) {
             password += tfPassword.getPassword()[i];
         }
-        if(username.isEmpty())
-        {
-            JOptionPane.showMessageDialog(this, MyConstants.emptyUsername, MyConstants.warningMessage, JOptionPane.PLAIN_MESSAGE);
-        }
-        else if(password.isEmpty())
-        {
-            JOptionPane.showMessageDialog(this, MyConstants.emptyPassword, MyConstants.warningMessage, JOptionPane.PLAIN_MESSAGE);
-        }
-        else
-        {
-            
-            setVisible(false);
+        if (username.isEmpty() || username.equals("")) {
+            Control.createCustomDialog(MyConstants.OptionDialogType.Message, MyConstants.WarningMessage, MyConstants.EmptyUsername);
+            return false;
+        } else if (password.isEmpty()) {
+            Control.createCustomDialog(MyConstants.OptionDialogType.Message, MyConstants.WarningMessage, MyConstants.EmptyPassword);
+            return false;
+        } else {
+            //send request to server
+            //return a string true or false from server, check and return for validate
+
+            //
             System.out.printf("Username: %s \n Password: %s", username, password);
+            return true;
         }
-        
+
     }
 }

@@ -9,10 +9,13 @@ import helpers.MyConstants;
 import helpers.MyStyle;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Image;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JWindow;
@@ -24,46 +27,42 @@ import userControls.BackgroundImagePanel;
  * @author Duy
  */
 public class SplashScreen extends JWindow{
-
+    private URI splashImage;
+    private JLabel label;
+    private BackgroundImagePanel imagePanel;
     public SplashScreen() {
-        BorderLayout bd = new BorderLayout();
-        this.setLayout(bd);
-        JFrame frame = new JFrame();
-        frame.setLayout(bd);
-        BackgroundImagePanel imageBackground = null;
-        JLabel label = new JLabel("The Application is loading...", SwingConstants.CENTER);
-        label.setFont(MyStyle.SplashLabelFont);
-        try {
-             imageBackground = new BackgroundImagePanel(getClass().getResource(MyConstants.SplashScreenImage).toURI());
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(SplashScreen.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(SplashScreen.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(imageBackground!= null)
-        {
-            imageBackground.add(label);
-            this.add(imageBackground);
-        }
-        else
-        {
-            this.add(label,SwingConstants.CENTER);
-        }
+        setLayout(null);
         
-        this.setBackground(Color.yellow);
-        this.setBounds((MyConstants.screenWidth-MyConstants.splashScreenWidth)/2,
-                (MyConstants.screenHeight-MyConstants.splashScreenHeight)/2,
-                MyConstants.splashScreenWidth,
-                MyConstants.splashScreenHeight
+        setBounds((MyConstants.ScreenWidth-MyConstants.SplashScreenWidth)/2,
+                (MyConstants.ScreenHeight-MyConstants.SplashScreenHeight)/2,
+                MyConstants.SplashScreenWidth,
+                MyConstants.SplashScreenHeight
         );
-        
+        try {
+            splashImage = getClass().getResource(MyConstants.SplashScreenImage).toURI();
+            imagePanel = new BackgroundImagePanel(splashImage);
+        } catch (IOException | URISyntaxException ex) {
+            Logger.getLogger(SplashScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        label = new JLabel("The Application is loading...", SwingConstants.CENTER);
+        label.setFont(MyStyle.SplashLabelFont);
+        label.setBounds(0, 0, MyConstants.SplashScreenWidth, MyConstants.LabelHeight);
+        label.setHorizontalTextPosition(SwingConstants.CENTER);
+        imagePanel.setLayout(null);
+        imagePanel.setBounds(0,
+                0,
+                MyConstants.SplashScreenWidth,
+                MyConstants.SplashScreenHeight
+        );
+        imagePanel.add(label);
+        add(imagePanel);
     }
 
     public void showSplash()
     {
         this.setVisible(true);
         try {
-            Thread.sleep(3000);
+            Thread.sleep(2000);
         } catch (InterruptedException ex) {
             Logger.getLogger(SplashScreen.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -14,6 +14,7 @@ import views.SplashScreen;
  * @author Duy
  */
 public class ClientSideMain {
+    public static String CurrentState;
     public static void main(String[] args) {
         new CustomUIManager();
         //new SplashScreen().showSplash();

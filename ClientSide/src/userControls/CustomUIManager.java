@@ -26,10 +26,6 @@ public class CustomUIManager{
     }
     private void customUI()
     {
-        UIManager.put("OptionPane.minimumSize",new Dimension(MyConstants.screenWidth/5,MyConstants.screenHeight/8));
-        UIManager.put("OptionPane.messageFont", MyStyle.MediumLabelFont);
-        UIManager.put("OptionPane.buttonOrientation", SwingConstants.RIGHT);
-        UIManager.getLookAndFeelDefaults().put("OptionPane.sameSizeButtons", true);
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
