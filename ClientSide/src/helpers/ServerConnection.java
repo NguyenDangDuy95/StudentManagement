@@ -1,45 +1,35 @@
 package helpers;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
-import java.io.PrintStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.util.ArrayList;
-import com.models.Student;
+import java.net.UnknownHostException;
 
 public class ServerConnection {
-	PrintStream ps = null;
-	ObjectInputStream ois = null;
-	private Socket socket;
+    public static ObjectInputStream ois = null;
+    public static ObjectOutputStream oos = null;
+    public static Socket socket;
 
-	@SuppressWarnings("unchecked")
-	public ArrayList<Student> connect() {
-		ArrayList<Student> stdList=null;
-		try {
-			System.out.println("Client 1 is ready");
-			socket = new Socket("192.168.1.77", 3001);
-			ps = new PrintStream(socket.getOutputStream());
-			ps.println("Send me list of students");
-			ps.flush();
-			// ObjectOutputStream oos = new ObjectOutputStream(
-			// socket.getOutputStream());
-			// Student std1 = new Student(1, "Duy", "21");
-			// oos.writeObject(std1);
-			stdList = new ArrayList<>();
-			ois = new ObjectInputStream(socket.getInputStream());
-			stdList = (ArrayList<Student>) ois.readObject();
-
-			//for (Student std : stdList) {
-			//	System.out.println(std.getId() + std.getName() + std.getAge());
-			//}
-
-			ois.close();
-			ps.close();
-		} catch (IOException | ClassNotFoundException e) {
-                    // TODO Auto-generated catch block
-
-		}
-            // TODO Auto-generated catch block
-		return stdList;
-	}
+    public static void connect() {
+        try {
+            System.out.println("Client 1 is ready");
+            socket = new Socket("192.168.1.36", 5555);  
+            oos = new ObjectOutputStream(socket.getOutputStream());
+            oos.flush();
+            System.out.println("ObjectOutput is ready");
+            ois = new ObjectInputStream(socket.getInputStream());
+            System.out.println("ObjectInput is ready");
+        }catch(UnknownHostException e){
+            System.out.println("Cannot connect to server!");
+            return;
+        }catch(IOException e){
+            System.out.println("Cannot create I/O to server!");
+            return;
+        }
+    }
 }

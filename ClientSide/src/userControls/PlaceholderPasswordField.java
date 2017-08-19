@@ -7,7 +7,6 @@ package userControls;
 
 import helpers.MyConstants;
 import helpers.MyStyle;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -15,8 +14,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import javax.swing.BorderFactory;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.border.Border;
 import javax.swing.text.Document;
 
 /**
