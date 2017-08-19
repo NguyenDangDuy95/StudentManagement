@@ -5,9 +5,10 @@
  */
 package controllers;
 
-import com.models.Student;
+import models.Student;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
+import services.StudentDataStore;
 
 /**
  *
@@ -16,8 +17,11 @@ import javax.swing.table.DefaultTableModel;
 
 public class StudentController {
     private Vector<Student> stdList;
-    public static StudentController Instance;
 
+    public Vector<Student> getStdList() {
+        return stdList;
+    }
+    public static StudentController Instance;
     public StudentController() {
         stdList = new Vector<Student>();
         Instance = this;
@@ -25,7 +29,7 @@ public class StudentController {
     
     public void load()
     {
-        
+        stdList = new StudentDataStore().GetItems();
     }
     
     public DefaultTableModel getSelectedStudentInfomationDataModel()

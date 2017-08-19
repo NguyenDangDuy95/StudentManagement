@@ -5,14 +5,26 @@
  */
 package controllers;
 
+import helpers.MyConstants;
+
 /**
  *
  * @author Duy
  */
 public class AppController {
-    private 
+    public static AppController Instance;
+    private MyConstants.OptionDialogType currentUserRole;
     
     public AppController() {
+        Instance = this;
     }
     
+    public MyConstants.OptionDialogType getCurrentUserRole()
+    {
+        return currentUserRole;
+    }
+    public void setCurrentUserRole(MyConstants.OptionDialogType role)
+    {
+        currentUserRole = role;
+    }
 }
