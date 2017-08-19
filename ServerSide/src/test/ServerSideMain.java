@@ -1,5 +1,6 @@
 package test;
 
+import helpers.DatabaseConnection;
 import helpers.Server;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -20,6 +21,7 @@ public class ServerSideMain {
     public static void main(String[] args) {
         try {
             new Server().serve();
+            DatabaseConnection.getConnection();
         } catch (IOException ex) {
             Logger.getLogger(ServerSideMain.class.getName()).log(Level.SEVERE, null, ex);
         }

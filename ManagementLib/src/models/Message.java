@@ -13,15 +13,63 @@ import java.io.Serializable;
  */
 public class Message implements Serializable{
 
-    private String Title;
-    private String Body;
+    private String Title="";
+    private String Body = "";
     private Student std;
     private Employee emp;
     private Course cor;
     private Department dpm;
     private Subject sub;
     private Batch bat;
-    
+    private Verification info;
+
+    public Employee getEmp() {
+        return emp;
+    }
+
+    public void setEmp(Employee emp) {
+        this.emp = emp;
+    }
+
+    public Course getCor() {
+        return cor;
+    }
+
+    public void setCor(Course cor) {
+        this.cor = cor;
+    }
+
+    public Department getDpm() {
+        return dpm;
+    }
+
+    public void setDpm(Department dpm) {
+        this.dpm = dpm;
+    }
+
+    public Subject getSub() {
+        return sub;
+    }
+
+    public void setSub(Subject sub) {
+        this.sub = sub;
+    }
+
+    public Batch getBat() {
+        return bat;
+    }
+
+    public void setBat(Batch bat) {
+        this.bat = bat;
+    }
+
+    public Verification getInfo() {
+        return info;
+    }
+
+    public void setInfo(Verification info) {
+        this.info = info;
+    }
     public Message() {
     }
 
@@ -45,7 +93,11 @@ public class Message implements Serializable{
         this.Title=Title;
         this.sub = sub;
     }
-
+    public Message(String Title, Verification info)
+    {
+        this.Title = Title;
+        this.info = info;
+    }
     public String getTitle() {
         return Title;
     }

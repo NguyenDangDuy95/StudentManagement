@@ -18,4 +18,5 @@ public class Request implements Serializable{
     public static String UpdateStudent = "updatestudent";
     public static String UpdateEmployee = "updateemployee";
     public static String UpdateCourse = "updatecourse";
+    public static String Verification = "verify";
 }

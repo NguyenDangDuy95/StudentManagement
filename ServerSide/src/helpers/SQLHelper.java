@@ -8,9 +8,14 @@ public class SQLHelper {
 	public static final String PASS = "123456789";
 	public static final String STUDENT_TABLE = "STUDENT";
 	public static final String USER = "sa";
-	
+	public static final String getAllUser = "";
 	public static String createSelectSQL(String tableName,String item)
 	{
 		return String.format("SELECT %s FROM %s;", item, tableName);
 	}
+        public static String getElementByID(String id, String role)
+        {
+            //return String.format(role, args);
+            return null;
+        }
 }
