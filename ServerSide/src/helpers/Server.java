@@ -106,7 +106,7 @@ public class Server {
         }
 
         private Message verify(Verification account) {
-            ResultSet rs = DatabaseConnection.getExecutedResultSet(SQLHelper.getAllUser);
+            ResultSet rs = DatabaseConnection.getExecutedResultSet(SQLHelper.GetAllUser);
             try {
                 while (rs.next()) {
                     if (account.getUsername().equals(rs.getString(0))) {
@@ -115,7 +115,7 @@ public class Server {
                             {
                                 return new Message("Success", StudentController.getStudentByID(rs.getString(2)));
                             }
-                            else return new Message("Success", (Employee) DatabaseConnection.getExecutedResultSet(SQLHelper.getElementByID(rs.getString(2), rs.getString(3)))); 
+                            else return new Message("Success", "ahihi"); 
                         }
                         return new Message("Wrong Password", "");
                     }
