@@ -14,7 +14,7 @@ import java.awt.Toolkit;
  */
 public class MyConstants {
 
-    public static String SERVERIP = "192.168.1.34";
+    public static String SERVERIP = "10.10.42.216";
     public static int PORT = 5555;
     
     public static String SplashScreenImage = "/images/SplashScreen.jpg";

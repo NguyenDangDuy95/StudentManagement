@@ -18,6 +18,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import models.Message;
+import services.VerificationService;
 import test.ClientSideMain;
 import userControls.*;
 import views.base.BaseView;
@@ -182,10 +184,12 @@ public class LoginView extends JDialog implements BaseView {
         } else {
             //send request to server
             //return a string true or false from server, check and return for validate
-
-            //
-            System.out.printf("Username: %s \n Password: %s", username, password);
-            return true;
+            Message mgs = VerificationService.verify(username, password);
+            System.out.println(mgs.getTitle());
+            if (mgs.getTitle().equals("Success")) {
+                return true;
+            }
+            return false;
         }
 
     }

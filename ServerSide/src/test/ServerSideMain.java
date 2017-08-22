@@ -22,7 +22,6 @@ public class ServerSideMain {
         try {
             DatabaseConnection.getConnection();
             new Server().serve();
-            
         } catch (IOException ex) {
             Logger.getLogger(ServerSideMain.class.getName()).log(Level.SEVERE, null, ex);
         }
