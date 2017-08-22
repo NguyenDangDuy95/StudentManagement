@@ -5,15 +5,10 @@
  */
 package test;
 
-import controllers.AppController;
 import controllers.StudentController;
 import helpers.MyConstants;
 import helpers.ServerConnection;
-import java.util.Vector;
-import models.Student;
-import services.StudentDataStore;
 import userControls.CustomUIManager;
-import views.LoginView;
 import views.SplashScreen;
 
 /**

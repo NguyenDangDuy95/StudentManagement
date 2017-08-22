@@ -26,7 +26,9 @@ public class Message implements Serializable{
     
     public Message() {
     }
-
+    public Message(String text) {
+        Title = text;
+    }
     public Message(String Title, String Body) {
         this.Title = Title;
         this.Body = Body;
