@@ -24,7 +24,7 @@ public class StudentDataStore implements IDataStore {
     public Vector<Student> GetItems() {
         Vector<Student> list = new Vector<>();
         try {
-            ServerConnection.oos.writeObject(new Message("studentlist", ""));
+            ServerConnection.oos.writeObject(new Message("studentlist"));
             ServerConnection.oos.flush();
             list = (Vector<Student>) ServerConnection.ois.readObject();
         } catch (IOException | ClassNotFoundException ex) {

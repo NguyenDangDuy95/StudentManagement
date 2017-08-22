@@ -5,15 +5,10 @@
  */
 package test;
 
-import controllers.AppController;
 import controllers.StudentController;
 import helpers.MyConstants;
 import helpers.ServerConnection;
-import java.util.Vector;
-import models.Student;
-import services.StudentDataStore;
 import userControls.CustomUIManager;
-import views.LoginView;
 import views.SplashScreen;
 
 /**
@@ -22,7 +17,6 @@ import views.SplashScreen;
  */
 public class ClientSideMain {
     public static String CurrentState;
-    
     public static MyConstants.OptionDialogType currentUserRole;
     public static void main(String[] args) {
         new CustomUIManager();
