@@ -24,7 +24,7 @@ public class SQLHelper {
 
     public static final String GetStudentList = "SELECT * FROM "+STUDENT_TABLE;
     public static String getStudentInfoByID(String id){
-        return "SELECT * FROM " + STUDENT_INFO_TABLE + " WHERE StudentID = \'"+id+"\'";
+        return "SELECT * FROM " + STUDENT_INFO_TABLE + " WHERE StudentID = \'"+id+"\';";
     }
     
     
