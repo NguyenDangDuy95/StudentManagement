@@ -3,11 +3,7 @@ package helpers;
 public class SQLHelper {
 
     public static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-<<<<<<< HEAD
     public static final String SERVER_NAME = "TMT\\SQLEXPRESS:1433";
-=======
-    public static final String SERVER_NAME = "DESKTOP-U2T7NV9";
->>>>>>> 946cb15b7788ab834854512a312d3da090b1a416
     public static final String DB_NAME = "ManagerAptech";
     public static final String DB_URL = "jdbc:sqlserver://" + SERVER_NAME + "; databaseName=" + DB_NAME;
     public static final String PASS = "123";
@@ -17,7 +13,12 @@ public class SQLHelper {
     public static final String EMPLOYEE_INFO_TABLE = "InfomationEmployee";
     public static final String USER = "sa";
     public static final String GetAllUser = "SELECT * FROM LoginAccount;";
-    
+   
+    public static final String GetStudentByID = "SELECT StudentList.StudentID , FristName ,LastName , Gender , Birthday , IDCard , Addresss, PlaceOfBirth, PhoneNumber, Email, \n" +
+            "Fathername, MotherName, FatherJob, MotherJob, ParentPhone, scholarship, CourseID, StartDate, EndDate\n" +
+            "FROM StudentList \n" +
+            "LEFT JOIN StudentInformation ON StudentList.StudentID = StudentInformation.StudentID\n" +
+            "WHERE StudentList.StudentID = '%s'\n" +";";
     
     public static final String GetAllEmployee = "SELECT * FROM ";
     public static final String GetEmployeeByID = " SELECT * \n"
@@ -36,7 +37,13 @@ public class SQLHelper {
         return String.format("SELECT %s FROM %s;", item, tableName);
     }
     
-    
+    public static String GetStudentByID(String id){
+        return "SELECT StudentList.StudentID , FirstName ,LastName , Gender , Birthday , IDCard , Addresss, PlaceOfBirth, PhoneNumber, Email," +
+            "Fathername, MotherName, FatherJob, MotherJob, ParentPhone, scholarship, CourseID, StartDate, EndDate" +
+            "FROM " + STUDENT_TABLE +
+            "LEFT JOIN "+ STUDENT_INFO_TABLE +"ON StudentList.StudentID = StudentInformation.StudentID" +
+            "WHERE StudentList.StudentID = \'"+id+"\';";
+    }
     
     public static String getElementByID(String id, String role) {
         if (role.equals("student")) {

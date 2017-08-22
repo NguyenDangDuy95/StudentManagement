@@ -36,6 +36,7 @@ public class StudentDataService {
             );
             stdList.add(std);
         }while(rs.next());
+        return stdList;
     }
     private static Gender getGender(String gender)
     {
