@@ -8,7 +8,6 @@ package services;
 import controllers.StudentController;
 import helpers.ServerConnection;
 import java.io.IOException;
-import java.util.Scanner;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,27 +18,18 @@ import models.Student;
  *
  * @author Duy
  */
-public class StudentDataStore implements IDataStore{
+public class StudentDataStore implements IDataStore {
 
     @Override
     public Vector<Student> GetItems() {
         Vector<Student> list = new Vector<>();
         try {
-            ServerConnection.oos.writeObject(new Message("student", "list"));
+            ServerConnection.oos.writeObject(new Message("studentlist", ""));
             ServerConnection.oos.flush();
-            System.out.println("startReceive");
-            list = (Vector<Student>)ServerConnection.ois.readObject();
-            System.out.println("received list");
-            for(Student std: list)
-            {
-                System.out.println(std.getFirstName());
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(StudentDataStore.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+            list = (Vector<Student>) ServerConnection.ois.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(StudentDataStore.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         return list;
     }
 
@@ -48,8 +38,7 @@ public class StudentDataStore implements IDataStore{
         boolean result = false;
         Vector<Student> stdList = StudentController.Instance.getStdList();
         for (Student student : stdList) {
-            if(student.getID().equals(id))
-            {
+            if (student.getID().equals(id)) {
                 try {
                     ServerConnection.oos.writeObject(student);
                     result = ServerConnection.ois.readBoolean();
@@ -66,8 +55,7 @@ public class StudentDataStore implements IDataStore{
         boolean result = false;
         Vector<Student> stdList = StudentController.Instance.getStdList();
         for (Student student : stdList) {
-            if(student.getID().equals(id))
-            {
+            if (student.getID().equals(id)) {
                 try {
                     //ServerConnection.os.write(id);
                     result = ServerConnection.ois.readBoolean();
@@ -79,5 +67,4 @@ public class StudentDataStore implements IDataStore{
         return result;
     }
 
-    
 }

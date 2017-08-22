@@ -38,50 +38,18 @@ public class Student implements Serializable{
     public Student() {
     }
 
-    public Student(String ID, String classID, String firstName, String lastName, String gender, Date birthDay, String personalID, String phone, String address, String placeOfBirth, String email, String schoolarship, String courseID, Date startDay, Date endDay, String fatherName, String motherName, String fatherJob, String motherJob, String parentPhone) {
-        this.ID = ID;
-        this.classID = classID;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        if(gender.equals("Male"))
-        {
-            this.gender = Gender.Male;
-        }else this.gender = Gender.Female;
-        this.birthDay = birthDay;
-        this.personalID = personalID;
-        this.phone = phone;
-        this.address = address;
-        this.placeOfBirth = placeOfBirth;
-        this.email = email;
-        this.schoolarship = schoolarship;
-        this.courseID = courseID;
-        this.startDay = startDay;
-        this.endDay = endDay;
-        this.fatherName = fatherName;
-        this.motherName = motherName;
-        this.fatherJob = fatherJob;
-        this.motherJob = motherJob;
-        this.parentPhone = parentPhone;
-    }
-
-    
-    public Student(String ID, String classID, String firstName, String lastName, Gender gender, Date birthDay, String personalID, String phone, String address, String email, String schoolarship, String courseID, Date startDay, Date endDay, AccessRole accessRole) {
+    public Student(String ID, String classID, String firstName, String lastName, Gender gender, Date birthDay, String phone, String email) {
         this.ID = ID;
         this.classID = classID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.birthDay = birthDay;
-        this.personalID = personalID;
         this.phone = phone;
-        this.address = address;
         this.email = email;
-        this.schoolarship = schoolarship;       
-        this.courseID = courseID;
-        this.startDay = startDay;
-        this.endDay = endDay;
-        this.accessRole = accessRole;
     }
+
+    
 
     public String getID() {
         return ID;

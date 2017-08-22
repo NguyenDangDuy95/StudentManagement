@@ -23,6 +23,35 @@ public class Message implements Serializable{
     private Batch bat;
     private Verification info;
 
+    
+    public Message() {
+    }
+
+    public Message(String Title, String Body) {
+        this.Title = Title;
+        this.Body = Body;
+    }
+
+    public Message(String Title, Student std) {
+        this.Title = Title;
+        this.std = std;
+    }
+    
+    public Message(String Title, Employee emp)
+    {
+        this.Title = Title;
+        this.emp = emp;
+    }
+    public Message(String Title, Subject sub)
+    {
+        this.Title=Title;
+        this.sub = sub;
+    }
+    public Message(String Title, Verification info)
+    {
+        this.Title = Title;
+        this.info = info;
+    }
     public Employee getEmp() {
         return emp;
     }
@@ -68,34 +97,6 @@ public class Message implements Serializable{
     }
 
     public void setInfo(Verification info) {
-        this.info = info;
-    }
-    public Message() {
-    }
-
-    public Message(String Title, String Body) {
-        this.Title = Title;
-        this.Body = Body;
-    }
-
-    public Message(String Title, Student std) {
-        this.Title = Title;
-        this.std = std;
-    }
-    
-    public Message(String Title, Employee emp)
-    {
-        this.Title = Title;
-        this.emp = emp;
-    }
-    public Message(String Title, Subject sub)
-    {
-        this.Title=Title;
-        this.sub = sub;
-    }
-    public Message(String Title, Verification info)
-    {
-        this.Title = Title;
         this.info = info;
     }
     public String getTitle() {
