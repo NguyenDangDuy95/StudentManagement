@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 import models.Gender;
+import models.Score;
 import models.Student;
 
 /**
@@ -18,13 +19,11 @@ import models.Student;
  * @author Duy
  */
 public class StudentDataService {
-    public static Vector<Student> getStudentList() throws SQLException
-    {
+
+    public static Vector<Student> getStudentList() throws SQLException {
         Vector<Student> stdList = new Vector<>();
         ResultSet rs = DatabaseConnection.getExecutedResultSet(SQLHelper.GetStudentList);
-        rs.first();
-        do{
-            
+        while (rs.next()) {
             Student std = new Student(rs.getString("StudentID"),
                     rs.getString("ClassID"),
                     rs.getString("FirstName"),
@@ -35,12 +34,46 @@ public class StudentDataService {
                     rs.getString("Email")
             );
             stdList.add(std);
-        }while(rs.next());
+        };
         return stdList;
     }
-    private static Gender getGender(String gender)
-    {
-        if(gender.equalsIgnoreCase("man"))return Gender.Male;
+
+    private static Gender getGender(String gender) {
+        if (gender.equalsIgnoreCase("man")) {
+            return Gender.Male;
+        }
         return Gender.Female;
+    }
+
+    public static Student getStudentByID(String id) throws SQLException {
+        ResultSet rs = DatabaseConnection.getExecutedResultSet(SQLHelper.GetStudentByID(id));
+        rs.next();
+        Student std = new Student(
+                rs.getString("StudentID"),
+                rs.getString("ClassID"),
+                rs.getString("FirstName"),
+                rs.getString("LastName"),
+                getGender(rs.getString("Gender")),
+                rs.getDate("Birthday"),
+                rs.getString("IDCard"),
+                rs.getString("PhoneNumber"),
+                rs.getString("Address"),
+                rs.getString("PlaceOfBirth"),
+                rs.getString("Email"),
+                rs.getString("Schoolarship"),
+                rs.getString("CourseID"),
+                rs.getDate("StartDate"),
+                rs.getDate("EndDate"),
+                rs.getString("FatherName"),
+                rs.getString("MotherName"),
+                rs.getString("FatherJob"),
+                rs.getString("MotherJob"),
+                rs.getString("ParentPhone")
+        );
+        return std;
+    }
+
+    public static Vector<Score> getScoreOfStudent(String id) {
+        return null;
     }
 }

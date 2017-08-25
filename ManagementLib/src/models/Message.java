@@ -18,7 +18,7 @@ public class Message implements Serializable{
     private Student std;
     private Employee emp;
     private Course cor;
-    private Department dpm;
+    
     private Subject sub;
     private Batch bat;
     private Verification info;
@@ -68,14 +68,6 @@ public class Message implements Serializable{
 
     public void setCor(Course cor) {
         this.cor = cor;
-    }
-
-    public Department getDpm() {
-        return dpm;
-    }
-
-    public void setDpm(Department dpm) {
-        this.dpm = dpm;
     }
 
     public Subject getSub() {

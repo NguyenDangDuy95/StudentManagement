@@ -111,7 +111,7 @@ public class ServiceThread extends Thread {
                         System.out.println(rs.getString(4));
                         if (rs.getString(4).toLowerCase().equals("student")) {
                             System.out.println("ok man");
-                            mss = new Message("Success", StudentController.getStudentByID(rs.getString(3)));
+                            //mss = new Message("Success", StudentController.getStudentByID(rs.getString(3)));
                             break;
                             //return new Message("Success", StudentController.getStudentByID(rs.getString(3)));
                         }

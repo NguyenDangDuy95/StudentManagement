@@ -19,7 +19,7 @@ public class ClientSideMain {
     public static String CurrentState;
     public static MyConstants.OptionDialogType currentUserRole;
     public static void main(String[] args) {
-        new CustomUIManager();
+        CustomUIManager.customUI();
         StudentController stdController = new StudentController();
         ServerConnection.connect();
         stdController.load();

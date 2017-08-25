@@ -28,7 +28,7 @@ public class Student implements Serializable{
     private String courseID;
     private Date startDay;
     private Date endDay;
-    private AccessRole accessRole;
+    private AccessRole accessRole = AccessRole.Student;
     private String fatherName;
     private String motherName;
     private String fatherJob;
@@ -49,6 +49,30 @@ public class Student implements Serializable{
         this.email = email;
     }
 
+    public Student(String ID, String classID, String firstName, String lastName, Gender gender, Date birthDay, String personalID, String phone, String address, String placeOfBirth, String email, String schoolarship, String courseID, Date startDay, Date endDay, String fatherName, String motherName, String fatherJob, String motherJob, String parentPhone) {
+        this.ID = ID;
+        this.classID = classID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.birthDay = birthDay;
+        this.personalID = personalID;
+        this.phone = phone;
+        this.address = address;
+        this.placeOfBirth = placeOfBirth;
+        this.email = email;
+        this.schoolarship = schoolarship;
+        this.courseID = courseID;
+        this.startDay = startDay;
+        this.endDay = endDay;
+        this.fatherName = fatherName;
+        this.motherName = motherName;
+        this.fatherJob = fatherJob;
+        this.motherJob = motherJob;
+        this.parentPhone = parentPhone;
+    }
+    
+    
     
 
     public String getID() {

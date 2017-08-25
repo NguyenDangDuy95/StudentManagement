@@ -187,6 +187,7 @@ public class LoginView extends JDialog implements BaseView {
             Message mgs = VerificationService.verify(username, password);
             System.out.println(mgs.getTitle());
             if (mgs.getTitle().equals("Success")) {
+                
                 return true;
             }
             return false;

@@ -5,12 +5,8 @@
  */
 package userControls;
 
-import helpers.MyConstants;
-import helpers.MyStyle;
-import java.awt.Dimension;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -21,10 +17,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class CustomUIManager{
 
-    public CustomUIManager() {
-        customUI();
-    }
-    private void customUI()
+    public static void customUI()
     {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

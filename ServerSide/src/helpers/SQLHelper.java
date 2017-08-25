@@ -13,21 +13,12 @@ public class SQLHelper {
     public static final String EMPLOYEE_INFO_TABLE = "InfomationEmployee";
     public static final String USER = "sa";
     public static final String GetAllUser = "SELECT * FROM LoginAccount;";
-   
-    public static final String GetStudentByID = "SELECT StudentList.StudentID , FristName ,LastName , Gender , Birthday , IDCard , Addresss, PlaceOfBirth, PhoneNumber, Email, \n" +
-            "Fathername, MotherName, FatherJob, MotherJob, ParentPhone, scholarship, CourseID, StartDate, EndDate\n" +
-            "FROM StudentList \n" +
-            "LEFT JOIN StudentInformation ON StudentList.StudentID = StudentInformation.StudentID\n" +
-            "WHERE StudentList.StudentID = '%s'\n" +";";
+  
     
     public static final String GetAllEmployee = "SELECT * FROM ";
-    public static final String GetEmployeeByID = " SELECT * \n"
-            + "FROM EmployeeList\n"
-            + "LEFT JOIN InformationEmployee ON InformationEmployee.EmployeeID = EmployeeList.EmployeeID\n"
-            + "LEFT JOIN Position ON Position.PositionID = EmployeeList.PositonID\n"
-            + "WHERE EmployeeList.EmployeeID = '%s' AND Position.PositionName = '%s';";
 
     public static final String GetStudentList = "SELECT * FROM "+STUDENT_TABLE;
+    public static final String GetEmployeeList = "SELECT * FROM "+EMPLOYEE_TABLE;
     public static String getStudentInfoByID(String id){
         return "SELECT * FROM " + STUDENT_INFO_TABLE + " WHERE StudentID = \'"+id+"\';";
     }
@@ -44,7 +35,9 @@ public class SQLHelper {
             "LEFT JOIN "+ STUDENT_INFO_TABLE +"ON StudentList.StudentID = StudentInformation.StudentID" +
             "WHERE StudentList.StudentID = \'"+id+"\';";
     }
-    
+    public static String GetEmployeeByID(String id){
+        return null;
+    }
     public static String getElementByID(String id, String role) {
         if (role.equals("student")) {
             return "SELECT * FROM " + STUDENT_TABLE
