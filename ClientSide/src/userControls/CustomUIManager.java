@@ -21,6 +21,7 @@ public class CustomUIManager{
     {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            UIManager.put("ProgressBarUI", new CircularProgressBarUI());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(CustomUIManager.class.getName()).log(Level.SEVERE, null, ex);
         }

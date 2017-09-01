@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DatabaseConnection {
 
@@ -47,5 +49,17 @@ public class DatabaseConnection {
             e.printStackTrace();
         }
         return rs;
+    }
+
+    public static boolean getUpdateResultSet(String sqlLine) {
+        int result = 0;
+        try {
+            Statement stmt = con.createStatement();
+            result = stmt.executeUpdate(sqlLine);
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(result>0) return true;
+        return false;
     }
 }

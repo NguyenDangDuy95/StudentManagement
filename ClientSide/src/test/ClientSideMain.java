@@ -20,9 +20,8 @@ public class ClientSideMain {
     public static MyConstants.OptionDialogType currentUserRole;
     public static void main(String[] args) {
         CustomUIManager.customUI();
-        StudentController stdController = new StudentController();
+        
         ServerConnection.connect();
-        stdController.load();
         new SplashScreen().showSplash();
     }
 }

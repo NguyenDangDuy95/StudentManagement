@@ -7,9 +7,11 @@ package controllers;
 
 import helpers.ServerConnection;
 import java.io.IOException;
-import models.Student;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import models.Course;
 import models.Message;
 import models.Request;
 
@@ -18,24 +20,24 @@ import models.Request;
  *
  * @author Duy
  */
+public class CourseController {
 
-public class StudentController {
-    private static StudentController _instance = null;
-    
-    private Vector<Student> _stdList;
-    
-    public static StudentController getInstance(){
-        if(_instance == null){
-            _instance = new StudentController();
+    private static CourseController _instance = null;
+
+    private Vector<Course> _courseList;
+
+    public static CourseController getInstance() {
+        if (_instance == null) {
+            _instance = new CourseController();
         }
         return _instance;
     }
-    
-    private StudentController(){
-        _stdList = new Vector<>();
+
+    private CourseController() {
+        _courseList = new Vector<>();
     }
-    
-    public DefaultTableModel getTableModel(){
+
+    public DefaultTableModel getTableModel() {
 //        Vector header = new Vector();
 //        header.add(Student.COLUMN_ID);
 //        header.add(Employee.COLUMN_NAME);
@@ -62,83 +64,85 @@ public class StudentController {
 //        return dataModel;
         return null;
     }
-    
-    public void load(){
+
+    public void load() {
         //request to server to get student list       
         try {
-            ServerConnection.oos.writeObject(new Message(Request.GetStudentList));
+            ServerConnection.oos.writeObject(new Message(Request.GetCourseList));
             ServerConnection.oos.flush();
-            _stdList = (Vector<Student>) ServerConnection.ois.readObject();
+            _courseList = (Vector<Course>) ServerConnection.ois.readObject();
         } catch (IOException | ClassNotFoundException ex) {
             
         }
     }
-    
-    public Vector<Student> get(){
-        if(_stdList.size() == 0){
+
+    public Vector<Course> get() {
+        if (_courseList.isEmpty()) {
             load();
         }
-        return _stdList;
+        return _courseList;
     }
-    
-    public Student getStudentByID(String id){
-        for(Student std : _stdList)
-        {
-            if(std.getID().equals(id)) return std;
+
+    public Course getStudentByID(String id) {
+        for (Course cor : _courseList) {
+            if (cor.getID().equals(id)) {
+                return cor;
+            }
         }
         return null;
     }
-    public void add(Student std){
+
+    public void add(Course cor) {
         //request server to save to database
 
         Message mgs = new Message();
         mgs.setTitle(Request.AddMessage);
-        mgs.setBody(Request.StudentObject);
-        mgs.setID(std.getID());
-        mgs.setStd(std);
+        mgs.setBody(Request.CourseObject);
+        mgs.setID(cor.getID());
+        mgs.setCor(cor);
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
         } catch (IOException ex) {
-            
         }
         //save temp to list
-        _stdList.addElement(std);
+        _courseList.addElement(cor);
     }
-    
-    public void update(Student std){
+
+    public void update(Course cor) {
         //request server to update to database
         Message mgs = new Message();
         mgs.setTitle(Request.UpdateMessage);
-        mgs.setBody(Request.BatchObject);
-        mgs.setStd(std);
+        mgs.setBody(Request.CourseObject);
+        mgs.setCor(cor);
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
         } catch (IOException ex) {
-          
+
         }
 
         //update to list AUTO
-        for(Student student : _stdList)
-        {
-            if(student.getID().equals(std.getID())){ student = std; break;}
+        for (Course course : _courseList) {
+            if (course.getID().equals(cor.getID())) {
+                course = cor;
+                break;
+            }
         }
     }
-    
-    public void delete(Student std){
+
+    public void delete(Course course) {
         //request server to delete from database
-        Message mgs = new Message(Request.DeleteMessage,Request.StudentObject,std.getID());
+        Message mgs = new Message(Request.DeleteMessage, Request.CourseObject, course.getID());
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
         } catch (IOException ex) {
-     
+
         }
 
         //delete from list
-        _stdList.removeElement(std);
+        _courseList.removeElement(course);
     }
-    
 
 }

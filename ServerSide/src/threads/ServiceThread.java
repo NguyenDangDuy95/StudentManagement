@@ -61,10 +61,11 @@ public class ServiceThread extends Thread {
                     if (request.equals(Request.Verification)) {
                         Verification info = message.getInfo();
                         if (info != null) {
-                            verificationResponse(verify(info));
+                            response(verify(info));
                         }
                         continue;
                     }
+                    
                     if (request.equals("quit")) {
                         quit();
                         break;
@@ -128,7 +129,7 @@ public class ServiceThread extends Thread {
         return mss;
     }
 
-    private void verificationResponse(Message msg) {
+    private void response(Message msg) {
         try {
             oos.writeObject(msg);
             oos.flush();

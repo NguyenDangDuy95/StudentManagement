@@ -22,7 +22,9 @@ public class Message implements Serializable{
     private Subject sub;
     private Batch bat;
     private Verification info;
+    private String ID;
 
+    
     
     public Message() {
     }
@@ -53,6 +55,19 @@ public class Message implements Serializable{
     {
         this.Title = Title;
         this.info = info;
+    }
+    public Message(String Title, String Body, String ID)
+    {
+        this.Title = Title;
+        this.Body = Body;
+        this.ID = ID;
+    }
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
     public Employee getEmp() {
         return emp;

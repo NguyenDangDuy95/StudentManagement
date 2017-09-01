@@ -18,11 +18,13 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import models.AccessRole;
 import models.Message;
 import services.VerificationService;
 import test.ClientSideMain;
 import userControls.*;
 import views.base.BaseView;
+import views.base.LoadingThread;
 
 /**
  *
@@ -187,7 +189,9 @@ public class LoginView extends JDialog implements BaseView {
             Message mgs = VerificationService.verify(username, password);
             System.out.println(mgs.getTitle());
             if (mgs.getTitle().equals("Success")) {
-                
+                if(mgs.getBody().equalsIgnoreCase("admin")||mgs.getBody().equalsIgnoreCase("employee")){
+                    new LoadingThread(AccessRole.Employee).start();
+                }else new LoadingThread(AccessRole.Student).start();
                 return true;
             }
             return false;

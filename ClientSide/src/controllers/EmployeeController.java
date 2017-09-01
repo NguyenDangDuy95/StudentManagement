@@ -7,9 +7,9 @@ package controllers;
 
 import helpers.ServerConnection;
 import java.io.IOException;
-import models.Student;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
+import models.Employee;
 import models.Message;
 import models.Request;
 
@@ -18,21 +18,20 @@ import models.Request;
  *
  * @author Duy
  */
-
-public class StudentController {
-    private static StudentController _instance = null;
+public class EmployeeController {
+    private static EmployeeController _instance = null;
     
-    private Vector<Student> _stdList;
+    private Vector<Employee> _empList;
     
-    public static StudentController getInstance(){
+    public static EmployeeController getInstance(){
         if(_instance == null){
-            _instance = new StudentController();
+            _instance = new EmployeeController();
         }
         return _instance;
     }
     
-    private StudentController(){
-        _stdList = new Vector<>();
+    private EmployeeController(){
+        _empList = new Vector<>();
     }
     
     public DefaultTableModel getTableModel(){
@@ -43,8 +42,8 @@ public class StudentController {
 //        header.add(Employee.COLUMN_DEPARTMENT);
 //        
 //        Vector data = new Vector();
-//        for(int i = 0; i < _stdList.size(); i++){
-//            Employee employee = _stdList.get(i);
+//        for(int i = 0; i < _empList.size(); i++){
+//            Employee employee = _empList.get(i);
 //            Vector row = new Vector();
 //            row.addElement(employee.getId());
 //            row.addElement(employee.getName());
@@ -66,79 +65,77 @@ public class StudentController {
     public void load(){
         //request to server to get student list       
         try {
-            ServerConnection.oos.writeObject(new Message(Request.GetStudentList));
+            ServerConnection.oos.writeObject(new Message(Request.GetEmployeeList));
             ServerConnection.oos.flush();
-            _stdList = (Vector<Student>) ServerConnection.ois.readObject();
+            _empList = (Vector<Employee>) ServerConnection.ois.readObject();
         } catch (IOException | ClassNotFoundException ex) {
             
         }
     }
     
-    public Vector<Student> get(){
-        if(_stdList.size() == 0){
+    public Vector<Employee> get(){
+        if(_empList.size() == 0){
             load();
         }
-        return _stdList;
+        return _empList;
     }
     
-    public Student getStudentByID(String id){
-        for(Student std : _stdList)
+    public Employee getEmployeeByID(String id){
+        for(Employee emp : _empList)
         {
-            if(std.getID().equals(id)) return std;
+            if(emp.getID().equals(id)) return emp;
         }
         return null;
     }
-    public void add(Student std){
+    public void add(Employee emp){
         //request server to save to database
 
         Message mgs = new Message();
         mgs.setTitle(Request.AddMessage);
-        mgs.setBody(Request.StudentObject);
-        mgs.setID(std.getID());
-        mgs.setStd(std);
+        mgs.setBody(Request.EmployeeObject);
+        mgs.setID(emp.getID());
+        mgs.setEmp(emp);
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
         } catch (IOException ex) {
-            
+            //Logger.getLogger(EmployeeDataStore.class.getName()).log(Level.SEVERE, null, ex);
         }
         //save temp to list
-        _stdList.addElement(std);
+        _empList.addElement(emp);
     }
     
-    public void update(Student std){
+    public void update(Employee emp){
         //request server to update to database
         Message mgs = new Message();
         mgs.setTitle(Request.UpdateMessage);
-        mgs.setBody(Request.BatchObject);
-        mgs.setStd(std);
+        mgs.setBody(Request.EmployeeObject);
+        mgs.setEmp(emp);
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
         } catch (IOException ex) {
-          
+            //Logger.getLogger(BatchDataStore.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         //update to list AUTO
-        for(Student student : _stdList)
+        for(Employee employee : _empList)
         {
-            if(student.getID().equals(std.getID())){ student = std; break;}
+            if(employee.getID().equals(emp.getID())){ employee = emp; break;}
         }
     }
     
-    public void delete(Student std){
+    public void delete(Employee emp){
         //request server to delete from database
-        Message mgs = new Message(Request.DeleteMessage,Request.StudentObject,std.getID());
+        Message mgs = new Message(Request.DeleteMessage,Request.EmployeeObject,emp.getID());
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
         } catch (IOException ex) {
-     
+            //Logger.getLogger(EmployeeDataStore.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         //delete from list
-        _stdList.removeElement(std);
+        _empList.removeElement(emp);
     }
-    
-
 }

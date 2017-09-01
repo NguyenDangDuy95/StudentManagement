@@ -3,19 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package services;
-
-import java.util.Vector;
-
-
+package helpers;
 
 /**
  *
  * @author Duy
  */
-public interface IDataStore {
-
-    Vector GetItems();
-    boolean UpdateItemByID(String id);
-    boolean DeleteItemByID(String id);
+public class MyConstants {
+    
 }
