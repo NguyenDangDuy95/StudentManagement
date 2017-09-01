@@ -11,18 +11,19 @@ import java.io.Serializable;
  *
  * @author Duy
  */
-public class Subject implements Serializable{
+public class Subject implements Serializable {
+
     private String ID;
     private String name;
     private String numberOfLesson;
     private String subjectInfo;
-    private Semester semester;
+    private String semester;
     private String courseID;
 
     public Subject() {
     }
 
-    public Subject(String ID, String name, String numberOfLesson, String subjectInfo, Semester semester, String courseID) {
+    public Subject(String ID, String name, String numberOfLesson, String subjectInfo, String semester, String courseID) {
         this.ID = ID;
         this.name = name;
         this.numberOfLesson = numberOfLesson;
@@ -31,11 +32,6 @@ public class Subject implements Serializable{
         this.courseID = courseID;
     }
 
-    @Override
-    public String toString() {
-        return name;
-    }
-    
     public String getID() {
         return ID;
     }
@@ -68,11 +64,11 @@ public class Subject implements Serializable{
         this.subjectInfo = subjectInfo;
     }
 
-    public Semester getSemester() {
+    public String getSemester() {
         return semester;
     }
 
-    public void setSemester(Semester semester) {
+    public void setSemester(String semester) {
         this.semester = semester;
     }
 
@@ -84,7 +80,8 @@ public class Subject implements Serializable{
         this.courseID = courseID;
     }
 
-    
-    
-    
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

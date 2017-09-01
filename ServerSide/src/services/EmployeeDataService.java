@@ -20,5 +20,6 @@ public class EmployeeDataService {
     public static Vector<Employee> getEmployeeList(){
         Vector<Employee> empList = new Vector<>();
         rs = DatabaseConnection.getExecutedResultSet(SQLHelper.GetEmployeeList);
+        return null;
     }
 }

@@ -15,7 +15,10 @@ import java.util.Vector;
 public class Course implements Serializable{
     private String ID;
     private String name;
-    private Vector<Batch> child;        
+    private Vector<Batch> batchList; 
+    private Vector<Subject> subjectList;
+
+    
 
     public Course() {
     }
@@ -25,6 +28,13 @@ public class Course implements Serializable{
         this.name = name;
     }
 
+    public Course(String ID, String name, Vector<Batch> batchList, Vector<Subject> subjectList) {
+        this.ID = ID;
+        this.name = name;
+        this.batchList = batchList;
+        this.subjectList = subjectList;
+    }
+    
     public String getID() {
         return ID;
     }
@@ -41,11 +51,25 @@ public class Course implements Serializable{
         this.name = name;
     }
 
-    public Vector<Batch> getChild() {
-        return child;
+    public Vector<Batch> getBatchList() {
+        return batchList;
     }
 
-    public void setChild(Vector<Batch> child) {
-        this.child = child;
+    public void setBatchList(Vector<Batch> batchList) {
+        this.batchList = batchList;
+    }
+
+    public Vector<Subject> getSubjectList() {
+        return subjectList;
+    }
+
+    public void setSubjectList(Vector<Subject> subjectList) {
+        this.subjectList = subjectList;
     }  
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
+    
 }

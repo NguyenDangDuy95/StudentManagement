@@ -11,7 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import models.Semester;
+import models.Batch;
+import models.Student;
 import models.Subject;
 
 /**
@@ -19,9 +20,8 @@ import models.Subject;
  * @author Duy
  */
 public class CustomTreeView extends JPanel implements TreeSelectionListener{
-    private DefaultMutableTreeNode top;
+    
     private Vector<Course> _courses;
-    private Vector<Subject> _subjects;
     public CustomTreeView(Vector<Course> courses) {
         top = new DefaultMutableTreeNode("Course List");
         _courses = courses;
@@ -31,35 +31,26 @@ public class CustomTreeView extends JPanel implements TreeSelectionListener{
     {
         
     }
-    private void createStudentTreeView(DefaultMutableTreeNode top)
+    private void createStudentTreeView()
     {
-        Vector<DefaultMutableTreeNode> courses = new Vector<DefaultMutableTreeNode>(); 
+        DefaultMutableTreeNode classList = new DefaultMutableTreeNode("Class List");
+        DefaultMutableTreeNode subjectList = new DefaultMutableTreeNode("Subject List");
         for(Course course : _courses)
         {
-            DefaultMutableTreeNode courseNode = new DefaultMutableTreeNode(course.getName());
-            top.add(courseNode);
-            for(Semester sem : Semester.values())
-            {
-                DefaultMutableTreeNode semNode = new DefaultMutableTreeNode(sem);
-                courseNode.add(semNode);
-                for(Subject sub : _subjects)
-                {
-                    if(sub.getSemester().equals(sem))
-                    {
-                        DefaultMutableTreeNode subject = new DefaultMutableTreeNode(sub.getName());
-                        semNode.add(subject);
-                    }
-                }
+            DefaultMutableTreeNode courseNode = new DefaultMutableTreeNode(course);
+            classList.add(courseNode);
+            subjectList.add(courseNode);
+            for(Batch batch : course.getBatchList()){
+                DefaultMutableTreeNode batchNode = new DefaultMutableTreeNode(batch);
+                courseNode.add(batchNode);
             }
-        }       
+        }
+        
+        
     }
-    
-    
-    
-    
-    
     @Override
     public void valueChanged(TreeSelectionEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 }
