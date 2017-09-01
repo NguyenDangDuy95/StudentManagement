@@ -3,21 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
-
-import java.util.Vector;
-import models.Course;
+package helpers;
 
 /**
  *
  * @author Duy
  */
-public class CourseController {
-    private Vector<Course> courseList;
-
-    public CourseController() {
-        
-    }
-    
+public class MyConstants {
     
 }

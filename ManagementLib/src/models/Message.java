@@ -18,61 +18,19 @@ public class Message implements Serializable{
     private Student std;
     private Employee emp;
     private Course cor;
-    private Department dpm;
+    
     private Subject sub;
     private Batch bat;
     private Verification info;
+    private String ID;
 
-    public Employee getEmp() {
-        return emp;
-    }
-
-    public void setEmp(Employee emp) {
-        this.emp = emp;
-    }
-
-    public Course getCor() {
-        return cor;
-    }
-
-    public void setCor(Course cor) {
-        this.cor = cor;
-    }
-
-    public Department getDpm() {
-        return dpm;
-    }
-
-    public void setDpm(Department dpm) {
-        this.dpm = dpm;
-    }
-
-    public Subject getSub() {
-        return sub;
-    }
-
-    public void setSub(Subject sub) {
-        this.sub = sub;
-    }
-
-    public Batch getBat() {
-        return bat;
-    }
-
-    public void setBat(Batch bat) {
-        this.bat = bat;
-    }
-
-    public Verification getInfo() {
-        return info;
-    }
-
-    public void setInfo(Verification info) {
-        this.info = info;
-    }
+    
+    
     public Message() {
     }
-
+    public Message(String text) {
+        Title = text;
+    }
     public Message(String Title, String Body) {
         this.Title = Title;
         this.Body = Body;
@@ -96,6 +54,58 @@ public class Message implements Serializable{
     public Message(String Title, Verification info)
     {
         this.Title = Title;
+        this.info = info;
+    }
+    public Message(String Title, String Body, String ID)
+    {
+        this.Title = Title;
+        this.Body = Body;
+        this.ID = ID;
+    }
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+    public Employee getEmp() {
+        return emp;
+    }
+
+    public void setEmp(Employee emp) {
+        this.emp = emp;
+    }
+
+    public Course getCor() {
+        return cor;
+    }
+
+    public void setCor(Course cor) {
+        this.cor = cor;
+    }
+
+    public Subject getSub() {
+        return sub;
+    }
+
+    public void setSub(Subject sub) {
+        this.sub = sub;
+    }
+
+    public Batch getBat() {
+        return bat;
+    }
+
+    public void setBat(Batch bat) {
+        this.bat = bat;
+    }
+
+    public Verification getInfo() {
+        return info;
+    }
+
+    public void setInfo(Verification info) {
         this.info = info;
     }
     public String getTitle() {

@@ -8,10 +8,8 @@ package controllers;
 import helpers.ServerConnection;
 import java.io.IOException;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import models.Course;
+import models.Batch;
 import models.Message;
 import models.Request;
 
@@ -20,33 +18,32 @@ import models.Request;
  *
  * @author Duy
  */
-public class CourseController {
-
-    private static CourseController _instance = null;
-
-    private Vector<Course> _courseList;
-
-    public static CourseController getInstance() {
-        if (_instance == null) {
-            _instance = new CourseController();
+public class BatchController {
+    private static BatchController _instance = null;
+    
+    private Vector<Batch> _batchList;
+    
+    public static BatchController getInstance(){
+        if(_instance == null){
+            _instance = new BatchController();
         }
         return _instance;
     }
-
-    private CourseController() {
-        _courseList = new Vector<>();
+    
+    private BatchController(){
+        _batchList = new Vector<>();
     }
-
-    public DefaultTableModel getTableModel() {
+    
+    public DefaultTableModel getTableModel(){
 //        Vector header = new Vector();
-//        header.add(Student.COLUMN_ID);
+//        header.add(Batch.COLUMN_ID);
 //        header.add(Employee.COLUMN_NAME);
 //        header.add(Employee.COLUMN_AGE);
 //        header.add(Employee.COLUMN_DEPARTMENT);
 //        
 //        Vector data = new Vector();
-//        for(int i = 0; i < _stdList.size(); i++){
-//            Employee employee = _stdList.get(i);
+//        for(int i = 0; i < _batchList.size(); i++){
+//            Employee employee = _batchList.get(i);
 //            Vector row = new Vector();
 //            row.addElement(employee.getId());
 //            row.addElement(employee.getName());
@@ -64,85 +61,82 @@ public class CourseController {
 //        return dataModel;
         return null;
     }
-
-    public void load() {
-        //request to server to get student list       
+    
+    public void load(){
+        //request to server to get Batch list       
         try {
-            ServerConnection.oos.writeObject(new Message(Request.GetCourseList));
+            ServerConnection.oos.writeObject(new Message(Request.GetBatchList));
             ServerConnection.oos.flush();
-            _courseList = (Vector<Course>) ServerConnection.ois.readObject();
+            _batchList = (Vector<Batch>) ServerConnection.ois.readObject();
         } catch (IOException | ClassNotFoundException ex) {
             
         }
     }
-
-    public Vector<Course> get() {
-        if (_courseList.isEmpty()) {
+    
+    public Vector<Batch> get(){
+        if(_batchList.size() == 0){
             load();
         }
-        return _courseList;
+        return _batchList;
     }
-
-    public Course getStudentByID(String id) {
-        for (Course cor : _courseList) {
-            if (cor.getID().equals(id)) {
-                return cor;
-            }
+    
+    public Batch getBatchByID(String id){
+        for(Batch batch : _batchList)
+        {
+            if(batch.getId().equals(id)) return batch;
         }
         return null;
     }
-
-    public void add(Course cor) {
+    public void add(Batch batch){
         //request server to save to database
 
         Message mgs = new Message();
         mgs.setTitle(Request.AddMessage);
-        mgs.setBody(Request.CourseObject);
-        mgs.setID(cor.getID());
-        mgs.setCor(cor);
+        mgs.setBody(Request.BatchObject);
+        mgs.setID(batch.getId());
+        mgs.setBat(batch);
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
         } catch (IOException ex) {
+            
         }
         //save temp to list
-        _courseList.addElement(cor);
+        _batchList.addElement(batch);
     }
-
-    public void update(Course cor) {
+    
+    public void update(Batch batch){
         //request server to update to database
         Message mgs = new Message();
         mgs.setTitle(Request.UpdateMessage);
-        mgs.setBody(Request.CourseObject);
-        mgs.setCor(cor);
+        mgs.setBody(Request.BatchObject);
+        mgs.setBat(batch);
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
         } catch (IOException ex) {
-
+          
         }
 
         //update to list AUTO
-        for (Course course : _courseList) {
-            if (course.getID().equals(cor.getID())) {
-                course = cor;
-                break;
-            }
+        for(Batch b : _batchList)
+        {
+            if(b.getId().equals(batch.getId())){ b = batch; break;}
         }
     }
-
-    public void delete(Course course) {
+    
+    public void delete(Batch batch){
         //request server to delete from database
-        Message mgs = new Message(Request.DeleteMessage, Request.CourseObject, course.getID());
+        Message mgs = new Message(Request.DeleteMessage,Request.BatchObject,batch.getId());
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
         } catch (IOException ex) {
-
+     
         }
 
         //delete from list
-        _courseList.removeElement(course);
+        _batchList.removeElement(batch);
     }
-
+    
 }

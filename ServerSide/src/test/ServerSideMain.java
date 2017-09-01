@@ -20,8 +20,8 @@ import java.util.logging.Logger;
 public class ServerSideMain {
     public static void main(String[] args) {
         try {
-            new Server().serve();
             DatabaseConnection.getConnection();
+            new Server().serve();
         } catch (IOException ex) {
             Logger.getLogger(ServerSideMain.class.getName()).log(Level.SEVERE, null, ex);
         }

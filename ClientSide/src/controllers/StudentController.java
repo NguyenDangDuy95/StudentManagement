@@ -5,15 +5,14 @@
  */
 package controllers;
 
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import helpers.ServerConnection;
+import java.io.IOException;
 import models.Student;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import services.StudentDataStore;
+import models.Message;
+import models.Request;
+
 
 /**
  *
@@ -21,33 +20,125 @@ import services.StudentDataStore;
  */
 
 public class StudentController {
-    private Vector<Student> stdList;
+    private static StudentController _instance = null;
+    
+    private Vector<Student> _stdList;
+    
+    public static StudentController getInstance(){
+        if(_instance == null){
+            _instance = new StudentController();
+        }
+        return _instance;
+    }
+    
+    private StudentController(){
+        _stdList = new Vector<>();
+    }
+    
+    public DefaultTableModel getTableModel(){
+//        Vector header = new Vector();
+//        header.add(Student.COLUMN_ID);
+//        header.add(Employee.COLUMN_NAME);
+//        header.add(Employee.COLUMN_AGE);
+//        header.add(Employee.COLUMN_DEPARTMENT);
+//        
+//        Vector data = new Vector();
+//        for(int i = 0; i < _stdList.size(); i++){
+//            Employee employee = _stdList.get(i);
+//            Vector row = new Vector();
+//            row.addElement(employee.getId());
+//            row.addElement(employee.getName());
+//            row.addElement(employee.getAge());
+//            row.addElement(employee.getDepartment().getName());
+//            data.addElement(row);
+//        }
+//        
+//        DefaultTableModel dataModel = new DefaultTableModel(data, header){
+//            @Override
+//            public boolean isCellEditable(int row, int column) {
+//                return false;
+//            }            
+//        };        
+//        return dataModel;
+        return null;
+    }
+    
+    public void load(){
+        //request to server to get student list       
+        try {
+            ServerConnection.oos.writeObject(new Message(Request.GetStudentList));
+            ServerConnection.oos.flush();
+            _stdList = (Vector<Student>) ServerConnection.ois.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            
+        }
+    }
+    
+    public Vector<Student> get(){
+        if(_stdList.size() == 0){
+            load();
+        }
+        return _stdList;
+    }
+    
+    public Student getStudentByID(String id){
+        for(Student std : _stdList)
+        {
+            if(std.getID().equals(id)) return std;
+        }
+        return null;
+    }
+    public void add(Student std){
+        //request server to save to database
 
-    public Vector<Student> getStdList() {
-        return stdList;
-    }
-    public static StudentController Instance;
-    public StudentController() {
-        stdList = new Vector<Student>();
-        Instance = this;
+        Message mgs = new Message();
+        mgs.setTitle(Request.AddMessage);
+        mgs.setBody(Request.StudentObject);
+        mgs.setID(std.getID());
+        mgs.setStd(std);
+        try {
+            ServerConnection.oos.writeObject(mgs);
+            ServerConnection.oos.flush();
+        } catch (IOException ex) {
+            
+        }
+        //save temp to list
+        _stdList.addElement(std);
     }
     
-    public void load()
-    {
-        stdList = new StudentDataStore().GetItems();
+    public void update(Student std){
+        //request server to update to database
+        Message mgs = new Message();
+        mgs.setTitle(Request.UpdateMessage);
+        mgs.setBody(Request.BatchObject);
+        mgs.setStd(std);
+        try {
+            ServerConnection.oos.writeObject(mgs);
+            ServerConnection.oos.flush();
+        } catch (IOException ex) {
+          
+        }
+
+        //update to list AUTO
+        for(Student student : _stdList)
+        {
+            if(student.getID().equals(std.getID())){ student = std; break;}
+        }
     }
     
-    public DefaultTableModel getSelectedStudentInfomationDataModel()
-    {
-        Vector header = new Vector();
-        header.addElement("Key");
-        header.addElement("Value");
-        Vector data = new Vector();
-        //for
-        Vector row = new Vector();
-        row.addElement("ahihi");
-        row.addElement("ahuhu");
-        data.add(row);
-        return new DefaultTableModel(data, header);
+    public void delete(Student std){
+        //request server to delete from database
+        Message mgs = new Message(Request.DeleteMessage,Request.StudentObject,std.getID());
+        try {
+            ServerConnection.oos.writeObject(mgs);
+            ServerConnection.oos.flush();
+        } catch (IOException ex) {
+     
+        }
+
+        //delete from list
+        _stdList.removeElement(std);
     }
+    
+
 }
