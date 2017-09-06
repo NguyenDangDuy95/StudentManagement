@@ -6,12 +6,11 @@
 package services;
 
 import helpers.DatabaseConnection;
+import helpers.MyConstants;
 import helpers.SQLHelper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
-import models.Gender;
-import models.Score;
 import models.Student;
 
 /**
@@ -20,60 +19,34 @@ import models.Student;
  */
 public class StudentDataService {
 
-    public static Vector<Student> getStudentList() throws SQLException {
+    public static Vector<Student> GetStudentListByBatchID(String batchID) throws SQLException {
+        ResultSet rs = DatabaseConnection.getExecutedResultSet(SQLHelper.getStudentListByBatchID(batchID));
         Vector<Student> stdList = new Vector<>();
-        ResultSet rs = DatabaseConnection.getExecutedResultSet(SQLHelper.GetStudentList);
         while (rs.next()) {
-            Student std = new Student(rs.getString("StudentID"),
-                    rs.getString("ClassID"),
+            Student std = new Student(
+                    rs.getString("StudentID"),
                     rs.getString("FirstName"),
                     rs.getString("LastName"),
-                    getGender(rs.getString("Gender")),
-                    rs.getDate("Birthday"),
+                    rs.getString("Course"),
+                    rs.getString("Batch"),
+                    MyConstants.getGender(rs.getString("Gender")),
+                    rs.getDate("BirthDay"),
+                    rs.getString("Address"),
+                    rs.getString("BirthPlace"),
+                    rs.getString("PersonalID"),
                     rs.getString("PhoneNumber"),
-                    rs.getString("Email")
+                    rs.getString("Email"),
+                    rs.getString("FatherName"),
+                    rs.getString("FatherJob"),
+                    rs.getString("MotherName"),
+                    rs.getString("MotherJob"),
+                    rs.getString("ParentPhone"),
+                    rs.getString("Schoolarship"),
+                    rs.getDate("StartDate"),
+                    rs.getDate("EndDate")
             );
-            stdList.add(std);
-        };
-        return stdList;
-    }
-
-    private static Gender getGender(String gender) {
-        if (gender.equalsIgnoreCase("man")) {
-            return Gender.Male;
+            stdList.addElement(std);
         }
-        return Gender.Female;
-    }
-
-    public static Student getStudentByID(String id) throws SQLException {
-        ResultSet rs = DatabaseConnection.getExecutedResultSet(SQLHelper.GetStudentByID(id));
-        rs.next();
-        Student std = new Student(
-                rs.getString("StudentID"),
-                rs.getString("ClassID"),
-                rs.getString("FirstName"),
-                rs.getString("LastName"),
-                getGender(rs.getString("Gender")),
-                rs.getDate("Birthday"),
-                rs.getString("IDCard"),
-                rs.getString("PhoneNumber"),
-                rs.getString("Address"),
-                rs.getString("PlaceOfBirth"),
-                rs.getString("Email"),
-                rs.getString("Schoolarship"),
-                rs.getString("CourseID"),
-                rs.getDate("StartDate"),
-                rs.getDate("EndDate"),
-                rs.getString("FatherName"),
-                rs.getString("MotherName"),
-                rs.getString("FatherJob"),
-                rs.getString("MotherJob"),
-                rs.getString("ParentPhone")
-        );
-        return std;
-    }
-
-    public static Vector<Score> getScoreOfStudent(String id) {
-        return null;
+        return stdList;
     }
 }

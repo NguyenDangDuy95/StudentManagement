@@ -12,192 +12,207 @@ import java.util.Date;
  *
  * @author Duy
  */
-public class Employee implements Serializable{
-    private String ID;
-    private String firstName;
-    private String lastName;
-    private String phone;
-    private String address;
-    private Date birthDay;
-    private Gender gender;
-    private TypeOfEmployee typeOfEmployee;
-    private String departmentID;
-    private String salaryRateID;
-    private Date startDay;
-    private Date endDay;
-    private String fatherName;
-    private String motherName;
-    private String fatherJob;
-    private String motherJob;
-    private String parentPhone;
-    private AccessRole accessRole;
+public class Employee implements Serializable {
+
+    private String EmployeeID;
+    private String FirstName;
+    private String LastName;
+    private String PositionName;
+    private String PayRate;
+    private Gender Gender;
+    private Date BirthDay;
+    private String PersonalID;
+    private String Email;
+    private String PhoneNumber;
+    private String Address;
+    private String BirthPlace;
+    private String FatherName;
+    private String MotherName;
+    private String FatherJob;
+    private String MotherJob;
+    private String ParentPhone;
+    private Date StartDate;
+    private Date EndDate;
 
     public Employee() {
     }
 
-    public Employee(String ID, String firstName, String lastName, String phone, String address, Date birthDay, Gender gender, TypeOfEmployee typeOfEmployee, String departmentID, String salaryRateID, Date startDay, Date endDay, String fatherName, String motherName, String fatherJob, String motherJob, String parentPhone, AccessRole accessRole) {
-        this.ID = ID;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phone = phone;
-        this.address = address;
-        this.birthDay = birthDay;
-        this.gender = gender;
-        this.typeOfEmployee = typeOfEmployee;
-        this.departmentID = departmentID;
-        this.salaryRateID = salaryRateID;
-        this.startDay = startDay;
-        this.endDay = endDay;
-        this.fatherName = fatherName;
-        this.motherName = motherName;
-        this.fatherJob = fatherJob;
-        this.motherJob = motherJob;
-        this.parentPhone = parentPhone;
-        this.accessRole = accessRole;
+    public Employee(String EmployeeID, String FirstName, String LastName, String PositionName, String PayRate, Gender Gender, Date BirthDay, String PersonalID, String Email, String PhoneNumber, String Address, String BirthPlace, String FatherName, String MotherName, String FatherJob, String MotherJob, String ParentPhone, Date StartDate, Date EndDate) {
+        this.EmployeeID = EmployeeID;
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.PositionName = PositionName;
+        this.PayRate = PayRate;
+        this.Gender = Gender;
+        this.BirthDay = BirthDay;
+        this.PersonalID = PersonalID;
+        this.Email = Email;
+        this.PhoneNumber = PhoneNumber;
+        this.Address = Address;
+        this.BirthPlace = BirthPlace;
+        this.FatherName = FatherName;
+        this.MotherName = MotherName;
+        this.FatherJob = FatherJob;
+        this.MotherJob = MotherJob;
+        this.ParentPhone = ParentPhone;
+        this.StartDate = StartDate;
+        this.EndDate = EndDate;
     }
 
-    public String getID() {
-        return ID;
+    public String getEmployeeID() {
+        return EmployeeID;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setEmployeeID(String EmployeeID) {
+        this.EmployeeID = EmployeeID;
     }
 
     public String getFirstName() {
-        return firstName;
+        return FirstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstName(String FirstName) {
+        this.FirstName = FirstName;
     }
 
     public String getLastName() {
-        return lastName;
+        return LastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastName(String LastName) {
+        this.LastName = LastName;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPositionName() {
+        return PositionName;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPositionName(String PositionName) {
+        this.PositionName = PositionName;
     }
 
-    public String getAddress() {
-        return address;
+    public String getPayRate() {
+        return PayRate;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Date getBirthDay() {
-        return birthDay;
-    }
-
-    public void setBirthDay(Date birthDay) {
-        this.birthDay = birthDay;
+    public void setPayRate(String PayRate) {
+        this.PayRate = PayRate;
     }
 
     public Gender getGender() {
-        return gender;
+        return Gender;
     }
 
-    public void setGender(Gender gender) {
-        this.gender = gender;
+    public void setGender(Gender Gender) {
+        this.Gender = Gender;
     }
 
-    public TypeOfEmployee getTypeOfEmployee() {
-        return typeOfEmployee;
+    public Date getBirthDay() {
+        return BirthDay;
     }
 
-    public void setTypeOfEmployee(TypeOfEmployee typeOfEmployee) {
-        this.typeOfEmployee = typeOfEmployee;
+    public void setBirthDay(Date BirthDay) {
+        this.BirthDay = BirthDay;
     }
 
-    public String getDepartmentID() {
-        return departmentID;
+    public String getPersonalID() {
+        return PersonalID;
     }
 
-    public void setDepartmentID(String departmentID) {
-        this.departmentID = departmentID;
+    public void setPersonalID(String PersonalID) {
+        this.PersonalID = PersonalID;
     }
 
-    public String getSalaryRateID() {
-        return salaryRateID;
+    public String getEmail() {
+        return Email;
     }
 
-    public void setSalaryRateID(String salaryRateID) {
-        this.salaryRateID = salaryRateID;
+    public void setEmail(String Email) {
+        this.Email = Email;
     }
 
-    public Date getStartDay() {
-        return startDay;
+    public String getPhoneNumber() {
+        return PhoneNumber;
     }
 
-    public void setStartDay(Date startDay) {
-        this.startDay = startDay;
+    public void setPhoneNumber(String PhoneNumber) {
+        this.PhoneNumber = PhoneNumber;
     }
 
-    public Date getEndDay() {
-        return endDay;
+    public String getAddress() {
+        return Address;
     }
 
-    public void setEndDay(Date endDay) {
-        this.endDay = endDay;
+    public void setAddress(String Address) {
+        this.Address = Address;
+    }
+
+    public String getBirthPlace() {
+        return BirthPlace;
+    }
+
+    public void setBirthPlace(String BirthPlace) {
+        this.BirthPlace = BirthPlace;
     }
 
     public String getFatherName() {
-        return fatherName;
+        return FatherName;
     }
 
-    public void setFatherName(String fatherName) {
-        this.fatherName = fatherName;
+    public void setFatherName(String FatherName) {
+        this.FatherName = FatherName;
     }
 
     public String getMotherName() {
-        return motherName;
+        return MotherName;
     }
 
-    public void setMotherName(String motherName) {
-        this.motherName = motherName;
+    public void setMotherName(String MotherName) {
+        this.MotherName = MotherName;
     }
 
     public String getFatherJob() {
-        return fatherJob;
+        return FatherJob;
     }
 
-    public void setFatherJob(String fatherJob) {
-        this.fatherJob = fatherJob;
+    public void setFatherJob(String FatherJob) {
+        this.FatherJob = FatherJob;
     }
 
     public String getMotherJob() {
-        return motherJob;
+        return MotherJob;
     }
 
-    public void setMotherJob(String motherJob) {
-        this.motherJob = motherJob;
+    public void setMotherJob(String MotherJob) {
+        this.MotherJob = MotherJob;
     }
 
     public String getParentPhone() {
-        return parentPhone;
+        return ParentPhone;
     }
 
-    public void setParentPhone(String parentPhone) {
-        this.parentPhone = parentPhone;
+    public void setParentPhone(String ParentPhone) {
+        this.ParentPhone = ParentPhone;
     }
 
-    public AccessRole getAccessRole() {
-        return accessRole;
+    public Date getStartDate() {
+        return StartDate;
     }
 
-    public void setAccessRole(AccessRole accessRole) {
-        this.accessRole = accessRole;
+    public void setStartDate(Date StartDate) {
+        this.StartDate = StartDate;
     }
-    
+
+    public Date getEndDate() {
+        return EndDate;
+    }
+
+    public void setEndDate(Date EndDate) {
+        this.EndDate = EndDate;
+    }
+
+    @Override
+    public String toString() {
+        return this.FirstName+" "+ this.LastName;
+    }
 }

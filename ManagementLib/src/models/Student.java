@@ -12,238 +12,214 @@ import java.util.Date;
  *
  * @author Duy
  */
-public class Student implements Serializable{
-    private String ID;
-    private String classID;
-    private String firstName;
-    private String lastName;
-    private Gender gender;
-    private Date birthDay;
-    private String personalID;
-    private String phone;
-    private String address;
-    private String placeOfBirth;
-    private String email;
-    private String schoolarship;
-    private String courseID;
-    private Date startDay;
-    private Date endDay;
-    private AccessRole accessRole = AccessRole.Student;
-    private String fatherName;
-    private String motherName;
-    private String fatherJob;
-    private String motherJob;
-    private String parentPhone;
-    
+public class Student implements Serializable {
+
+    private String StudentID;
+    private String FirstName;
+    private String LastName;
+    private String Course;
+    private String Batch;
+    private Gender Gender;
+    private Date BirthDay;
+    private String Address;
+    private String BirthPlace;
+    private String PersonalID;
+    private String PhoneNumber;
+    private String Email;
+    private String FatherName;
+    private String FatherJob;
+    private String MotherName;
+    private String MotherJob;
+    private String ParentPhone;
+    private String Schoolarship;
+    private Date StartDate;
+    private Date EndDate;
+
     public Student() {
     }
 
-    public Student(String ID, String classID, String firstName, String lastName, Gender gender, Date birthDay, String phone, String email) {
-        this.ID = ID;
-        this.classID = classID;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.birthDay = birthDay;
-        this.phone = phone;
-        this.email = email;
-    }
-
-    public Student(String ID, String classID, String firstName, String lastName, Gender gender, Date birthDay, String personalID, String phone, String address, String placeOfBirth, String email, String schoolarship, String courseID, Date startDay, Date endDay, String fatherName, String motherName, String fatherJob, String motherJob, String parentPhone) {
-        this.ID = ID;
-        this.classID = classID;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.birthDay = birthDay;
-        this.personalID = personalID;
-        this.phone = phone;
-        this.address = address;
-        this.placeOfBirth = placeOfBirth;
-        this.email = email;
-        this.schoolarship = schoolarship;
-        this.courseID = courseID;
-        this.startDay = startDay;
-        this.endDay = endDay;
-        this.fatherName = fatherName;
-        this.motherName = motherName;
-        this.fatherJob = fatherJob;
-        this.motherJob = motherJob;
-        this.parentPhone = parentPhone;
+    public Student(String StudentID, String FirstName, String LastName, String Course, String Batch, Gender Gender, Date BirthDay, String Address, String BirthPlace, String PersonalID, String PhoneNumber, String Email, String FatherName, String FatherJob, String MotherName, String MotherJob, String ParentPhone, String Schoolarship, Date StartDate, Date EndDate) {
+        this.StudentID = StudentID;
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.Course = Course;
+        this.Batch = Batch;
+        this.Gender = Gender;
+        this.BirthDay = BirthDay;
+        this.Address = Address;
+        this.BirthPlace = BirthPlace;
+        this.PersonalID = PersonalID;
+        this.PhoneNumber = PhoneNumber;
+        this.Email = Email;
+        this.FatherName = FatherName;
+        this.FatherJob = FatherJob;
+        this.MotherName = MotherName;
+        this.MotherJob = MotherJob;
+        this.ParentPhone = ParentPhone;
+        this.Schoolarship = Schoolarship;
+        this.StartDate = StartDate;
+        this.EndDate = EndDate;
     }
     
-    
-    
-
-    public String getID() {
-        return ID;
+    public String getStudentID() {
+        return StudentID;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
-    }
-
-    public String getClassID() {
-        return classID;
-    }
-
-    public void setClassID(String classID) {
-        this.classID = classID;
+    public void setStudentID(String StudentID) {
+        this.StudentID = StudentID;
     }
 
     public String getFirstName() {
-        return firstName;
+        return FirstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstName(String FirstName) {
+        this.FirstName = FirstName;
     }
 
     public String getLastName() {
-        return lastName;
+        return LastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastName(String LastName) {
+        this.LastName = LastName;
+    }
+
+    public String getCourse() {
+        return Course;
+    }
+
+    public void setCourse(String Course) {
+        this.Course = Course;
+    }
+
+    public String getBatch() {
+        return Batch;
+    }
+
+    public void setBatch(String Batch) {
+        this.Batch = Batch;
     }
 
     public Gender getGender() {
-        return gender;
+        return Gender;
     }
 
-    public void setGender(Gender gender) {
-        this.gender = gender;
+    public void setGender(Gender Gender) {
+        this.Gender = Gender;
     }
 
     public Date getBirthDay() {
-        return birthDay;
+        return BirthDay;
     }
 
-    public void setBirthDay(Date birthDay) {
-        this.birthDay = birthDay;
-    }
-
-    public String getPersonalID() {
-        return personalID;
-    }
-
-    public void setPersonalID(String personalID) {
-        this.personalID = personalID;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setBirthDay(Date BirthDay) {
+        this.BirthDay = BirthDay;
     }
 
     public String getAddress() {
-        return address;
+        return Address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAddress(String Address) {
+        this.Address = Address;
+    }
+
+    public String getBirthPlace() {
+        return BirthPlace;
+    }
+
+    public void setBirthPlace(String BirthPlace) {
+        this.BirthPlace = BirthPlace;
+    }
+
+    public String getPersonalID() {
+        return PersonalID;
+    }
+
+    public void setPersonalID(String PersonalID) {
+        this.PersonalID = PersonalID;
+    }
+
+    public String getPhoneNumber() {
+        return PhoneNumber;
+    }
+
+    public void setPhoneNumber(String PhoneNumber) {
+        this.PhoneNumber = PhoneNumber;
     }
 
     public String getEmail() {
-        return email;
+        return Email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSchoolarship() {
-        return schoolarship;
-    }
-
-    public void setSchoolarship(String schoolarship) {
-        this.schoolarship = schoolarship;
-    }
-
-    public String getCourseID() {
-        return courseID;
-    }
-
-    public void setCourseID(String courseID) {
-        this.courseID = courseID;
-    }
-
-    public Date getStartDay() {
-        return startDay;
-    }
-
-    public void setStartDay(Date startDay) {
-        this.startDay = startDay;
-    }
-
-    public Date getEndDay() {
-        return endDay;
-    }
-
-    public void setEndDay(Date endDay) {
-        this.endDay = endDay;
-    }
-
-    public AccessRole getAccessRole() {
-        return accessRole;
-    }
-
-    public void setAccessRole(AccessRole accessRole) {
-        this.accessRole = accessRole;
-    }
-        public String getPlaceOfBirth() {
-        return placeOfBirth;
-    }
-
-    public void setPlaceOfBirth(String placeOfBirth) {
-        this.placeOfBirth = placeOfBirth;
+    public void setEmail(String Email) {
+        this.Email = Email;
     }
 
     public String getFatherName() {
-        return fatherName;
+        return FatherName;
     }
 
-    public void setFatherName(String fatherName) {
-        this.fatherName = fatherName;
-    }
-
-    public String getMotherName() {
-        return motherName;
-    }
-
-    public void setMotherName(String motherName) {
-        this.motherName = motherName;
+    public void setFatherName(String FatherName) {
+        this.FatherName = FatherName;
     }
 
     public String getFatherJob() {
-        return fatherJob;
+        return FatherJob;
     }
 
-    public void setFatherJob(String fatherJob) {
-        this.fatherJob = fatherJob;
+    public void setFatherJob(String FatherJob) {
+        this.FatherJob = FatherJob;
+    }
+
+    public String getMotherName() {
+        return MotherName;
+    }
+
+    public void setMotherName(String MotherName) {
+        this.MotherName = MotherName;
     }
 
     public String getMotherJob() {
-        return motherJob;
+        return MotherJob;
     }
 
-    public void setMotherJob(String motherJob) {
-        this.motherJob = motherJob;
+    public void setMotherJob(String MotherJob) {
+        this.MotherJob = MotherJob;
     }
 
     public String getParentPhone() {
-        return parentPhone;
+        return ParentPhone;
     }
 
-    public void setParentPhone(String parentPhone) {
-        this.parentPhone = parentPhone;
+    public void setParentPhone(String ParentPhone) {
+        this.ParentPhone = ParentPhone;
     }
 
-    @Override
-    public String toString() {
-        return firstName + lastName;
+    public String getSchoolarship() {
+        return Schoolarship;
     }
+
+    public void setSchoolarship(String Schoolarship) {
+        this.Schoolarship = Schoolarship;
+    }
+
+    public Date getStartDate() {
+        return StartDate;
+    }
+
+    public void setStartDate(Date StartDate) {
+        this.StartDate = StartDate;
+    }
+
+    public Date getEndDate() {
+        return EndDate;
+    }
+
+    public void setEndDate(Date EndDate) {
+        this.EndDate = EndDate;
+    }
+    
+    
 }

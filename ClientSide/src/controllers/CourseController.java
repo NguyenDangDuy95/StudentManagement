@@ -8,13 +8,10 @@ package controllers;
 import helpers.ServerConnection;
 import java.io.IOException;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import models.Course;
 import models.Message;
 import models.Request;
-
 
 /**
  *
@@ -67,12 +64,14 @@ public class CourseController {
 
     public void load() {
         //request to server to get student list       
+        
         try {
-            ServerConnection.oos.writeObject(new Message(Request.GetCourseList));
+            Message mgs = new Message(Request.GetCourseList);
+            ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
             _courseList = (Vector<Course>) ServerConnection.ois.readObject();
         } catch (IOException | ClassNotFoundException ex) {
-            
+
         }
     }
 
@@ -98,8 +97,7 @@ public class CourseController {
         Message mgs = new Message();
         mgs.setTitle(Request.AddMessage);
         mgs.setBody(Request.CourseObject);
-        mgs.setID(cor.getID());
-        mgs.setCor(cor);
+        mgs.setCourse(cor);
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
@@ -114,7 +112,7 @@ public class CourseController {
         Message mgs = new Message();
         mgs.setTitle(Request.UpdateMessage);
         mgs.setBody(Request.CourseObject);
-        mgs.setCor(cor);
+        mgs.setCourse(cor);
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
@@ -133,10 +131,12 @@ public class CourseController {
 
     public void delete(Course course) {
         //request server to delete from database
-        Message mgs = new Message(Request.DeleteMessage, Request.CourseObject, course.getID());
+        Message mgs = new Message(Request.DeleteMessage, Request.CourseObject);
+        mgs.setCourse(course);
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
+            
         } catch (IOException ex) {
 
         }

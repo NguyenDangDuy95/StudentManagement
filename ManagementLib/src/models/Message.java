@@ -11,103 +11,30 @@ import java.io.Serializable;
  *
  * @author Duy
  */
-public class Message implements Serializable{
+public class Message implements Serializable {
 
-    private String Title="";
+    private String Title = "";
     private String Body = "";
-    private Student std;
-    private Employee emp;
-    private Course cor;
     
-    private Subject sub;
-    private Batch bat;
-    private Verification info;
-    private String ID;
+    private Student student;
+    private Employee employee;
+    private Subject subject;
+    private Batch batch;
+    private Course course;
+    
 
-    
-    
     public Message() {
     }
-    public Message(String text) {
-        Title = text;
-    }
-    public Message(String Title, String Body) {
-        this.Title = Title;
-        this.Body = Body;
+
+    public Message(String title) {
+        this.Title = title;
     }
 
-    public Message(String Title, Student std) {
-        this.Title = Title;
-        this.std = std;
-    }
-    
-    public Message(String Title, Employee emp)
-    {
-        this.Title = Title;
-        this.emp = emp;
-    }
-    public Message(String Title, Subject sub)
-    {
-        this.Title=Title;
-        this.sub = sub;
-    }
-    public Message(String Title, Verification info)
-    {
-        this.Title = Title;
-        this.info = info;
-    }
-    public Message(String Title, String Body, String ID)
-    {
-        this.Title = Title;
-        this.Body = Body;
-        this.ID = ID;
-    }
-    public String getID() {
-        return ID;
+    public Message(String title, String body) {
+        this.Title = title;
+        this.Body = body;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
-    }
-    public Employee getEmp() {
-        return emp;
-    }
-
-    public void setEmp(Employee emp) {
-        this.emp = emp;
-    }
-
-    public Course getCor() {
-        return cor;
-    }
-
-    public void setCor(Course cor) {
-        this.cor = cor;
-    }
-
-    public Subject getSub() {
-        return sub;
-    }
-
-    public void setSub(Subject sub) {
-        this.sub = sub;
-    }
-
-    public Batch getBat() {
-        return bat;
-    }
-
-    public void setBat(Batch bat) {
-        this.bat = bat;
-    }
-
-    public Verification getInfo() {
-        return info;
-    }
-
-    public void setInfo(Verification info) {
-        this.info = info;
-    }
     public String getTitle() {
         return Title;
     }
@@ -123,13 +50,43 @@ public class Message implements Serializable{
     public void setBody(String Body) {
         this.Body = Body;
     }
-
-    public Student getStd() {
-        return std;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStd(Student std) {
-        this.std = std;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    public Batch getBatch() {
+        return batch;
+    }
+
+    public void setBatch(Batch batch) {
+        this.batch = batch;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
 }

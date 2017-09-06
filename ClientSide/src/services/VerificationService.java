@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Message;
-import models.Verification;
+import models.Request;
 
 /**
  *
@@ -21,10 +21,9 @@ public class VerificationService {
     public static Message verify(String username, String password)
     {
         Message result= new Message();
-        Verification info = new Verification(username, password);
-        Message message = new Message("verify", info);
+        Message mgs = new Message(Request.Verification, username+" "+password);
         try {
-            ServerConnection.oos.writeObject(message);
+            ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
             result = (Message)ServerConnection.ois.readObject();
         } catch (IOException | ClassNotFoundException ex) {

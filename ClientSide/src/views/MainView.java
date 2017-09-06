@@ -5,6 +5,10 @@
  */
 package views;
 
+import controllers.BatchController;
+import controllers.CourseController;
+import controllers.EmployeeController;
+import controllers.StudentController;
 import helpers.MyConstants;
 import helpers.MyStyle;
 import java.awt.Color;
@@ -13,8 +17,10 @@ import java.awt.HeadlessException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import models.Employee;
 import test.ClientSideMain;
 import userControls.CloseButton;
+import userControls.CustomTreeView;
 import views.base.BaseView;
 
 /**
@@ -22,14 +28,18 @@ import views.base.BaseView;
  * @author Duy
  */
 public class MainView extends JFrame implements BaseView {
-
+    public static Object CurrentUser;
     private JPanel container, leftPanel, mainPanel, infoPanel, bottomPanel, toolbarPanel,userPanel;
     private CloseButton closeButton;
     private JLabel usernameLabel;
-    
+    private CustomTreeView customTreeView;
 
     public MainView() throws HeadlessException {
         ClientSideMain.CurrentState = "MainView";
+        CourseController.getInstance().load();
+        BatchController.getInstance().load();
+        EmployeeController.getInstance().load();
+        StudentController.getInstance().load();
         initView();
         initCommand();
         draw();
@@ -48,6 +58,8 @@ public class MainView extends JFrame implements BaseView {
         usernameLabel = new JLabel();
         
         closeButton = new CloseButton();
+        
+        customTreeView = new CustomTreeView();
     }
 
     @Override
@@ -95,6 +107,9 @@ public class MainView extends JFrame implements BaseView {
                 MyConstants.LeftPanelWidth,
                 MyConstants.LeftPanelHeight
         );
+        
+        customTreeView.setBounds(0, 0, MyConstants.LabelWidth, MyConstants.LabelHeight);
+        leftPanel.add(customTreeView);
         //
         
         /*Main Panel
@@ -137,7 +152,5 @@ public class MainView extends JFrame implements BaseView {
 
     @Override
     public void initCommand() {
-
     }
-
 }

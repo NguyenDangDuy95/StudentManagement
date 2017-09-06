@@ -5,10 +5,18 @@
  */
 package helpers;
 
+import models.Gender;
+
 /**
  *
  * @author Duy
  */
 public class MyConstants {
-    
+
+    public static Gender getGender(String gender) {
+        if (gender.equalsIgnoreCase("man")) {
+            return Gender.Male;
+        }
+        return Gender.Female;
+    }
 }

@@ -22,7 +22,7 @@ public class CourseDataService {
 
     public static Vector<Course> getCourseList() throws SQLException {
         Vector<Course> courseList = new Vector<>();
-        ResultSet rsCourse = DatabaseConnection.getExecutedResultSet(SQLHelper.GetCourseList);
+        ResultSet rsCourse = DatabaseConnection.getExecutedResultSet(SQLHelper.getCourseList());
 
         while (rsCourse.next()) {
             Course course = new Course();
@@ -30,9 +30,11 @@ public class CourseDataService {
             course.setName(rsCourse.getString(2));
             ResultSet rsSubject = DatabaseConnection.getExecutedResultSet(SQLHelper.getSubjectListByCourseID(course.getID()));
             ResultSet rsBatch = DatabaseConnection.getExecutedResultSet(SQLHelper.getBatchListByCourseID(course.getID()));
+            
             Vector<Batch> batchList = new Vector<Batch>();
             while (rsBatch.next()) {
                 Batch batch = new Batch(rsBatch.getString(1), rsBatch.getString(2), rsBatch.getString(3));
+                batch.setStdList(StudentDataService.GetStudentListByBatchID(batch.getId()));
                 batchList.addElement(batch);
             }
             course.setBatchList(batchList);
@@ -41,8 +43,8 @@ public class CourseDataService {
                 Subject sub = new Subject(
                         rsSubject.getString("SubjectID"),
                         rsSubject.getString("SubjectName"),
-                        rsSubject.getString("Hours"),
-                        rsSubject.getString("Information"),
+                        rsSubject.getString("NumberOfLessons"),
+                        rsSubject.getString("CourseInformation"),
                         rsSubject.getString("semester"),
                         rsSubject.getString("CourseID")
                 );

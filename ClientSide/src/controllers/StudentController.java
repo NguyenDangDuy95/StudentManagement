@@ -75,7 +75,7 @@ public class StudentController {
     }
     
     public Vector<Student> get(){
-        if(_stdList.size() == 0){
+        if(_stdList.isEmpty()){
             load();
         }
         return _stdList;
@@ -84,20 +84,14 @@ public class StudentController {
     public Student getStudentByID(String id){
         for(Student std : _stdList)
         {
-            if(std.getID().equals(id)) return std;
+            if(std.getStudentID().equals(id)) return std;
         }
         return null;
     }
     public void add(Student std){
         //request server to save to database
-
-        Message mgs = new Message();
-        mgs.setTitle(Request.AddMessage);
-        mgs.setBody(Request.StudentObject);
-        mgs.setID(std.getID());
-        mgs.setStd(std);
         try {
-            ServerConnection.oos.writeObject(mgs);
+            ServerConnection.oos.writeObject(std);
             ServerConnection.oos.flush();
         } catch (IOException ex) {
             
@@ -108,12 +102,8 @@ public class StudentController {
     
     public void update(Student std){
         //request server to update to database
-        Message mgs = new Message();
-        mgs.setTitle(Request.UpdateMessage);
-        mgs.setBody(Request.BatchObject);
-        mgs.setStd(std);
         try {
-            ServerConnection.oos.writeObject(mgs);
+            ServerConnection.oos.writeObject(std);
             ServerConnection.oos.flush();
         } catch (IOException ex) {
           
@@ -122,13 +112,13 @@ public class StudentController {
         //update to list AUTO
         for(Student student : _stdList)
         {
-            if(student.getID().equals(std.getID())){ student = std; break;}
+            if(student.getStudentID().equals(std.getStudentID())){ student = std; break;}
         }
     }
     
     public void delete(Student std){
         //request server to delete from database
-        Message mgs = new Message(Request.DeleteMessage,Request.StudentObject,std.getID());
+        Message mgs = new Message(Request.DeleteMessage+Request.StudentObject, std.getStudentID());
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();

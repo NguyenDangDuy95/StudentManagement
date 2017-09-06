@@ -18,7 +18,6 @@ public class Request implements Serializable{
     public static String GetStudentList = "studentlist";
     public static String GetStudentByID = "student";
     public static String GetStudentListByBatchID = "studentlistbybatchid";
-    
     public static String GetCourseList = "courselist";
     
     public static String GetEmployeeList = "employeelist";

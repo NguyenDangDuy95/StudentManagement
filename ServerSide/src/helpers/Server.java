@@ -13,7 +13,7 @@ public class Server {
     public void serve() throws IOException {
         System.out.println("Server is waiting to accept user...");
         try {
-            listener = new ServerSocket(5555);
+            listener = new ServerSocket(3002);
             while (true) {
                 Socket socketOfServer = listener.accept();
                 new ServiceThread(socketOfServer, clientNumber++).start();

@@ -103,10 +103,10 @@ public class LoginView extends JDialog implements BaseView {
     @Override
     public void initCommand() {
         btnLogin.addActionListener((ActionEvent e) -> {
-            if (checkValidation()) {
+            //if (checkValidation()) {
                 setVisible(false);
                 new MainView().setVisible(true);
-            }
+            //}
         });
     }
 

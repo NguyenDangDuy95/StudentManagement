@@ -6,8 +6,10 @@
 package services;
 
 import helpers.DatabaseConnection;
+import helpers.MyConstants;
 import helpers.SQLHelper;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Vector;
 import models.Employee;
 
@@ -16,10 +18,36 @@ import models.Employee;
  * @author Duy
  */
 public class EmployeeDataService {
+
     private static ResultSet rs = null;
-    public static Vector<Employee> getEmployeeList(){
+
+    public static Vector<Employee> getEmployeeList() throws SQLException {
         Vector<Employee> empList = new Vector<>();
-        rs = DatabaseConnection.getExecutedResultSet(SQLHelper.GetEmployeeList);
-        return null;
+        rs = DatabaseConnection.getExecutedResultSet(SQLHelper.getFullInfoEmployeeList());
+        while (rs.next()) {
+            Employee emp = new Employee(
+                    rs.getString("EmployeeID"),
+                    rs.getString("FirstName"),
+                    rs.getString("LastName"),
+                    rs.getString("PositionName"),
+                    rs.getString("PayRate"),
+                    MyConstants.getGender(rs.getString("Gender")),
+                    rs.getDate("BirthDay"),
+                    rs.getString("PersonalID"),
+                    rs.getString("Email"),
+                    rs.getString("PhoneNumber"),
+                    rs.getString("Address"),
+                    rs.getString("BirthPlace"),
+                    rs.getString("FatherName"),
+                    rs.getString("MotherName"),
+                    rs.getString("FatherJob"),
+                    rs.getString("MotherJob"),
+                    rs.getString("ParentPhone"),
+                    rs.getDate("StartDate"),
+                    rs.getDate("EndDate")
+            );
+            empList.addElement(emp);
+        }
+        return empList;
     }
 }
