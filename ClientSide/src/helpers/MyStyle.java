@@ -16,11 +16,11 @@ import java.awt.Toolkit;
  */
 public class MyStyle {
 
-    public static Font SplashLabelFont = new Font("Sans Serif", Font.PLAIN, 30);
+    public static Font SplashLabelFont = new Font("Sans Serif", Font.PLAIN, MyConstants.ScreenHeight / 60);
     public static Font MediumTextFont = new Font("Sans Serif", Font.BOLD, MyConstants.ScreenHeight / 50);
     public static Font SmallLabelFont = new Font("Sans Serif", Font.PLAIN, MyConstants.ScreenHeight / 90);
     public static Font MediumLabelFont = new Font("Sans Serif", Font.PLAIN, MyConstants.ScreenHeight / 60);
-    public static Font BigLabelFont = new Font("Sans Serif", Font.PLAIN, 40);
+    public static Font BigLabelFont = new Font("Sans Serif", Font.PLAIN, MyConstants.ScreenHeight / 45);
 
     public static Color DisableColor = Color.decode("#BDBDBD");
     public static Color Transparent = new Color(0, 0, 0, 0);

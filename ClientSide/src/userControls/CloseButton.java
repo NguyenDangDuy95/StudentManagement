@@ -25,12 +25,14 @@ import views.LoginView;
  */
 public class CloseButton extends JButton{
     private Image closeIcon = null;
+    
     public CloseButton() {
         setContentAreaFilled(false);
         setFocusPainted(false);
         setBorderPainted(false);
         try {
             closeIcon = ImageIO.read(getClass().getResource(MyConstants.CloseImage));
+            closeIcon = closeIcon.getScaledInstance( 32*(MyConstants.LabelHeight)/50, 32*(MyConstants.LabelHeight)/50,  java.awt.Image.SCALE_SMOOTH ) ;
         } catch (IOException ex) {
             Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -70,7 +72,7 @@ public class CloseButton extends JButton{
     
     public void setWidthOfView(int width)
     {
-        setBounds(width - 100, 0, 100, 50);
+        setBounds(width - 2*MyConstants.LabelHeight, 0, 2*MyConstants.LabelHeight, MyConstants.LabelHeight);
     }
     
     
