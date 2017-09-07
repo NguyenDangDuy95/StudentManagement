@@ -93,8 +93,7 @@ public class BatchController {
         Message mgs = new Message();
         mgs.setTitle(Request.AddMessage);
         mgs.setBody(Request.BatchObject);
-        mgs.setID(batch.getId());
-        mgs.setBat(batch);
+        mgs.setBatch(batch);
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
@@ -110,7 +109,7 @@ public class BatchController {
         Message mgs = new Message();
         mgs.setTitle(Request.UpdateMessage);
         mgs.setBody(Request.BatchObject);
-        mgs.setBat(batch);
+        mgs.setBatch(batch);
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
@@ -127,7 +126,8 @@ public class BatchController {
     
     public void delete(Batch batch){
         //request server to delete from database
-        Message mgs = new Message(Request.DeleteMessage,Request.BatchObject,batch.getId());
+        Message mgs = new Message(Request.DeleteMessage,Request.BatchObject);
+        mgs.setBatch(batch);
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();

@@ -5,7 +5,9 @@
  */
 package userControls;
 
+import helpers.MyConstants;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +20,7 @@ import javax.swing.JPanel;
  * @author Duy
  */
 public class BackgroundImagePanel extends JPanel{
-    private BufferedImage backgroundImage;
+    private Image backgroundImage;
 
     public BackgroundImagePanel(URI fileName) throws IOException{
         backgroundImage = ImageIO.read(new File(fileName));
@@ -27,7 +29,7 @@ public class BackgroundImagePanel extends JPanel{
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        g.drawImage( backgroundImage, 0, 0, this);
+        g.drawImage( backgroundImage, 0, 0,MyConstants.SplashScreenWidth,MyConstants.SplashScreenHeight, this);
         
     }
 }

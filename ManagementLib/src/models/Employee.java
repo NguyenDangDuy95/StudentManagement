@@ -18,7 +18,7 @@ public class Employee implements Serializable {
     private String FirstName;
     private String LastName;
     private String PositionName;
-    private String PayRate;
+    private int SalaryValue;
     private Gender Gender;
     private Date BirthDay;
     private String PersonalID;
@@ -37,12 +37,12 @@ public class Employee implements Serializable {
     public Employee() {
     }
 
-    public Employee(String EmployeeID, String FirstName, String LastName, String PositionName, String PayRate, Gender Gender, Date BirthDay, String PersonalID, String Email, String PhoneNumber, String Address, String BirthPlace, String FatherName, String MotherName, String FatherJob, String MotherJob, String ParentPhone, Date StartDate, Date EndDate) {
+    public Employee(String EmployeeID, String FirstName, String LastName, String PositionName, int SalaryValue, Gender Gender, Date BirthDay, String PersonalID, String Email, String PhoneNumber, String Address, String BirthPlace, String FatherName, String MotherName, String FatherJob, String MotherJob, String ParentPhone, Date StartDate, Date EndDate) {
         this.EmployeeID = EmployeeID;
         this.FirstName = FirstName;
         this.LastName = LastName;
         this.PositionName = PositionName;
-        this.PayRate = PayRate;
+        this.SalaryValue = SalaryValue;
         this.Gender = Gender;
         this.BirthDay = BirthDay;
         this.PersonalID = PersonalID;
@@ -91,12 +91,12 @@ public class Employee implements Serializable {
         this.PositionName = PositionName;
     }
 
-    public String getPayRate() {
-        return PayRate;
+    public int getSalaryValue() {
+        return SalaryValue;
     }
 
-    public void setPayRate(String PayRate) {
-        this.PayRate = PayRate;
+    public void setSalaryValue(int SalaryValue) {
+        this.SalaryValue = SalaryValue;
     }
 
     public Gender getGender() {

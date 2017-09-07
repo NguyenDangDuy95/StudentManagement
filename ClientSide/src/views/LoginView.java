@@ -9,6 +9,8 @@ import helpers.MyConstants;
 import helpers.MyStyle;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
@@ -20,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import models.AccessRole;
 import models.Message;
+import models.Request;
 import services.VerificationService;
 import test.ClientSideMain;
 import userControls.*;
@@ -102,11 +105,18 @@ public class LoginView extends JDialog implements BaseView {
 
     @Override
     public void initCommand() {
-        btnLogin.addActionListener((ActionEvent e) -> {
-            //if (checkValidation()) {
-                setVisible(false);
-                new MainView().setVisible(true);
-            //}
+        btnLogin.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (checkValidation()) {
+                    
+                    System.out.println(ClientSideMain.CurrentUser.toString());
+                    System.out.println(ClientSideMain.CurrentUserRole);
+                    setVisible(false);
+                    new MainView().setVisible(true);
+                }
+            }
+
         });
     }
 
@@ -173,7 +183,10 @@ public class LoginView extends JDialog implements BaseView {
     }
 
     private boolean checkValidation() {
+        username = "";
         username = tfUsername.getText();
+        password = "";
+        char[] ahihi = tfPassword.getPassword();
         for (int i = 0; i < tfPassword.getPassword().length; i++) {
             password += tfPassword.getPassword()[i];
         }
@@ -186,16 +199,38 @@ public class LoginView extends JDialog implements BaseView {
         } else {
             //send request to server
             //return a string true or false from server, check and return for validate
-            Message mgs = VerificationService.verify(username, password);
-            System.out.println(mgs.getTitle());
-            if (mgs.getTitle().equals("Success")) {
-                if(mgs.getBody().equalsIgnoreCase("admin")||mgs.getBody().equalsIgnoreCase("employee")){
-                    new LoadingThread(AccessRole.Employee).start();
-                }else new LoadingThread(AccessRole.Student).start();
-                return true;
-            }
-            return false;
-        }
+            Message mgs = new Message();
+            mgs = VerificationService.verify(username, password);
+            if (mgs != null) {
 
+                String result = mgs.getTitle();
+                if (result.equals(Request.FailedMessage)) {
+                    if (mgs.getBody().equals(Request.Username)) {
+                        Control.createCustomDialog(MyConstants.OptionDialogType.Message, MyConstants.WarningMessage, MyConstants.WrongUsername);
+                        return false;
+                    } else {
+                        Control.createCustomDialog(MyConstants.OptionDialogType.Message, MyConstants.WarningMessage, MyConstants.WrongPassword);
+                        return false;
+                    }
+                } else {
+                    if (mgs.getBody().equals(Request.StudentObject)) {
+                        ClientSideMain.CurrentUser = mgs.getStudent();
+                        ClientSideMain.CurrentUserRole = Request.StudentObject;
+                    }
+                    if (mgs.getBody().equals(Request.EmployeeObject)) {
+                        ClientSideMain.CurrentUser = mgs.getEmployee();
+                        ClientSideMain.CurrentUserRole = Request.EmployeeObject;
+                    }
+                    if (mgs.getBody().equals(Request.AdminObject)) {
+                        ClientSideMain.CurrentUser = mgs.getEmployee();
+                        ClientSideMain.CurrentUserRole = Request.AdminObject;
+                    }
+                    return true;
+                }
+            } else {
+                Control.createCustomDialog(MyConstants.OptionDialogType.Message, MyConstants.WarningMessage, MyConstants.VerificationError);
+                return false;
+            }
+        }
     }
 }

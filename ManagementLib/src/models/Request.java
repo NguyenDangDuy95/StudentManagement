@@ -14,6 +14,10 @@ import java.io.Serializable;
 public class Request implements Serializable{
     //lohin
     public static String Verification = "verify";
+    public static String FailedMessage = "f";
+    public static String SuccessMessage = "s";
+    public static String Username = "u";
+    public static String Password = "p";
     //
     public static String GetStudentList = "studentlist";
     public static String GetStudentByID = "student";
@@ -29,6 +33,7 @@ public class Request implements Serializable{
     
     public static String StudentObject = "student";
     public static String EmployeeObject = "employee";
+    public static String AdminObject = "adminstrator";
     public static String BatchObject = "batch";
     public static String CourseObject = "course";
     public static String SubjectObject = "subject";

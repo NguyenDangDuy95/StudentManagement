@@ -34,6 +34,7 @@ public class SplashScreen extends JWindow{
                 MyConstants.SplashScreenHeight
         );
         try {
+            
             splashImage = getClass().getResource(MyConstants.SplashScreenImage).toURI();
             imagePanel = new BackgroundImagePanel(splashImage);
         } catch (IOException | URISyntaxException ex) {

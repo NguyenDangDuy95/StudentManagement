@@ -5,25 +5,20 @@
  */
 package threads;
 
-import helpers.DatabaseConnection;
-import helpers.SQLHelper;
-import helpers.Server;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Message;
 import models.Request;
-import models.Student;
 import models.Verification;
 import services.CourseDataService;
 import services.EmployeeDataService;
 import services.StudentDataService;
+import services.VerificationService;
 
 /**
  *
@@ -58,28 +53,25 @@ public class ServiceThread extends Thread {
                 Message message = (Message) ois.readObject();
                 if (message != null) {
                     if (message.getTitle().equals(Request.GetStudentList)) {
-                        oos.writeObject(StudentDataService.getStudentList());
+                        oos.writeObject(StudentDataService.GetStudentList());
                         oos.flush();
                         continue;
                     }
-                    
+
                     if (message.getTitle().equals(Request.GetCourseList)) {
                         oos.writeObject(CourseDataService.getCourseList());
                         oos.flush();
                         continue;
                     }
-                    
+
                     if (message.getTitle().equals(Request.GetEmployeeList)) {
                         oos.writeObject(EmployeeDataService.getEmployeeList());
                         oos.flush();
                         continue;
                     }
-                    
+
                     if (message.getTitle().equals(Request.Verification)) {
-                        Verification info = message.getInfo();
-                        if (info != null) {
-                            response(verify(info));
-                        }
+                        verify(message.getBody());
                         continue;
                     }
 
@@ -89,19 +81,23 @@ public class ServiceThread extends Thread {
                     }
                 }
             }
-        } catch (IOException | ClassNotFoundException e) {
-        } catch (SQLException ex) {
-            Logger.getLogger(ServiceThread.class.getName()).log(Level.SEVERE, null, ex);
+            oos.close();
+            ois.close();
+            socketOfServer.close();
+        } catch (IOException | ClassNotFoundException | SQLException e) {
         }
     }
 
     private void quit() throws IOException {
-        oos.writeObject(new Message("Disconnect with cloent# ", String.valueOf(clientNumber)));
+        oos.writeObject(new Message("Disconnect with client# ", String.valueOf(clientNumber)));
         oos.flush();
     }
 
-    private Message verify(Verification account) {
-
-        return null;
+    private void verify(String body) throws SQLException, IOException{
+        String[] user = body.split(" ");
+        Verification account = new Verification(user[0], user[1]);
+        Message mgs = VerificationService.checkValidation(account);
+        oos.writeObject(mgs);
+        oos.flush();
     }
 }

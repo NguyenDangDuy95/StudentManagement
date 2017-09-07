@@ -28,29 +28,8 @@ public class CourseDataService {
             Course course = new Course();
             course.setID(rsCourse.getString(1));
             course.setName(rsCourse.getString(2));
-            ResultSet rsSubject = DatabaseConnection.getExecutedResultSet(SQLHelper.getSubjectListByCourseID(course.getID()));
-            ResultSet rsBatch = DatabaseConnection.getExecutedResultSet(SQLHelper.getBatchListByCourseID(course.getID()));
-            
-            Vector<Batch> batchList = new Vector<Batch>();
-            while (rsBatch.next()) {
-                Batch batch = new Batch(rsBatch.getString(1), rsBatch.getString(2), rsBatch.getString(3));
-                batch.setStdList(StudentDataService.GetStudentListByBatchID(batch.getId()));
-                batchList.addElement(batch);
-            }
-            course.setBatchList(batchList);
-            Vector<Subject> subList = new Vector<>();
-            while (rsSubject.next()) {
-                Subject sub = new Subject(
-                        rsSubject.getString("SubjectID"),
-                        rsSubject.getString("SubjectName"),
-                        rsSubject.getString("NumberOfLessons"),
-                        rsSubject.getString("CourseInformation"),
-                        rsSubject.getString("semester"),
-                        rsSubject.getString("CourseID")
-                );
-                subList.addElement(sub);
-            }
-            course.setSubjectList(subList);
+            course.setBatchList(BatchDataService.getBatchListByCourseID(course.getID()));
+            course.setSubjectList(SubjectDataService.getSubjectListByCourseID(course.getID()));
             courseList.addElement(course);
         }
         return courseList;

@@ -220,6 +220,11 @@ public class Student implements Serializable {
     public void setEndDate(Date EndDate) {
         this.EndDate = EndDate;
     }
+
+    @Override
+    public String toString() {
+        return this.FirstName + this.LastName;
+    }
     
     
 }

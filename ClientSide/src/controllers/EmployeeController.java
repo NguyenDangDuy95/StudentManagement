@@ -83,7 +83,7 @@ public class EmployeeController {
     public Employee getEmployeeByID(String id){
         for(Employee emp : _empList)
         {
-            if(emp.getID().equals(id)) return emp;
+            if(emp.getEmployeeID().equals(id)) return emp;
         }
         return null;
     }
@@ -93,8 +93,7 @@ public class EmployeeController {
         Message mgs = new Message();
         mgs.setTitle(Request.AddMessage);
         mgs.setBody(Request.EmployeeObject);
-        mgs.setID(emp.getID());
-        mgs.setEmp(emp);
+        mgs.setEmployee(emp);
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
@@ -110,7 +109,7 @@ public class EmployeeController {
         Message mgs = new Message();
         mgs.setTitle(Request.UpdateMessage);
         mgs.setBody(Request.EmployeeObject);
-        mgs.setEmp(emp);
+        mgs.setEmployee(emp);
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
@@ -121,13 +120,14 @@ public class EmployeeController {
         //update to list AUTO
         for(Employee employee : _empList)
         {
-            if(employee.getID().equals(emp.getID())){ employee = emp; break;}
+            if(employee.getEmployeeID().equals(emp.getEmployeeID())){ employee = emp; break;}
         }
     }
     
     public void delete(Employee emp){
         //request server to delete from database
-        Message mgs = new Message(Request.DeleteMessage,Request.EmployeeObject,emp.getID());
+        Message mgs = new Message(Request.DeleteMessage,Request.EmployeeObject);
+        mgs.setEmployee(emp);
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();

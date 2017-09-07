@@ -15,7 +15,7 @@ import java.awt.Toolkit;
 public class MyConstants {
 
 
-    public static String SERVERIP = "10.10.42.37";
+    public static String SERVERIP = "192.168.1.81";
 
     public static int PORT = 3002;
     
@@ -82,7 +82,10 @@ public class MyConstants {
 
     //loginMessage
     public static String EmptyUsername = "Empty Username";
+    public static String WrongUsername = "Wrong Username";
     public static String EmptyPassword = "Empty Password";
+    public static String WrongPassword = "Wrong Password";
+    public static String VerificationError = "Verification Error";
     public static String QuitMessage = "Do you want to quit";
     public static String WarningMessage = "Warning";
     public static String ExitTitle = "Exit";

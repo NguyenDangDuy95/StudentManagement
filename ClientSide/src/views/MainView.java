@@ -28,7 +28,6 @@ import views.base.BaseView;
  * @author Duy
  */
 public class MainView extends JFrame implements BaseView {
-    public static Object CurrentUser;
     private JPanel container, leftPanel, mainPanel, infoPanel, bottomPanel, toolbarPanel,userPanel;
     private CloseButton closeButton;
     private JLabel usernameLabel;
@@ -108,7 +107,7 @@ public class MainView extends JFrame implements BaseView {
                 MyConstants.LeftPanelHeight
         );
         
-        customTreeView.setBounds(0, 0, MyConstants.LabelWidth, MyConstants.LabelHeight);
+        customTreeView.setBounds(0, 0, MyConstants.LeftPanelWidth, MyConstants.LeftPanelHeight);
         leftPanel.add(customTreeView);
         //
         

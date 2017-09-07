@@ -10,8 +10,12 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import models.Batch;
 import models.Course;
+import models.Student;
+import models.Subject;
 import services.CourseDataService;
+import services.StudentDataService;
 
 /**
  *
@@ -20,10 +24,26 @@ import services.CourseDataService;
 public class TestDataService {
     public static void main(String[] args) {
         DatabaseConnection.getConnection();
-        Vector<Course> courseList = new Vector<Course>();
+        Vector<Course> stdList = new Vector<Course>();
         try {
-            courseList = CourseDataService.getCourseList();
-            System.out.println("done");
+            stdList = CourseDataService.getCourseList();
+            for(Course course : stdList){
+                System.out.println(course.getName());
+                for(Batch batch : course.getBatchList()){
+                    System.out.println("\t"+batch.getName());
+                    for(Student std: batch.getStdList()){
+                        System.out.println("\t\t"+std.toString());
+                    }
+                }
+            }
+            for(Course course : stdList){
+                System.out.println(course.getName());
+                for(Subject subject : course.getSubjectList()){
+                    System.out.println("\t"+subject.getName() + subject.getSubjectInfo());
+                }
+            }
+            Student std = StudentDataService.GetStudentByID("BB738174-12DF-4B8F-B020-020B4F6FF4E0");
+            System.out.println(std.toString());
         } catch (SQLException ex) {
             Logger.getLogger(TestDataService.class.getName()).log(Level.SEVERE, null, ex);
         }

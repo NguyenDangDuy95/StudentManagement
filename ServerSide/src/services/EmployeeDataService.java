@@ -30,18 +30,18 @@ public class EmployeeDataService {
                     rs.getString("FirstName"),
                     rs.getString("LastName"),
                     rs.getString("PositionName"),
-                    rs.getString("PayRate"),
+                    rs.getInt("SalaryValue"),
                     MyConstants.getGender(rs.getString("Gender")),
                     rs.getDate("BirthDay"),
                     rs.getString("PersonalID"),
                     rs.getString("Email"),
                     rs.getString("PhoneNumber"),
-                    rs.getString("Address"),
+                    rs.getString("Addresss"),
                     rs.getString("BirthPlace"),
                     rs.getString("FatherName"),
                     rs.getString("MotherName"),
                     rs.getString("FatherJob"),
-                    rs.getString("MotherJob"),
+                    rs.getString("MontherJob"),
                     rs.getString("ParentPhone"),
                     rs.getDate("StartDate"),
                     rs.getDate("EndDate")
@@ -49,5 +49,32 @@ public class EmployeeDataService {
             empList.addElement(emp);
         }
         return empList;
+    }
+
+    public static Employee getEmployeeByID(String id) throws SQLException {
+        ResultSet rs = DatabaseConnection.getExecutedResultSet(SQLHelper.getEmployeeByID(id));
+        rs.next();
+        Employee emp = new Employee(
+                rs.getString("EmployeeID"),
+                rs.getString("FirstName"),
+                rs.getString("LastName"),
+                rs.getString("PositionName"),
+                rs.getInt("SalaryValue"),
+                MyConstants.getGender(rs.getString("Gender")),
+                rs.getDate("BirthDay"),
+                rs.getString("PersonalID"),
+                rs.getString("Email"),
+                rs.getString("PhoneNumber"),
+                rs.getString("Addresss"),
+                rs.getString("BirthPlace"),
+                rs.getString("FatherName"),
+                rs.getString("MotherName"),
+                rs.getString("FatherJob"),
+                rs.getString("MotherJob"),
+                rs.getString("ParentPhone"),
+                rs.getDate("StartDate"),
+                rs.getDate("EndDate")
+        );
+        return emp;
     }
 }

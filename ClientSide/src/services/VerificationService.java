@@ -21,7 +21,7 @@ public class VerificationService {
     public static Message verify(String username, String password)
     {
         Message result= new Message();
-        Message mgs = new Message(Request.Verification, username+" "+password);
+        Message mgs = new Message(Request.Verification, username.trim()+" "+password.trim());
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();

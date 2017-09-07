@@ -28,7 +28,7 @@ public class DatabaseConnection {
         }
     }
 
-    public static void closeConnection(Connection con) {
+    public static void closeConnection() {
         if (con != null) {
             try {
                 con.close();

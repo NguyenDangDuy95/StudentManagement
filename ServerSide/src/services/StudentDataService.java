@@ -21,17 +21,54 @@ public class StudentDataService {
 
     public static Vector<Student> GetStudentListByBatchID(String batchID) throws SQLException {
         ResultSet rs = DatabaseConnection.getExecutedResultSet(SQLHelper.getStudentListByBatchID(batchID));
+        return createStudentListFromResultSet(rs);
+    }
+
+    public static Student GetStudentByID(String id) throws SQLException {
+        ResultSet rs = DatabaseConnection.getExecutedResultSet(SQLHelper.getStudentByID(id));
+        rs.next();
+        Student std = new Student(
+                rs.getString("StudentID"),
+                rs.getString("FirstName"),
+                rs.getString("LastName"),
+                rs.getString("CourseID"),
+                rs.getString("BatchID"),
+                MyConstants.getGender(rs.getString("Gender")),
+                rs.getDate("BirthDay"),
+                rs.getString("Addresss"),
+                rs.getString("BirthPlace"),
+                rs.getString("PersonalID"),
+                rs.getString("PhoneNumber"),
+                rs.getString("Email"),
+                rs.getString("FatherName"),
+                rs.getString("FatherJob"),
+                rs.getString("MotherName"),
+                rs.getString("MotherJob"),
+                rs.getString("ParentPhone"),
+                rs.getString("Scholarship"),
+                rs.getDate("StartDate"),
+                rs.getDate("EndDate")
+        );
+        return std;
+    }
+
+    public static Vector<Student> GetStudentList() throws SQLException {
+        ResultSet rs = DatabaseConnection.getExecutedResultSet(SQLHelper.getFullStudentList());
+        return createStudentListFromResultSet(rs);
+    }
+
+    private static Vector<Student> createStudentListFromResultSet(ResultSet rs) throws SQLException {
         Vector<Student> stdList = new Vector<>();
         while (rs.next()) {
             Student std = new Student(
                     rs.getString("StudentID"),
                     rs.getString("FirstName"),
                     rs.getString("LastName"),
-                    rs.getString("Course"),
-                    rs.getString("Batch"),
+                    rs.getString("CourseID"),
+                    rs.getString("BatchID"),
                     MyConstants.getGender(rs.getString("Gender")),
                     rs.getDate("BirthDay"),
-                    rs.getString("Address"),
+                    rs.getString("Addresss"),
                     rs.getString("BirthPlace"),
                     rs.getString("PersonalID"),
                     rs.getString("PhoneNumber"),
@@ -41,7 +78,7 @@ public class StudentDataService {
                     rs.getString("MotherName"),
                     rs.getString("MotherJob"),
                     rs.getString("ParentPhone"),
-                    rs.getString("Schoolarship"),
+                    rs.getString("Scholarship"),
                     rs.getDate("StartDate"),
                     rs.getDate("EndDate")
             );

@@ -17,7 +17,8 @@ import views.SplashScreen;
  */
 public class ClientSideMain {
     public static String CurrentState;
-    public static MyConstants.OptionDialogType currentUserRole;
+    public static Object CurrentUser;
+    public static String CurrentUserRole;
     public static void main(String[] args) {
         CustomUIManager.customUI();
         
