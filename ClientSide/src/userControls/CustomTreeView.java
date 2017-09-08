@@ -8,86 +8,132 @@ package userControls;
 import controllers.CourseController;
 import helpers.MyConstants;
 import helpers.MyStyle;
+import java.awt.Color;
 import models.Course;
 import java.util.Vector;
-import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeSelectionModel;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import models.Batch;
-import models.Subject;
+import models.Request;
+import test.ClientSideMain;
+import views.MainPanel;
 
 /**
  *
  * @author Duy
  */
-public class CustomTreeView extends JPanel {
+public class CustomTreeView extends JScrollPane {
+
+    public JTree tree;
 
     public CustomTreeView() {
-        add(createSubjectTree());
+        setOpaque(true);
+        setBackground(MyStyle.BackgroundColor);
+        setBorder(new LineBorder(MyStyle.PrimaryColor, 1));
+        setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        initView(ClientSideMain.CurrentUserRole);
+        setViewportView(tree);
     }
 
-    private JTree createSubjectTree() {
+    private void initView(String role) {
+        DefaultMutableTreeNode top = new DefaultMutableTreeNode("Aptech");
+        if (role.equals(Request.StudentObject)) {
+            top.add(createBatchTreeView());
+            top.add(createSubjectTree());
+        } else {
+            top.add(createBatchTreeView());
+            top.add(createSubjectTree());
+            top.add(createEmployeeTreeView());
+        }
+        tree = new JTree(top);
+        tree.setFont(MyStyle.TreeLabelFont);
+        DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) tree.getCellRenderer();
+        renderer.setTextSelectionColor(Color.white);
+        renderer.setBackgroundSelectionColor(MyStyle.PrimaryColor);
+        renderer.setBorderSelectionColor(MyStyle.PrimaryColor);
+        tree.setBorder(new EmptyBorder(0, MyConstants.VerySmallMargin, 0, 0));
+        tree.addTreeSelectionListener(new TreeSelectionListener() {
+            @Override
+            public void valueChanged(TreeSelectionEvent e) {
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+                
+                if (node == null) //Nothing is selected.  
+                {
+                    return;
+                }
+                
+                Object nodeInfo = node.getUserObject();
+
+                if (node.isLeaf()) {
+                    if (nodeInfo.getClass().equals(Batch.class)) {
+                        Batch batch = (Batch) nodeInfo;
+                        MainPanel.SelectedObjectType = Request.BatchObject;
+                        MainPanel.SelectedObject = batch;
+                    }else if(node.toString().equals(MyConstants.AdminRole)||node.toString().equals(MyConstants.TeacherRole)){
+                        MainPanel.SelectedObjectType = node.toString();
+                    }else{
+                        MainPanel.SelectedObjectType = Request.SubjectObject + node.toString();
+                        DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
+                        MainPanel.SelectedObject = (Course)parent.getUserObject();
+                        
+                    }
+                }
+            }
+        });
+    }
+
+    private DefaultMutableTreeNode createSubjectTree() {
         DefaultMutableTreeNode top = new DefaultMutableTreeNode("Subject List");
         Vector<Course> courses = CourseController.getInstance().get();
         for (Course course : courses) {
             DefaultMutableTreeNode courseNode = new DefaultMutableTreeNode(course);
             top.add(courseNode);
-            DefaultMutableTreeNode semesterINode = new DefaultMutableTreeNode("Semester I");
-            DefaultMutableTreeNode semesterIINode = new DefaultMutableTreeNode("Semester II");
-            DefaultMutableTreeNode semesterIIINode = new DefaultMutableTreeNode("Semester III");
-            DefaultMutableTreeNode semesterIVNode = new DefaultMutableTreeNode("Semester IV");
+            DefaultMutableTreeNode semesterINode = new DefaultMutableTreeNode(MyConstants.FirstSemester);
+            DefaultMutableTreeNode semesterIINode = new DefaultMutableTreeNode(MyConstants.SecondSemester);
+            DefaultMutableTreeNode semesterIIINode = new DefaultMutableTreeNode(MyConstants.ThirdSemester);
+            DefaultMutableTreeNode semesterIVNode = new DefaultMutableTreeNode(MyConstants.FourthSemester);
             courseNode.add(semesterINode);
             courseNode.add(semesterIINode);
             courseNode.add(semesterIIINode);
             courseNode.add(semesterIVNode);
-            for (Subject sub : course.getSubjectList()) {
-                String semester = sub.getSemester().trim();
-                switch (semester) {
-                    case "I": {
-                        DefaultMutableTreeNode subject = new DefaultMutableTreeNode(sub);
-                        semesterINode.add(subject);
-                        break;
-                    }
-                    case "II": {
-                        DefaultMutableTreeNode subject = new DefaultMutableTreeNode(sub);
-                        semesterIINode.add(subject);
-                        break;
-                    }
-                    case "III": {
-                        DefaultMutableTreeNode subject = new DefaultMutableTreeNode(sub);
-                        semesterIIINode.add(subject);
-                        break;
-                    }
-                    case "IV": {
-                        DefaultMutableTreeNode subject = new DefaultMutableTreeNode(sub);
-                        semesterIVNode.add(subject);
-                        break;
-                    }
-                }
-            }
+//            for (Subject sub : course.getSubjectList()) {
+//                String semester = sub.getSemester().trim();
+//                switch (semester) {
+//                    case "I": {
+//                        DefaultMutableTreeNode subject = new DefaultMutableTreeNode(sub);
+//                        semesterINode.add(subject);
+//                        break;
+//                    }
+//                    case "II": {
+//                        DefaultMutableTreeNode subject = new DefaultMutableTreeNode(sub);
+//                        semesterIINode.add(subject);
+//                        break;
+//                    }
+//                    case "III": {
+//                        DefaultMutableTreeNode subject = new DefaultMutableTreeNode(sub);
+//                        semesterIIINode.add(subject);
+//                        break;
+//                    }
+//                    case "IV": {
+//                        DefaultMutableTreeNode subject = new DefaultMutableTreeNode(sub);
+//                        semesterIVNode.add(subject);
+//                        break;
+//                    }
+//                }
+//            }
         }
-        JTree tree = new JTree(top);
-        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-        tree.addTreeSelectionListener(new TreeSelectionListener() {
-            @Override
-            public void valueChanged(TreeSelectionEvent e) {
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
-                if (node.getClass().equals(Subject.class)) {
-                    Subject sub = (Subject) node.getUserObject();
-                    //set sub to the main view
-                }
-            }
-        });
-        tree.setBounds(0, 0, MyConstants.LeftPanelWidth, MyConstants.LeftPanelHeight);
-        tree.setOpaque(true);
-        tree.setBackground(MyStyle.Transparent);
-        return tree;
+        return top;
     }
 
-    private JTree createBatchTreeView() {
+    private DefaultMutableTreeNode createBatchTreeView() {
         DefaultMutableTreeNode top = new DefaultMutableTreeNode("Batch List");
         Vector<Course> courses = CourseController.getInstance().get();
         for (Course course : courses) {
@@ -98,17 +144,15 @@ public class CustomTreeView extends JPanel {
                 courseNode.add(batchNode);
             }
         }
-        JTree tree = new JTree(top);
-        tree.addTreeSelectionListener(new TreeSelectionListener() {
-            @Override
-            public void valueChanged(TreeSelectionEvent e) {
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
-                if (node.getClass().equals(Batch.class)) {
-                    Batch sub = (Batch) node.getUserObject();
-                    //set studentlist to the main view
-                }
-            }
-        });
-        return tree;
+        return top;
+    }
+
+    private DefaultMutableTreeNode createEmployeeTreeView() {
+        DefaultMutableTreeNode top = new DefaultMutableTreeNode("Employee List");
+        DefaultMutableTreeNode adminTitleNode = new DefaultMutableTreeNode(MyConstants.AdminRole);
+        DefaultMutableTreeNode employeeTitleNode = new DefaultMutableTreeNode(MyConstants.TeacherRole);
+        top.add(adminTitleNode);
+        top.add(employeeTitleNode);
+        return top;
     }
 }

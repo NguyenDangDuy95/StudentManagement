@@ -41,7 +41,7 @@ public class EmployeeDataService {
                     rs.getString("FatherName"),
                     rs.getString("MotherName"),
                     rs.getString("FatherJob"),
-                    rs.getString("MontherJob"),
+                    rs.getString("MotherJob"),
                     rs.getString("ParentPhone"),
                     rs.getDate("StartDate"),
                     rs.getDate("EndDate")
@@ -58,7 +58,7 @@ public class EmployeeDataService {
                 rs.getString("EmployeeID"),
                 rs.getString("FirstName"),
                 rs.getString("LastName"),
-                rs.getString("PositionName"),
+                (rs.getString("PositionName").equals("admin")) ? "Adminstrator" : "Teacher",
                 rs.getInt("SalaryValue"),
                 MyConstants.getGender(rs.getString("Gender")),
                 rs.getDate("BirthDay"),

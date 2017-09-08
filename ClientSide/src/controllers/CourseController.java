@@ -82,7 +82,7 @@ public class CourseController {
         return _courseList;
     }
 
-    public Course getStudentByID(String id) {
+    public Course getCourseByID(String id) {
         for (Course cor : _courseList) {
             if (cor.getID().equals(id)) {
                 return cor;

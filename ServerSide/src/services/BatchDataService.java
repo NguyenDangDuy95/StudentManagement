@@ -20,11 +20,15 @@ public class BatchDataService {
 
     public static Vector<Batch> getBatchListByCourseID(String courseID) throws SQLException {
         ResultSet rs = DatabaseConnection.getExecutedResultSet(SQLHelper.getBatchListByCourseID(courseID));
-        return createBatchListFromResultSet(rs);
+        Vector<Batch> batchList = new Vector<>();
+        batchList = createBatchListFromResultSet(rs);
+        return batchList;
     }
     public static Vector<Batch> getFullBatchList() throws SQLException{
         ResultSet rs = DatabaseConnection.getExecutedResultSet(SQLHelper.getFullBatchList());
-        return createBatchListFromResultSet(rs);
+        Vector<Batch> batchList = new Vector<>();
+        batchList = createBatchListFromResultSet(rs);
+        return batchList;
     }
     private static Vector<Batch> createBatchListFromResultSet(ResultSet rs) throws SQLException{
         Vector<Batch> batchList = new Vector<Batch>();

@@ -79,7 +79,16 @@ public class MyConstants {
     public static int BottonPanelWidth = ScreenWidth - VerySmallMargin * 3 - LeftPanelWidth;
     public static int BottomPanelHeight = LeftPanelHeight / 3 + VerySmallMargin;
     //
-
+    
+    //tree view
+    public static String FirstSemester = "Semester I";
+    public static String SecondSemester = "Semester II";
+    public static String ThirdSemester = "Semester III";
+    public static String FourthSemester = "Semester IV";
+    public static String AdminRole = "Adminstrator";
+    public static String TeacherRole = "Teacher";
+    //
+    
     //loginMessage
     public static String EmptyUsername = "Empty Username";
     public static String WrongUsername = "Wrong Username";

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import models.Employee;
+import models.Gender;
 import models.Message;
 import models.Request;
 
@@ -61,7 +62,31 @@ public class EmployeeController {
 //        return dataModel;
         return null;
     }
-    
+    public DefaultTableModel getTableModelByList(Vector<Employee> empList){
+        Vector header = new Vector();
+        header.add("First Name");
+        header.add("Last Name");
+        header.add("Position");
+        header.add("Gender");
+        header.add("Birth Day");
+        header.add("Phone Number");
+        header.add("Address");
+   
+        Vector data = new Vector();
+        for(Employee emp : empList){
+            Vector row = new Vector();
+            row.addElement(emp.getFirstName());
+            row.addElement(emp.getLastName());
+            row.addElement(emp.getPositionName());
+            row.addElement((emp.getGender()==Gender.Male)? "Male" : "Female");
+            row.addElement(emp.getBirthDay());
+            row.addElement(emp.getPhoneNumber());
+            row.addElement(emp.getAddress());
+            data.add(row);
+        }
+        DefaultTableModel dataModel = new DefaultTableModel(data, header);
+        return dataModel;
+    }
     public void load(){
         //request to server to get student list       
         try {
@@ -86,6 +111,27 @@ public class EmployeeController {
             if(emp.getEmployeeID().equals(id)) return emp;
         }
         return null;
+    }
+    
+    public Vector<Employee> getAdminList(){
+        Vector<Employee> list = new Vector<>();
+        for(Employee emp: _empList){
+            if(emp.getPositionName().equals("admin"))
+            {
+                list.add(emp);
+            }
+        }
+        return list;
+    }
+    public Vector<Employee> getTeacherList(){
+        Vector<Employee> list = new Vector<>();
+        for(Employee emp: _empList){
+            if(emp.getPositionName().equals("teacher"))
+            {
+                list.add(emp);
+            }
+        }
+        return list;
     }
     public void add(Employee emp){
         //request server to save to database

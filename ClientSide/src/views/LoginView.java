@@ -38,6 +38,7 @@ public class LoginView extends JDialog implements BaseView {
     private JPanel container;
     private BackgroundImagePanel titlePanel;
     private JLabel lbTitle, lbUsername, lbPassword;
+    private GradientPanel testTitle;
     private PlaceHolderTextField tfUsername;
     private PlaceholderPasswordField tfPassword;
     private CustomButton btnLogin;
@@ -67,14 +68,16 @@ public class LoginView extends JDialog implements BaseView {
         container.setBackground(Color.white);
         container.setSize(MyConstants.LoginWidth, MyConstants.LoginHeight);
         setContentPane(container);
-        try {
-            titlePanel = new BackgroundImagePanel(getClass().getResource(MyConstants.LoginImage).toURI());
-        } catch (URISyntaxException | IOException ex) {
-            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        lbTitle = new JLabel("Login", JLabel.CENTER);
-        lbTitle.setForeground(Color.WHITE);
+//        try {
+//            titlePanel = new BackgroundImagePanel(getClass().getResource(MyConstants.LoginImage).toURI());
+//        } catch (URISyntaxException | IOException ex) {
+//            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        lbTitle = new JLabel("Management", JLabel.CENTER);
+        lbTitle.setForeground(Color.BLACK);
         lbTitle.setFont(MyStyle.BigLabelFont);
+
+        testTitle = new GradientPanel(MyStyle.PrimaryColor, MyStyle.SecondaryColor);
 
         lbUsername = new JLabel("Username: ", JLabel.LEFT);
         lbUsername.setFont(MyStyle.MediumLabelFont);
@@ -90,10 +93,7 @@ public class LoginView extends JDialog implements BaseView {
         tfPassword.setPlaceholder("Input your password");
         tfPassword.setFont(MyStyle.MediumLabelFont);
 
-        btnLogin = new CustomButton("Login");
-        btnLogin.setForeground(Color.WHITE);
-        btnLogin.setBackground(Color.ORANGE);
-        System.out.println(Color.ORANGE.toString());
+        btnLogin = new CustomButton("Login", MyStyle.PrimaryColor, MyStyle.SecondaryColor);
         btnLogin.setFont(MyStyle.MediumLabelFont);
 
         btnClose = new CloseButton();
@@ -109,7 +109,7 @@ public class LoginView extends JDialog implements BaseView {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (checkValidation()) {
-                    
+
                     System.out.println(ClientSideMain.CurrentUser.toString());
                     System.out.println(ClientSideMain.CurrentUserRole);
                     setVisible(false);
@@ -122,12 +122,15 @@ public class LoginView extends JDialog implements BaseView {
 
     @Override
     public void draw() {
-        titlePanel.setLayout(null);
-        titlePanel.setBounds(0, 0, MyConstants.LoginWidth, MyConstants.LoginTitleHeight);
+//        titlePanel.setLayout(null);
+//        titlePanel.setBounds(0, 0, MyConstants.LoginWidth, MyConstants.LoginTitleHeight);
 
-        lbTitle.setBounds((MyConstants.LoginWidth - MyConstants.LabelWidth) / 2,
+        testTitle.setLayout(null);
+        testTitle.setBounds(0, 0, MyConstants.LoginWidth, MyConstants.LoginTitleHeight);
+
+        lbTitle.setBounds((MyConstants.LoginWidth - MyConstants.LabelWidth*2) / 2,
                 (MyConstants.LoginTitleHeight - MyConstants.LabelHeight) / 2,
-                MyConstants.LabelWidth,
+                MyConstants.LabelWidth*2,
                 MyConstants.LabelHeight
         );
         lbUsername.setBounds(
@@ -171,9 +174,12 @@ public class LoginView extends JDialog implements BaseView {
         );
         btnLogin.setFocusPainted(false);
 
-        titlePanel.add(lbTitle);
-        titlePanel.add(btnClose);
-        container.add(titlePanel);
+//        titlePanel.add(lbTitle);
+//        titlePanel.add(btnClose);
+        testTitle.add(lbTitle);
+        testTitle.add(btnClose);
+        //container.add(titlePanel);
+        container.add(testTitle);
         container.add(lbUsername);
         container.add(lbPassword);
         container.add(tfUsername);

@@ -14,9 +14,12 @@ import helpers.MyStyle;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.HeadlessException;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import models.Employee;
 import test.ClientSideMain;
 import userControls.CloseButton;
@@ -28,7 +31,9 @@ import views.base.BaseView;
  * @author Duy
  */
 public class MainView extends JFrame implements BaseView {
-    private JPanel container, leftPanel, mainPanel, infoPanel, bottomPanel, toolbarPanel,userPanel;
+    private JPanel container, leftPanel, infoPanel, bottomPanel, toolbarPanel,userPanel;
+    private MainPanel mainPanel;
+    private JScrollPane leftScroll, mainScroll,infoScroll,bottomScroll;
     private CloseButton closeButton;
     private JLabel usernameLabel;
     private CustomTreeView customTreeView;
@@ -36,9 +41,13 @@ public class MainView extends JFrame implements BaseView {
     public MainView() throws HeadlessException {
         ClientSideMain.CurrentState = "MainView";
         CourseController.getInstance().load();
+        System.out.println("Done get Course");
         BatchController.getInstance().load();
+        System.out.println("Done get Batch");
         EmployeeController.getInstance().load();
+        System.out.println("Done get Employee");
         StudentController.getInstance().load();
+        System.out.println("Done get Student");
         initView();
         initCommand();
         draw();
@@ -48,7 +57,7 @@ public class MainView extends JFrame implements BaseView {
     public void initView() {
         container = new JPanel();
         leftPanel = new JPanel();
-        mainPanel = new JPanel();
+        mainPanel = new MainPanel();
         infoPanel = new JPanel();
         bottomPanel = new JPanel();
         toolbarPanel = new JPanel();
@@ -59,6 +68,7 @@ public class MainView extends JFrame implements BaseView {
         closeButton = new CloseButton();
         
         customTreeView = new CustomTreeView();
+        
     }
 
     @Override
@@ -85,7 +95,7 @@ public class MainView extends JFrame implements BaseView {
         userPanel.setOpaque(true);
         userPanel.setBackground(Color.red);
         userPanel.setBounds(MyConstants.ScreenWidth- 100-MyConstants.VerySmallMargin - 300, 0, 300, MyConstants.ToolbarHeight);
-        usernameLabel.setText("Duy Nguyen");
+        usernameLabel.setText(ClientSideMain.CurrentUser.toString());
         usernameLabel.setFont(MyStyle.MediumLabelFont);
         userPanel.add(usernameLabel);
         
@@ -106,8 +116,13 @@ public class MainView extends JFrame implements BaseView {
                 MyConstants.LeftPanelWidth,
                 MyConstants.LeftPanelHeight
         );
-        
         customTreeView.setBounds(0, 0, MyConstants.LeftPanelWidth, MyConstants.LeftPanelHeight);
+        customTreeView.tree.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                mainPanel.reload();
+            }
+        });
         leftPanel.add(customTreeView);
         //
         
@@ -116,8 +131,6 @@ public class MainView extends JFrame implements BaseView {
         * main infomation
         */
         mainPanel.setLayout(null);
-        mainPanel.setOpaque(true);
-        mainPanel.setBackground(Color.green);
         mainPanel.setBounds(leftPanel.getX() + leftPanel.getWidth() + MyConstants.VerySmallMargin, leftPanel.getY(), MyConstants.MainPanelWidth, MyConstants.MainPanelHeight);
         /*Info Panel
         * Clear infomation of Object

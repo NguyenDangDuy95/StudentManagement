@@ -63,6 +63,31 @@ public class StudentController {
         return null;
     }
     
+    public DefaultTableModel getTableModelByList(Vector<Student> stdList){
+        Vector header = new Vector();
+        header.add("First Name");
+        header.add("Last Name");
+        header.add("Class");
+        header.add("Course");
+        header.add("Birth Day");
+        header.add("Gender");
+        header.add("Phone Number");
+
+        Vector data = new Vector();
+        for(Student std: stdList){
+            Vector row = new Vector();
+            row.addElement(std.getFirstName());
+            row.addElement(std.getLastName());
+            row.addElement(BatchController.getInstance().getBatchByID(std.getBatch()));
+            row.addElement(CourseController.getInstance().getCourseByID(std.getCourse()));
+            row.addElement(std.getBirthDay());
+            row.addElement(std.getGender());
+            row.addElement(std.getPhoneNumber());
+            data.add(row);
+        }
+        DefaultTableModel dataModel = new DefaultTableModel(data, header);
+        return dataModel;
+    }
     public void load(){
         //request to server to get student list       
         try {

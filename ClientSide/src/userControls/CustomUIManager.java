@@ -5,6 +5,7 @@
  */
 package userControls;
 
+import helpers.MyConstants;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
@@ -21,6 +22,7 @@ public class CustomUIManager{
     {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            UIManager.put("Tree.rowHeight", 3*MyConstants.LabelHeight/5);
             //UIManager.put("ProgressBarUI", new CircularProgressBarUI());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(CustomUIManager.class.getName()).log(Level.SEVERE, null, ex);

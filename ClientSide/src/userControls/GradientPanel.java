@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,47 +9,32 @@ import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Paint;
 import java.awt.RenderingHints;
-import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  *
- * @author Duy
+ * @author DUY
  */
-public class CustomButton extends JButton {
+public class GradientPanel extends JPanel {
 
     private Color fromColor, toColor;
-    
-    public CustomButton(Color from, Color to)
-    {
+
+    public GradientPanel(Color to, Color from) {
         this.fromColor = from;
         this.toColor = to;
-        setOpaque(false);
-        setContentAreaFilled(false);
-        setFocusPainted(false);
-        setBorderPainted(false);
-    }
-    public CustomButton(String text, Color to, Color from) {
-        super(text);
-        this.fromColor = from;
-        this.toColor = to;
-        setOpaque(false);
-        setBorderPainted(false);
-        setFocusPainted(false);
-        setContentAreaFilled(false);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
+        super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         int w = getWidth();
         int h = getHeight();
-        Paint gp = new GradientPaint(0, 0, fromColor, w, h, toColor);
+        GradientPaint gp = new GradientPaint(0, 0, fromColor, w, h, toColor);
         g2d.setPaint(gp);
         g2d.fillRect(0, 0, w, h);
-        super.paintComponent(g);
     }
 
 }

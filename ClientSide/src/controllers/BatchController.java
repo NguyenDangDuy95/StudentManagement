@@ -66,6 +66,7 @@ public class BatchController {
         //request to server to get Batch list       
         try {
             ServerConnection.oos.writeObject(new Message(Request.GetBatchList));
+            System.out.println(Request.GetBatchList);
             ServerConnection.oos.flush();
             _batchList = (Vector<Batch>) ServerConnection.ois.readObject();
         } catch (IOException | ClassNotFoundException ex) {
@@ -73,20 +74,21 @@ public class BatchController {
         }
     }
     
+    public Batch getBatchByID(String id){
+        for(Batch batch : _batchList){
+            if(batch.getId().equals(id)){
+                return batch;
+            }
+        }
+        return null;
+    }
     public Vector<Batch> get(){
         if(_batchList.size() == 0){
             load();
         }
         return _batchList;
     }
-    
-    public Batch getBatchByID(String id){
-        for(Batch batch : _batchList)
-        {
-            if(batch.getId().equals(id)) return batch;
-        }
-        return null;
-    }
+
     public void add(Batch batch){
         //request server to save to database
 

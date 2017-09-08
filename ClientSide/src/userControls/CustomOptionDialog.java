@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,11 +30,9 @@ public class CustomOptionDialog extends JDialog implements BaseView {
     private JLabel lbMessage, lbTitle;
     private String title;
     private String message;
-    private CustomButton btnNo, btnYes;
+    private JButton btnNo, btnYes;
     private boolean isOK = false;
     private boolean isClicked = false;
-
-    
 
     public CustomOptionDialog(MyConstants.OptionDialogType type, String title, String message) {
         this.type = type;
@@ -51,38 +50,34 @@ public class CustomOptionDialog extends JDialog implements BaseView {
         lbMessage = new JLabel();
         lbTitle = new JLabel();
 
-        btnNo = new CustomButton();
-        btnYes = new CustomButton();
+        btnNo = new JButton();
+        btnYes = new JButton();
 
     }
 
     @Override
     public void draw() {
-    
-        
+
         setUndecorated(true);
-        getRootPane().setBorder( BorderFactory.createLineBorder(Color.BLACK) );
+        getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK));
         getRootPane().setOpaque(true);
         setLayout(null);
-        setBackground(new Color(0,0,0,200));
+        setBackground(new Color(0, 0, 0, 200));
         if (ClientSideMain.CurrentState.equals("Login")) {
             setBounds(MyConstants.LoginPositionX, MyConstants.LoginPositionY, MyConstants.LoginWidth, MyConstants.LoginHeight);
-            containter.setBounds(0, (MyConstants.LoginHeight-MyConstants.OptionPaneHeight)/2, MyConstants.OptionPaneWidth, MyConstants.OptionPaneHeight);
-        }
-        else
-        {
-            setBounds(0, MyConstants.ToolbarHeight, MyConstants.ScreenWidth, MyConstants.ScreenHeight-MyConstants.ToolbarHeight);
-            containter.setBounds((MyConstants.ScreenWidth-MyConstants.OptionPaneWidth)/2, (MyConstants.ScreenHeight-MyConstants.OptionPaneHeight)/2, MyConstants.OptionPaneWidth, MyConstants.OptionPaneHeight);
+            containter.setBounds(0, (MyConstants.LoginHeight - MyConstants.OptionPaneHeight) / 2, MyConstants.OptionPaneWidth, MyConstants.OptionPaneHeight);
+        } else {
+            setBounds(0, MyConstants.ToolbarHeight, MyConstants.ScreenWidth, MyConstants.ScreenHeight - MyConstants.ToolbarHeight);
+            containter.setBounds((MyConstants.ScreenWidth - MyConstants.OptionPaneWidth) / 2, (MyConstants.ScreenHeight - MyConstants.OptionPaneHeight) / 2, MyConstants.OptionPaneWidth, MyConstants.OptionPaneHeight);
         }
 
-        
         containter.setBackground(Color.WHITE);
-        
+
         containter.setLayout(null);
         add(containter);
 
         lbTitle.setText(title);
-        lbTitle.setBounds(MyConstants.VerySmallMargin, 0, MyConstants.LabelWidth, MyConstants.LabelHeight);
+        lbTitle.setBounds(MyConstants.VerySmallMargin, 0, MyConstants.OptionPaneWidth-MyConstants.VerySmallMargin, MyConstants.LabelHeight);
         lbTitle.setFont(MyStyle.BigLabelFont);
         lbTitle.setForeground(MyStyle.PrimaryColor);
 
@@ -100,30 +95,34 @@ public class CustomOptionDialog extends JDialog implements BaseView {
                 MyConstants.OptionPaneButtonWidth,
                 MyConstants.OptionPaneButtonHeight
         );
+        btnYes.setBorderPainted(false);
+        btnYes.setFocusPainted(false);
+        btnYes.setContentAreaFilled(false);
         btnYes.setFont(MyStyle.MediumLabelFont);
         btnYes.setForeground(Color.WHITE);
         btnYes.setBackground(MyStyle.PrimaryColor);
         btnYes.setOpaque(true);
-        btnNo.setOpaque(true);
-        btnNo.setFont(MyStyle.MediumLabelFont);
+        
         btnNo.setBounds(btnYes.getX() - MyConstants.OptionPaneButtonWidth - MyConstants.VerySmallMargin,
                 MyConstants.OptionPaneHeight - MyConstants.OptionPaneButtonHeight - MyConstants.SmallMargin,
                 MyConstants.OptionPaneButtonWidth,
                 MyConstants.OptionPaneButtonHeight
         );
-        btnNo.setBackground(MyStyle.PrimaryColor);
+        btnNo.setBorderPainted(false);
+        btnNo.setFocusPainted(false);
+        btnNo.setContentAreaFilled(false);
+        btnNo.setFont(MyStyle.MediumLabelFont);
         btnNo.setForeground(Color.WHITE);
-        if(type == MyConstants.OptionDialogType.Message)
-        {
+        btnNo.setBackground(MyStyle.PrimaryColor);
+        btnNo.setOpaque(true);
+        if (type == MyConstants.OptionDialogType.Message) {
             btnNo.setVisible(false);
             btnYes.setText(MyConstants.OKText);
-        }
-        else
-        {
+        } else {
             btnYes.setText(MyConstants.YesText);
             btnNo.setText(MyConstants.NoText);
         }
-        
+
         containter.add(lbTitle);
         containter.add(lbMessage);
         containter.add(btnYes);
@@ -145,7 +144,7 @@ public class CustomOptionDialog extends JDialog implements BaseView {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                
+
             }
 
             @Override
@@ -171,7 +170,7 @@ public class CustomOptionDialog extends JDialog implements BaseView {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                
+
             }
 
             @Override
@@ -183,6 +182,6 @@ public class CustomOptionDialog extends JDialog implements BaseView {
             public void mouseExited(MouseEvent e) {
                 btnNo.setBackground(MyStyle.PrimaryColor);
             }
-        });      
+        });
     }
 }

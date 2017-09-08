@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import models.Message;
 import models.Request;
 import models.Verification;
+import services.BatchDataService;
 import services.CourseDataService;
 import services.EmployeeDataService;
 import services.StudentDataService;
@@ -69,7 +70,15 @@ public class ServiceThread extends Thread {
                         oos.flush();
                         continue;
                     }
-
+                    
+                    if(message.getTitle().equals(Request.GetBatchList)){
+                        oos.writeObject(BatchDataService.getFullBatchList());
+                        oos.flush();
+                        continue;
+                    }
+                    
+                    
+                    
                     if (message.getTitle().equals(Request.Verification)) {
                         verify(message.getBody());
                         continue;
