@@ -12,8 +12,10 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import javax.swing.BorderFactory;
 import javax.swing.JPasswordField;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.text.Document;
 
 /**
@@ -26,7 +28,7 @@ public class PlaceholderPasswordField extends JPasswordField implements FocusLis
     private boolean isFocused = false;
 
     public PlaceholderPasswordField() {
-        setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, MyStyle.DisableColor));
+        setBorder(new CompoundBorder(new LineBorder(MyStyle.PrimaryColor), new EmptyBorder(0, MyConstants.VerySmallMargin, 0, 0)));
         addFocusListener(this);
 
     }

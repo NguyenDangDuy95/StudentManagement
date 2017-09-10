@@ -20,6 +20,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import models.Employee;
 import test.ClientSideMain;
 import userControls.CloseButton;
@@ -31,8 +33,9 @@ import views.base.BaseView;
  * @author Duy
  */
 public class MainView extends JFrame implements BaseView {
-    private JPanel container, leftPanel, infoPanel, bottomPanel, toolbarPanel,userPanel;
+    private JPanel container, leftPanel, bottomPanel, toolbarPanel,userPanel;
     private MainPanel mainPanel;
+    private InfoPanel infoPanel;
     private JScrollPane leftScroll, mainScroll,infoScroll,bottomScroll;
     private CloseButton closeButton;
     private JLabel usernameLabel;
@@ -58,7 +61,7 @@ public class MainView extends JFrame implements BaseView {
         container = new JPanel();
         leftPanel = new JPanel();
         mainPanel = new MainPanel();
-        infoPanel = new JPanel();
+        infoPanel = new InfoPanel();
         bottomPanel = new JPanel();
         toolbarPanel = new JPanel();
         userPanel = new JPanel();
@@ -132,13 +135,17 @@ public class MainView extends JFrame implements BaseView {
         */
         mainPanel.setLayout(null);
         mainPanel.setBounds(leftPanel.getX() + leftPanel.getWidth() + MyConstants.VerySmallMargin, leftPanel.getY(), MyConstants.MainPanelWidth, MyConstants.MainPanelHeight);
+        mainPanel.table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                infoPanel.reloadDataModel();
+                System.out.println("ahihi");
+            }
+        });
         /*Info Panel
         * Clear infomation of Object
         * Edit
         */
-        infoPanel.setLayout(null);
-        infoPanel.setOpaque(true);
-        infoPanel.setBackground(Color.yellow);
         infoPanel.setBounds(
                 mainPanel.getX()+mainPanel.getWidth()+MyConstants.VerySmallMargin,
                 mainPanel.getY(),

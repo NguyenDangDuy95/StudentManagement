@@ -8,32 +8,28 @@ package views;
 import helpers.MyConstants;
 import helpers.MyStyle;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import models.AccessRole;
 import models.Message;
 import models.Request;
 import services.VerificationService;
 import test.ClientSideMain;
 import userControls.*;
 import views.base.BaseView;
-import views.base.LoadingThread;
 
 /**
  *
  * @author Duy
  */
-public class LoginView extends JDialog implements BaseView {
+public class LoginView extends JDialog implements BaseView{
 
     private JPanel container;
     private BackgroundImagePanel titlePanel;
@@ -109,9 +105,6 @@ public class LoginView extends JDialog implements BaseView {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (checkValidation()) {
-
-                    System.out.println(ClientSideMain.CurrentUser.toString());
-                    System.out.println(ClientSideMain.CurrentUserRole);
                     setVisible(false);
                     new MainView().setVisible(true);
                 }
@@ -128,9 +121,9 @@ public class LoginView extends JDialog implements BaseView {
         testTitle.setLayout(null);
         testTitle.setBounds(0, 0, MyConstants.LoginWidth, MyConstants.LoginTitleHeight);
 
-        lbTitle.setBounds((MyConstants.LoginWidth - MyConstants.LabelWidth*2) / 2,
+        lbTitle.setBounds((MyConstants.LoginWidth - MyConstants.LabelWidth * 2) / 2,
                 (MyConstants.LoginTitleHeight - MyConstants.LabelHeight) / 2,
-                MyConstants.LabelWidth*2,
+                MyConstants.LabelWidth * 2,
                 MyConstants.LabelHeight
         );
         lbUsername.setBounds(

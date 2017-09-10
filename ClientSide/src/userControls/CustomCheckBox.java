@@ -9,16 +9,13 @@ import helpers.MyConstants;
 import helpers.MyStyle;
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.Insets;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 
 /**
  *
@@ -33,10 +30,8 @@ public class CustomCheckBox extends JCheckBox{
             disabledIcon= ImageIO.read(getClass().getResource(MyConstants.UnCheckedImage));
             pressedIcon= ImageIO.read(getClass().getResource(MyConstants.PressedImage));
             disabledSelectedIcon= ImageIO.read(getClass().getResource(MyConstants.DisableSelectedImage));
-            System.out.println("ahihiasdasdasd");
         } catch (IOException ex) {
             Logger.getLogger(CustomCheckBox.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("ahihi");
         }
         setText(text);
         setFocusPainted(false);

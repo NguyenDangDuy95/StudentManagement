@@ -8,6 +8,10 @@ package userControls;
 import helpers.MyConstants;
 import helpers.MyStyle;
 import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
@@ -77,7 +81,7 @@ public class CustomOptionDialog extends JDialog implements BaseView {
         add(containter);
 
         lbTitle.setText(title);
-        lbTitle.setBounds(MyConstants.VerySmallMargin, 0, MyConstants.OptionPaneWidth-MyConstants.VerySmallMargin, MyConstants.LabelHeight);
+        lbTitle.setBounds(MyConstants.VerySmallMargin, 0, MyConstants.OptionPaneWidth - MyConstants.VerySmallMargin, MyConstants.LabelHeight);
         lbTitle.setFont(MyStyle.BigLabelFont);
         lbTitle.setForeground(MyStyle.PrimaryColor);
 
@@ -102,7 +106,7 @@ public class CustomOptionDialog extends JDialog implements BaseView {
         btnYes.setForeground(Color.WHITE);
         btnYes.setBackground(MyStyle.PrimaryColor);
         btnYes.setOpaque(true);
-        
+
         btnNo.setBounds(btnYes.getX() - MyConstants.OptionPaneButtonWidth - MyConstants.VerySmallMargin,
                 MyConstants.OptionPaneHeight - MyConstants.OptionPaneButtonHeight - MyConstants.SmallMargin,
                 MyConstants.OptionPaneButtonWidth,
@@ -131,20 +135,11 @@ public class CustomOptionDialog extends JDialog implements BaseView {
 
     @Override
     public void initCommand() {
-        btnYes.addMouseListener(new MouseListener() {
+        btnYes.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 firePropertyChange("isClicked", true, false);
                 setVisible(false);
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
             }
 
             @Override
@@ -157,22 +152,12 @@ public class CustomOptionDialog extends JDialog implements BaseView {
                 btnYes.setBackground(MyStyle.PrimaryColor);
             }
         });
-        btnNo.addMouseListener(new MouseListener() {
+        btnNo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 isClicked = true;
                 setVisible(false);
             }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
             @Override
             public void mouseEntered(MouseEvent e) {
                 btnNo.setBackground(MyStyle.PressedColor);

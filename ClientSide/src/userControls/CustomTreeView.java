@@ -79,7 +79,10 @@ public class CustomTreeView extends JScrollPane {
                         MainPanel.SelectedObject = batch;
                     }else if(node.toString().equals(MyConstants.AdminRole)||node.toString().equals(MyConstants.TeacherRole)){
                         MainPanel.SelectedObjectType = node.toString();
-                    }else{
+                    }else if(node.toString().lastIndexOf("Course")>-1){
+                        return;
+                    }
+                    else{
                         MainPanel.SelectedObjectType = Request.SubjectObject + node.toString();
                         DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
                         MainPanel.SelectedObject = (Course)parent.getUserObject();
@@ -104,31 +107,6 @@ public class CustomTreeView extends JScrollPane {
             courseNode.add(semesterIINode);
             courseNode.add(semesterIIINode);
             courseNode.add(semesterIVNode);
-//            for (Subject sub : course.getSubjectList()) {
-//                String semester = sub.getSemester().trim();
-//                switch (semester) {
-//                    case "I": {
-//                        DefaultMutableTreeNode subject = new DefaultMutableTreeNode(sub);
-//                        semesterINode.add(subject);
-//                        break;
-//                    }
-//                    case "II": {
-//                        DefaultMutableTreeNode subject = new DefaultMutableTreeNode(sub);
-//                        semesterIINode.add(subject);
-//                        break;
-//                    }
-//                    case "III": {
-//                        DefaultMutableTreeNode subject = new DefaultMutableTreeNode(sub);
-//                        semesterIIINode.add(subject);
-//                        break;
-//                    }
-//                    case "IV": {
-//                        DefaultMutableTreeNode subject = new DefaultMutableTreeNode(sub);
-//                        semesterIVNode.add(subject);
-//                        break;
-//                    }
-//                }
-//            }
         }
         return top;
     }
