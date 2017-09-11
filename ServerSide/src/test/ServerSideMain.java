@@ -18,6 +18,7 @@ import java.util.logging.Logger;
  * @author Duy
  */
 public class ServerSideMain {
+
     public static void main(String[] args) {
         try {
             DatabaseConnection.getConnection();

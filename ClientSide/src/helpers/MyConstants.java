@@ -15,9 +15,11 @@ import java.awt.Toolkit;
 public class MyConstants {
 
 
-    public static String SERVERIP = "192.168.1.81";
+    public static String SERVERIP = "10.10.40.16";
 
     public static int PORT = 3002;
+    
+    public static String AppTitle = "School Management";
     
     public static String SplashScreenImage = "/images/SplashScreen.jpg";
     public static String LoginTitleBackgroundImage = "/images/LoginTitleImage.jpg";
@@ -51,6 +53,9 @@ public class MyConstants {
 
     public static int LabelHeight = ScreenHeight / 36;
     public static int LabelWidth = LabelHeight * 4;
+    
+    public static int MainPanelButtonWidth = SmallMargin*5;
+    public static int MainPanelButtonHeight = VerySmallMargin*3;
 
     public static int TextFieldHeight = ScreenHeight / 18;
     public static int TextFieldWidth = LoginWidth - 2 * SmallMargin;
@@ -67,6 +72,7 @@ public class MyConstants {
 
     //mainview
     public static int ToolbarHeight = ScreenHeight / 36;
+    public static int ToolbarTitleWidth = ScreenWidth/9;
     public static int LeftPanelWidth = ScreenWidth / 6;
     public static int LeftPanelHeight = ScreenHeight - ToolbarHeight - SmallMargin;
 

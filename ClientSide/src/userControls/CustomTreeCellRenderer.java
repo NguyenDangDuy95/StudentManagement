@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import javax.swing.JTree;
+import javax.swing.border.EmptyBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
@@ -23,7 +24,8 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
         setOpaque(true);
         setBackgroundSelectionColor(MyStyle.PrimaryColor);
         setTextSelectionColor(Color.WHITE);
-        setBorderSelectionColor(null);
+        setBackgroundSelectionColor(MyStyle.PrimaryColor);
+        
     }
 
     

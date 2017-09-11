@@ -13,56 +13,49 @@ import models.Batch;
 import models.Message;
 import models.Request;
 
-
 /**
  *
  * @author Duy
  */
 public class BatchController {
+
     private static BatchController _instance = null;
-    
+
     private Vector<Batch> _batchList;
-    
-    public static BatchController getInstance(){
-        if(_instance == null){
+
+    public static BatchController getInstance() {
+        if (_instance == null) {
             _instance = new BatchController();
         }
         return _instance;
     }
-    
-    private BatchController(){
+
+    private BatchController() {
         _batchList = new Vector<>();
     }
-    
-    public DefaultTableModel getTableModel(){
-//        Vector header = new Vector();
-//        header.add(Batch.COLUMN_ID);
-//        header.add(Employee.COLUMN_NAME);
-//        header.add(Employee.COLUMN_AGE);
-//        header.add(Employee.COLUMN_DEPARTMENT);
-//        
-//        Vector data = new Vector();
-//        for(int i = 0; i < _batchList.size(); i++){
-//            Employee employee = _batchList.get(i);
-//            Vector row = new Vector();
-//            row.addElement(employee.getId());
-//            row.addElement(employee.getName());
-//            row.addElement(employee.getAge());
-//            row.addElement(employee.getDepartment().getName());
-//            data.addElement(row);
-//        }
-//        
-//        DefaultTableModel dataModel = new DefaultTableModel(data, header){
-//            @Override
-//            public boolean isCellEditable(int row, int column) {
-//                return false;
-//            }            
-//        };        
-//        return dataModel;
+
+    public DefaultTableModel getTableModel() {
         return null;
     }
-    
-    public void load(){
+
+    public DefaultTableModel getTableModelFromList(Vector<Batch> batchList) {
+        Vector header = new Vector();
+        header.add("Batch name");
+        header.add("Course name");
+        header.add("Number of student");
+        Vector data = new Vector();
+        for (Batch batch : batchList) {
+            Vector row = new Vector();
+            row.addElement(batch.getName());
+            row.addElement(CourseController.getInstance().getCourseByID(batch.getCourseID()).getName());
+            row.addElement(batch.getStdList().size());
+            data.add(row);
+        }
+        DefaultTableModel dataModel = new DefaultTableModel(data, header);
+        return dataModel;
+    }
+
+    public void load() {
         //request to server to get Batch list       
         try {
             ServerConnection.oos.writeObject(new Message(Request.GetBatchList));
@@ -70,26 +63,27 @@ public class BatchController {
             ServerConnection.oos.flush();
             _batchList = (Vector<Batch>) ServerConnection.ois.readObject();
         } catch (IOException | ClassNotFoundException ex) {
-            
+
         }
     }
-    
-    public Batch getBatchByID(String id){
-        for(Batch batch : _batchList){
-            if(batch.getId().equals(id)){
+
+    public Batch getBatchByID(String id) {
+        for (Batch batch : _batchList) {
+            if (batch.getId().equals(id)) {
                 return batch;
             }
         }
         return null;
     }
-    public Vector<Batch> get(){
-        if(_batchList.size() == 0){
+
+    public Vector<Batch> get() {
+        if (_batchList.size() == 0) {
             load();
         }
         return _batchList;
     }
 
-    public void add(Batch batch){
+    public void add(Batch batch) {
         //request server to save to database
 
         Message mgs = new Message();
@@ -100,13 +94,13 @@ public class BatchController {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
         } catch (IOException ex) {
-            
+
         }
         //save temp to list
         _batchList.addElement(batch);
     }
-    
-    public void update(Batch batch){
+
+    public void update(Batch batch) {
         //request server to update to database
         Message mgs = new Message();
         mgs.setTitle(Request.UpdateMessage);
@@ -116,29 +110,31 @@ public class BatchController {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
         } catch (IOException ex) {
-          
+
         }
 
         //update to list AUTO
-        for(Batch b : _batchList)
-        {
-            if(b.getId().equals(batch.getId())){ b = batch; break;}
+        for (Batch b : _batchList) {
+            if (b.getId().equals(batch.getId())) {
+                b = batch;
+                break;
+            }
         }
     }
-    
-    public void delete(Batch batch){
+
+    public void delete(Batch batch) {
         //request server to delete from database
-        Message mgs = new Message(Request.DeleteMessage,Request.BatchObject);
+        Message mgs = new Message(Request.DeleteMessage, Request.BatchObject);
         mgs.setBatch(batch);
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
         } catch (IOException ex) {
-     
+
         }
 
         //delete from list
         _batchList.removeElement(batch);
     }
-    
+
 }

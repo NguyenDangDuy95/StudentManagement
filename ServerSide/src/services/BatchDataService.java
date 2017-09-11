@@ -39,6 +39,9 @@ public class BatchDataService {
                     rs.getString("CourseID")
             );
             batch.setStdList(StudentDataService.GetStudentListByBatchID(batch.getId()));
+            //ResultSet currentTeacher = DatabaseConnection.getExecutedResultSet(SQLHelper.getCurrentTeacher(batch.getId()));
+            //currentTeacher.next();
+            //batch.setCurrentTeacher(EmployeeDataService.getEmployeeByID(currentTeacher.getString(0)));
             batchList.addElement(batch);
         }
         return batchList;

@@ -10,8 +10,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import models.Message;
 import models.Request;
 import models.Verification;
@@ -52,7 +50,9 @@ public class ServiceThread extends Thread {
 
             while (true) {
                 Message message = (Message) ois.readObject();
+                System.out.println(message.getTitle() + message.getBody());
                 if (message != null) {
+                    
                     if (message.getTitle().equals(Request.GetStudentList)) {
                         oos.writeObject(StudentDataService.GetStudentList());
                         oos.flush();
@@ -76,9 +76,7 @@ public class ServiceThread extends Thread {
                         oos.flush();
                         continue;
                     }
-                    
-                    
-                    
+                                       
                     if (message.getTitle().equals(Request.Verification)) {
                         verify(message.getBody());
                         continue;
@@ -94,6 +92,7 @@ public class ServiceThread extends Thread {
             ois.close();
             socketOfServer.close();
         } catch (IOException | ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -103,6 +102,7 @@ public class ServiceThread extends Thread {
     }
 
     private void verify(String body) throws SQLException, IOException{
+        System.out.println(body);
         String[] user = body.split(" ");
         Verification account = new Verification(user[0], user[1]);
         Message mgs = VerificationService.checkValidation(account);

@@ -59,34 +59,37 @@ public class CustomTreeView extends JScrollPane {
         renderer.setTextSelectionColor(Color.white);
         renderer.setBackgroundSelectionColor(MyStyle.PrimaryColor);
         renderer.setBorderSelectionColor(MyStyle.PrimaryColor);
-        tree.setBorder(new EmptyBorder(0, MyConstants.VerySmallMargin, 0, 0));
+        tree.setBorder(new EmptyBorder(MyConstants.VerySmallMargin, MyConstants.VerySmallMargin, 0, 0));
+
         tree.addTreeSelectionListener(new TreeSelectionListener() {
             @Override
             public void valueChanged(TreeSelectionEvent e) {
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
-                
+
                 if (node == null) //Nothing is selected.  
                 {
                     return;
                 }
-                
+                System.out.println(node.toString());
                 Object nodeInfo = node.getUserObject();
+                String name = node.toString();
 
-                if (node.isLeaf()) {
+                if (!name.equals("Batch List") && !name.equals("Subject List") && !name.equals("Employee List") && !name.equals("Aptech")) {
                     if (nodeInfo.getClass().equals(Batch.class)) {
                         Batch batch = (Batch) nodeInfo;
                         MainPanel.SelectedObjectType = Request.BatchObject;
                         MainPanel.SelectedObject = batch;
-                    }else if(node.toString().equals(MyConstants.AdminRole)||node.toString().equals(MyConstants.TeacherRole)){
+                    } else if (name.equals(MyConstants.AdminRole) || name.equals(MyConstants.TeacherRole)) {
                         MainPanel.SelectedObjectType = node.toString();
-                    }else if(node.toString().lastIndexOf("Course")>-1){
-                        return;
-                    }
-                    else{
+                    } else if (nodeInfo.getClass().equals(Course.class)) {
+                        Course course = (Course) nodeInfo;
+                        MainPanel.SelectedObjectType = Request.CourseObject;
+                        MainPanel.SelectedObject = course;
+                    } else {
                         MainPanel.SelectedObjectType = Request.SubjectObject + node.toString();
                         DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
-                        MainPanel.SelectedObject = (Course)parent.getUserObject();
-                        
+                        MainPanel.SelectedObject = (Course) parent.getUserObject();
+
                     }
                 }
             }

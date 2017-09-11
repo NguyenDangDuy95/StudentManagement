@@ -10,11 +10,16 @@ import helpers.MyConstants;
 import helpers.MyStyle;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
+import static java.awt.image.ImageObserver.ABORT;
+import static java.awt.image.ImageObserver.HEIGHT;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 import javax.swing.table.TableCellRenderer;
 
 /**
@@ -39,9 +44,15 @@ public class CustomTableView extends JTable{
                 JLabel lbl = (JLabel) tcr.getTableCellRendererComponent(table,
                         value, isSelected, hasFocus, row, column);
                 lbl.setForeground(Color.WHITE);
-                lbl.setBackground(MyStyle.PrimaryColor);
-                lbl.setBorder(new WindowsBorders.DashedBorder(Color.BLACK));
-                lbl.setFont(new Font(MyStyle.TreeLabelFont.getName(), MyStyle.TreeLabelFont.getStyle(), MyStyle.TreeLabelFont.getSize() + 5));
+                if(column==0){
+                    lbl.setPreferredSize(new Dimension(MyConstants.MainPanelButtonWidth, MyConstants.MainPanelButtonHeight));
+                    lbl.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
+                }else {
+                    if(column == getColumnCount()-1)lbl.setPreferredSize(new Dimension(MyConstants.MainPanelButtonWidth, MyConstants.MainPanelButtonHeight));
+                    lbl.setBorder(new MatteBorder(1, 0, 1, 1, Color.BLACK));
+                }
+                lbl.setBackground(MyStyle.PrimaryColor);              
+                lbl.setFont(new Font(MyStyle.TreeLabelFont.getName(), MyStyle.TreeLabelFont.getStyle(), MyStyle.TreeLabelFont.getSize() + 2));
                 lbl.setHorizontalAlignment(SwingConstants.CENTER);
                 return lbl;
             }

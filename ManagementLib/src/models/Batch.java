@@ -18,6 +18,7 @@ public class Batch implements Serializable{
     private String name;
     private String courseID;
     private Vector<Student> stdList;
+    //private Employee currentTeacher;
 
     public Batch() {
     }
@@ -60,6 +61,14 @@ public class Batch implements Serializable{
         this.stdList = stdList;
     }
 
+//    public Employee getCurrentTeacher() {
+//        return currentTeacher;
+//    }
+//
+//    public void setCurrentTeacher(Employee currentTeacher) {
+//        this.currentTeacher = currentTeacher;
+//    }
+    
     @Override
     public String toString() {
         return this.name;

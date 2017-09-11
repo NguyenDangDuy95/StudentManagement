@@ -23,6 +23,7 @@ public class CustomUIManager{
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             UIManager.put("Tree.rowHeight", 3*MyConstants.LabelHeight/5);
+            UIManager.put("Tree.drawDashedFocusIndicator", false);
             //UIManager.put("ProgressBarUI", new CircularProgressBarUI());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(CustomUIManager.class.getName()).log(Level.SEVERE, null, ex);

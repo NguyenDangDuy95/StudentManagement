@@ -3,13 +3,15 @@ package helpers;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+
 import threads.ServiceThread;
 
 public class Server {
-
+    
     private ServerSocket listener = null;
     private int clientNumber = 0;
 
+    
     public void serve() throws IOException {
         System.out.println("Server is waiting to accept user...");
         try {
@@ -17,6 +19,7 @@ public class Server {
             while (true) {
                 Socket socketOfServer = listener.accept();
                 new ServiceThread(socketOfServer, clientNumber++).start();
+                
             }
 
         } catch (IOException e) {

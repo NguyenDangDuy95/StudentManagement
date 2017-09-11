@@ -35,6 +35,15 @@ public class SQLHelper {
                 + "FROM BatchList";
     }
 
+    public static String getCurrentTeacher(String batchID) {
+        return "SELECT EmployeeList.EmployeeID\n"
+                + "FROM BatchList,EmployeeList,SubjectTeacher\n"
+                + "WHERE BatchList.BatchID = SubjectTeacher.BatchID \n"
+                + "AND SubjectTeacher.EmployeeID = EmployeeList.EmployeeID \n"
+                + "AND SubjectTeacher.EndDate IS NULL\n"
+                + "AND BatchList.BatchID = \'"+batchID+"\';";
+    }
+
     //subject
     /**
      *
@@ -87,7 +96,7 @@ public class SQLHelper {
                 + "ON EmployeeList.EmployeeID = InformationEmployee.EmployeeID\n"
                 + "WHERE Position.PositionID = EmployeeList.PositonID \n"
                 + "And Salary.SalaryID = EmployeeList.SalaryID\n"
-                + "And EmployeeList.EmployeeID = \'"+id+"\'";
+                + "And EmployeeList.EmployeeID = \'" + id + "\'";
     }
 
     //course

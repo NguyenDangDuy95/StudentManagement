@@ -37,4 +37,17 @@ public class Control {
             }
         });
     }
+    public static boolean getResult(MyConstants.OptionDialogType type,String title,String message){
+        CustomOptionDialog ahihi = new CustomOptionDialog(type, title, message);
+        ahihi.addPropertyChangeListener("isClicked", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (type == MyConstants.OptionDialogType.Message) {
+                    return;
+                }
+                rs = true;
+            }
+        });
+        return rs;
+    }
 }

@@ -12,6 +12,7 @@ import controllers.StudentController;
 import helpers.MyConstants;
 import helpers.MyStyle;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 import java.beans.PropertyChangeEvent;
@@ -26,6 +27,7 @@ import models.Employee;
 import test.ClientSideMain;
 import userControls.CloseButton;
 import userControls.CustomTreeView;
+import userControls.GradientPanel;
 import views.base.BaseView;
 
 /**
@@ -33,13 +35,13 @@ import views.base.BaseView;
  * @author Duy
  */
 public class MainView extends JFrame implements BaseView {
-    private JPanel container, leftPanel, bottomPanel, toolbarPanel,userPanel;
+    private JPanel container, leftPanel, toolbarPanel, bottomPanel, userPanel;
     private MainPanel mainPanel;
     private InfoPanel infoPanel;
-    private JScrollPane leftScroll, mainScroll,infoScroll,bottomScroll;
     private CloseButton closeButton;
-    private JLabel usernameLabel;
+    private JLabel lbUser,lbTitle;
     private CustomTreeView customTreeView;
+
 
     public MainView() throws HeadlessException {
         ClientSideMain.CurrentState = "MainView";
@@ -64,9 +66,9 @@ public class MainView extends JFrame implements BaseView {
         infoPanel = new InfoPanel();
         bottomPanel = new JPanel();
         toolbarPanel = new JPanel();
-        userPanel = new JPanel();
         
-        usernameLabel = new JLabel();
+        lbUser = new JLabel(ClientSideMain.CurrentUser.toString());
+        lbTitle = new JLabel();
         
         closeButton = new CloseButton();
         
@@ -92,19 +94,30 @@ public class MainView extends JFrame implements BaseView {
         toolbarPanel.setOpaque(true);
         toolbarPanel.setBackground(MyStyle.PrimaryColor);
         toolbarPanel.setBounds(0, 0, MyConstants.ScreenWidth, MyConstants.ToolbarHeight);
+        
+        lbTitle.setText(MyConstants.AppTitle);
+        lbTitle.setFont(MyStyle.MediumLabelFont);   
+        lbTitle.setHorizontalAlignment(JLabel.CENTER);
+        lbTitle.setBounds((MyConstants.ScreenWidth-MyConstants.ToolbarTitleWidth)/2, 0, MyConstants.ToolbarTitleWidth, MyConstants.ToolbarHeight);
+        
+        
         closeButton.setWidthOfView(MyConstants.ScreenWidth);
+
+        lbUser.setFont(MyStyle.MediumLabelFont);
+        lbUser.setHorizontalAlignment(JLabel.RIGHT);
+        Dimension lbUserSize = lbUser.getPreferredSize();
+        lbUser.setBounds(
+                MyConstants.ScreenWidth - closeButton.getWidth() - MyConstants.VerySmallMargin - lbUserSize.width,
+                (MyConstants.ToolbarHeight-lbUserSize.height)/2,
+                lbUserSize.width,
+                lbUserSize.height
+        );
         
-        userPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        userPanel.setOpaque(true);
-        userPanel.setBackground(Color.red);
-        userPanel.setBounds(MyConstants.ScreenWidth- 100-MyConstants.VerySmallMargin - 300, 0, 300, MyConstants.ToolbarHeight);
-        usernameLabel.setText(ClientSideMain.CurrentUser.toString());
-        usernameLabel.setFont(MyStyle.MediumLabelFont);
-        userPanel.add(usernameLabel);
         
-        
+            
         toolbarPanel.add(closeButton);
-        toolbarPanel.add(userPanel);
+        toolbarPanel.add(lbUser);
+        toolbarPanel.add(lbTitle);
 
         /* Left Panel
         *  -Course
