@@ -12,12 +12,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import static java.awt.image.ImageObserver.ABORT;
-import static java.awt.image.ImageObserver.HEIGHT;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.TableCellRenderer;
@@ -30,6 +27,7 @@ public class CustomTableView extends JTable{
 
     public CustomTableView() {
         setRowHeight(MyConstants.LabelHeight);
+        
         setFont(MyStyle.TreeLabelFont);
         setOpaque(true);
         setBackground(MyStyle.BackgroundColor);
@@ -57,6 +55,5 @@ public class CustomTableView extends JTable{
                 return lbl;
             }
         });
-    }
-    
+    } 
 }

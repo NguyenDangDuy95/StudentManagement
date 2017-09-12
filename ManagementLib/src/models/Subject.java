@@ -19,17 +19,19 @@ public class Subject implements Serializable {
     private String subjectInfo;
     private String semester;
     private String courseID;
+    private String subjectCode;
 
     public Subject() {
     }
 
-    public Subject(String ID, String name, String numberOfLesson, String subjectInfo, String semester, String courseID) {
+    public Subject(String ID, String name, String numberOfLesson, String subjectInfo, String semester, String courseID, String subjectCode) {
         this.ID = ID;
         this.name = name;
         this.numberOfLesson = numberOfLesson;
         this.subjectInfo = subjectInfo;
         this.semester = semester;
         this.courseID = courseID;
+        this.subjectCode= subjectCode;
     }
 
     public String getID() {
@@ -80,6 +82,15 @@ public class Subject implements Serializable {
         this.courseID = courseID;
     }
 
+    public String getSubjectCode() {
+        return subjectCode;
+    }
+
+    public void setSubjectCode(String subjectCode) {
+        this.subjectCode = subjectCode;
+    }
+
+    
     @Override
     public String toString() {
         return this.name;

@@ -9,9 +9,11 @@ import helpers.ServerConnection;
 import java.io.IOException;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
+import models.Batch;
 import models.Message;
 import models.Request;
 import models.Subject;
+import models.SubjectBatch;
 
 /**
  *
@@ -24,13 +26,19 @@ public class SubjectController {
         return null;
     }
 
+    public static Vector<SubjectBatch> getSubjectListByBatch(String id) throws IOException, ClassNotFoundException{
+        Vector<SubjectBatch> subList = BatchController.getInstance().getBatchByID(id).getSbList();
+        return subList;
+    }
+    
     public static DefaultTableModel getTableModelByList(Vector<Subject> subList) {
         Vector header = new Vector();
-        header.addElement("Subject Name");
-        header.addElement("Number Of Lessons");
-        header.addElement("Semester");
-        header.addElement("Course");
-        header.addElement("Infomation");
+        header.add("Subject Name");
+        header.add("Number Of Lessons");
+        header.add("Semester");
+        header.add("Course");
+        header.add("Infomation");
+        header.add("Subject Code");
         Vector data = new Vector();
         for(Subject sub : subList){
             Vector row = new Vector();
@@ -38,7 +46,8 @@ public class SubjectController {
             row.addElement(sub.getNumberOfLesson());
             row.addElement("Semester " + sub.getSemester());
             row.addElement(CourseController.getInstance().getCourseByID(sub.getCourseID()).getName());
-            row.addElement(sub.getNumberOfLesson());
+            row.addElement(sub.getSubjectInfo());
+            row.addElement(sub.getSubjectCode());
             data.add(row);
         }
         DefaultTableModel dataModel = new DefaultTableModel(data, header);
@@ -70,7 +79,16 @@ public class SubjectController {
             }
         }
     }
-
+    
+    public static Subject getSubjectByIDInList(Vector<Subject> subList,String id){
+        for(Subject sub : subList){
+            if(sub.getID().equals(id)){
+                return sub;
+            }
+        }
+        return null;
+    }
+    
     public static void delete(Subject sub) {
         //request server to delete from database
         Message mgs = new Message(Request.DeleteMessage + Request.SubjectObject, sub.getID());

@@ -125,6 +125,8 @@ public class StudentController {
 
     public void add(Student std) {
         //request server to save to database
+        Message mgs = new Message(Request.AddMessage, Request.StudentObject);
+        mgs.setStudent(std);
         try {
             ServerConnection.oos.writeObject(std);
             ServerConnection.oos.flush();
@@ -137,6 +139,8 @@ public class StudentController {
 
     public void update(Student std) {
         //request server to update to database
+        Message mgs = new Message(Request.UpdateMessage, Request.StudentObject);
+        mgs.setStudent(std);
         try {
             ServerConnection.oos.writeObject(std);
             ServerConnection.oos.flush();
@@ -155,7 +159,8 @@ public class StudentController {
 
     public void delete(Student std) {
         //request server to delete from database
-        Message mgs = new Message(Request.DeleteMessage + Request.StudentObject, std.getStudentID());
+        Message mgs = new Message(Request.DeleteMessage, Request.StudentObject);
+        mgs.setStudent(std);
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();

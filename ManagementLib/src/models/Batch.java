@@ -18,7 +18,11 @@ public class Batch implements Serializable{
     private String name;
     private String courseID;
     private Vector<Student> stdList;
-    //private Employee currentTeacher;
+    private Employee currentTeacher;
+    private Subject currentSubject;
+    private Vector<Score> scList;
+    private Vector<Attendance> attList;
+    private Vector<SubjectBatch> sbList;
 
     public Batch() {
     }
@@ -61,13 +65,46 @@ public class Batch implements Serializable{
         this.stdList = stdList;
     }
 
-//    public Employee getCurrentTeacher() {
-//        return currentTeacher;
-//    }
-//
-//    public void setCurrentTeacher(Employee currentTeacher) {
-//        this.currentTeacher = currentTeacher;
-//    }
+    public Employee getCurrentTeacher() {
+        return currentTeacher;
+    }
+
+    public void setCurrentTeacher(Employee currentTeacher) {
+        this.currentTeacher = currentTeacher;
+    }
+
+    public Subject getCurrentSubject() {
+        return currentSubject;
+    }
+
+    public void setCurrentSubject(Subject currentSubject) {
+        this.currentSubject = currentSubject;
+    }
+
+    public Vector<Score> getScList() {
+        return scList;
+    }
+
+    public void setScList(Vector<Score> scList) {
+        this.scList = scList;
+    }
+
+    public Vector<Attendance> getAttList() {
+        return attList;
+    }
+
+    public void setAttList(Vector<Attendance> attList) {
+        this.attList = attList;
+    }
+
+    public Vector<SubjectBatch> getSbList() {
+        return sbList;
+    }
+
+    public void setSbList(Vector<SubjectBatch> sbList) {
+        this.sbList = sbList;
+    }
+    
     
     @Override
     public String toString() {

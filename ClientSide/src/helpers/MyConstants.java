@@ -15,7 +15,7 @@ import java.awt.Toolkit;
 public class MyConstants {
 
 
-    public static String SERVERIP = "10.10.40.16";
+    public static String SERVERIP = "192.168.1.81";
 
     public static int PORT = 3002;
     

@@ -17,6 +17,9 @@ import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -35,16 +38,15 @@ import views.base.BaseView;
  * @author Duy
  */
 public class MainView extends JFrame implements BaseView {
-    private JPanel container, leftPanel, toolbarPanel, bottomPanel, userPanel;
+    private JPanel container, leftPanel, toolbarPanel;
+    private BottomPanel bottomPanel;
     private MainPanel mainPanel;
     private InfoPanel infoPanel;
     private CloseButton closeButton;
     private JLabel lbUser,lbTitle;
     private CustomTreeView customTreeView;
-
-
-    public MainView() throws HeadlessException {
-        ClientSideMain.CurrentState = "MainView";
+    
+    public static void getData(){
         CourseController.getInstance().load();
         System.out.println("Done get Course");
         BatchController.getInstance().load();
@@ -53,6 +55,11 @@ public class MainView extends JFrame implements BaseView {
         System.out.println("Done get Employee");
         StudentController.getInstance().load();
         System.out.println("Done get Student");
+    }
+
+    public MainView() throws HeadlessException {
+        ClientSideMain.CurrentState = "MainView";
+        getData();
         initView();
         initCommand();
         draw();
@@ -64,7 +71,7 @@ public class MainView extends JFrame implements BaseView {
         leftPanel = new JPanel();
         mainPanel = new MainPanel();
         infoPanel = new InfoPanel();
-        bottomPanel = new JPanel();
+        bottomPanel = new BottomPanel();
         toolbarPanel = new JPanel();
         
         lbUser = new JLabel(ClientSideMain.CurrentUser.toString());
@@ -137,6 +144,13 @@ public class MainView extends JFrame implements BaseView {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 mainPanel.reload();
+                try {
+                    bottomPanel.reload();
+                } catch (IOException ex) {
+                    Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         leftPanel.add(customTreeView);
@@ -170,9 +184,6 @@ public class MainView extends JFrame implements BaseView {
         *  Display Salary of Employee
         *  Display more infomation of a Subject
         */
-        bottomPanel.setLayout(null);
-        bottomPanel.setOpaque(true);
-        bottomPanel.setBackground(Color.blue);
         bottomPanel.setBounds(leftPanel.getX() + leftPanel.getWidth() + MyConstants.VerySmallMargin, mainPanel.getY() + mainPanel.getHeight() + MyConstants.VerySmallMargin, MyConstants.BottonPanelWidth, MyConstants.BottomPanelHeight);
         add(container);
         container.add(toolbarPanel);

@@ -35,13 +35,31 @@ public class SQLHelper {
                 + "FROM BatchList";
     }
 
+    public static String getBatchScoreList(String id) {
+        return "SELECT *\n"
+                + "FROM Score\n"
+                + "WHERE Batch = \'" + id + "\'";
+    }
+
     public static String getCurrentTeacher(String batchID) {
-        return "SELECT EmployeeList.EmployeeID\n"
-                + "FROM BatchList,EmployeeList,SubjectTeacher\n"
-                + "WHERE BatchList.BatchID = SubjectTeacher.BatchID \n"
-                + "AND SubjectTeacher.EmployeeID = EmployeeList.EmployeeID \n"
-                + "AND SubjectTeacher.EndDate IS NULL\n"
-                + "AND BatchList.BatchID = \'"+batchID+"\';";
+        return "SELECT EmployeeID\n"
+                + "FROM SubjectTeacher\n"
+                + "WHERE SubjectTeacher.EndDate IS NULL\n"
+                + "AND SubjectTeacher.BatchID = \'" + batchID + "\';";
+    }
+
+    public static String getCurrentSubject(String batchID) {
+        return "SELECT SubjectID\n"
+                + "FROM SubjectTeacher\n"
+                + "WHERE EndDate IS NULL\n"
+                + "AND SubjectTeacher.BatchID = \'" + batchID + "\';";
+    }
+
+    public static String getCurrentAttendance(String batchID, String subjectID) {
+        return "SELECT * \n"
+                + "FROM Attendance\n"
+                + "WHERE BatchID = \'" + batchID + "\'\n"
+                + "AND SubjectID = \'" + subjectID + "\'";
     }
 
     //subject
@@ -52,6 +70,16 @@ public class SQLHelper {
      */
     public static String getSubjectListByCourseID(String id) {
         return String.format("SELECT * FROM SubjectList WHERE CourseID = \'%s\'", id);
+    }
+
+    public static String getSubjectByID(String id) {
+        return String.format("SELECT * FROM SubjectList WHERE SubjectID = \'%s\'", id);
+    }
+
+    public static String getSubjectListByBatchID(String id) {
+        return "SELECT *\n"
+                + "FROM SubjectTeacher\n"
+                + "WHERE SubjectTeacher.BatchID =\'"+ id +"\'";
     }
 
     //student
@@ -101,7 +129,7 @@ public class SQLHelper {
 
     //course
     public static String getCourseList() {
-        return "SELECT CourseID,CourseName\n"
+        return "SELECT *\n"
                 + "FROM Course";
     }
 }

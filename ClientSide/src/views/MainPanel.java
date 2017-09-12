@@ -6,6 +6,7 @@
 package views;
 
 import controllers.BatchController;
+import controllers.CourseController;
 import controllers.EmployeeController;
 import controllers.StudentController;
 import controllers.SubjectController;
@@ -31,6 +32,7 @@ import models.Employee;
 import models.Request;
 import models.Student;
 import models.Subject;
+import test.ClientSideMain;
 import userControls.Control;
 import userControls.CustomButton;
 import userControls.CustomTableView;
@@ -103,27 +105,30 @@ public class MainPanel extends JPanel implements BaseView {
 
         noDataPanel.add(lbNoData);
 
-        btnAdd.setVisible(false);
-        btnAdd.setFont(MyStyle.MediumLabelFont);
-        btnAdd.setBounds(
-                MyConstants.MainPanelWidth - MyConstants.VerySmallMargin - MyConstants.MainPanelButtonWidth,
-                MyConstants.MainPanelHeight - MyConstants.MediumMargin,
-                MyConstants.MainPanelButtonWidth,
-                MyConstants.MainPanelButtonHeight
-        );
+        if (!ClientSideMain.CurrentUserRole.equals(Request.StudentObject)) {
+            btnAdd.setVisible(false);
+            btnAdd.setFont(MyStyle.MediumLabelFont);
+            btnAdd.setBounds(
+                    MyConstants.MainPanelWidth - MyConstants.VerySmallMargin - MyConstants.MainPanelButtonWidth,
+                    MyConstants.MainPanelHeight - MyConstants.MediumMargin,
+                    MyConstants.MainPanelButtonWidth,
+                    MyConstants.MainPanelButtonHeight
+            );
 
-        btnDelete.setVisible(false);
-        btnDelete.setEnabled(false);
-        btnDelete.setFont(MyStyle.MediumLabelFont);
-        btnDelete.setBounds(
-                MyConstants.VerySmallMargin,
-                MyConstants.MainPanelHeight - MyConstants.MediumMargin,
-                MyConstants.MainPanelButtonWidth,
-                MyConstants.MainPanelButtonHeight
-        );
-
+            btnDelete.setVisible(false);
+            btnDelete.setEnabled(false);
+            btnDelete.setFont(MyStyle.MediumLabelFont);
+            btnDelete.setBounds(
+                    MyConstants.VerySmallMargin,
+                    MyConstants.MainPanelHeight - MyConstants.MediumMargin,
+                    MyConstants.MainPanelButtonWidth,
+                    MyConstants.MainPanelButtonHeight
+            );
+            sp.setBounds(MyConstants.VerySmallMargin, MyConstants.VerySmallMargin, MyConstants.MainPanelWidth - MyConstants.SmallMargin, MyConstants.MainPanelHeight - MyConstants.SmallMargin * 3);
+        } else {
+            sp.setBounds(MyConstants.VerySmallMargin, MyConstants.VerySmallMargin, MyConstants.MainPanelWidth - MyConstants.SmallMargin, MyConstants.MainPanelHeight - MyConstants.SmallMargin);
+        }
         sp.setVisible(false);
-        sp.setBounds(MyConstants.VerySmallMargin, MyConstants.VerySmallMargin, MyConstants.MainPanelWidth - MyConstants.SmallMargin, MyConstants.MainPanelHeight - MyConstants.SmallMargin * 3);
         sp.setViewportView(table);
         sp.getViewport().setBackground(MyStyle.BackgroundColor);
         sp.setViewportBorder(border);
@@ -178,12 +183,15 @@ public class MainPanel extends JPanel implements BaseView {
                             Vector<Student> stdList = new Vector<>();
                             stdList = batch.getStdList();
                             StudentController.getInstance().delete(stdList.get(index));
-                        } else if (SelectedObjectType.equals(MyConstants.AdminRole) || SelectedObjectType.equals(MyConstants.TeacherRole)) {
-                            EmployeeController.getInstance().delete(EmployeeController.getInstance().get().get(index));
+                        } else if (SelectedObjectType.equals(MyConstants.AdminRole)) {
+                            EmployeeController.getInstance().delete(EmployeeController.getInstance().getAdminList().get(index));
+                        } else if (SelectedObjectType.equals(MyConstants.TeacherRole)) {
+                            EmployeeController.getInstance().delete(EmployeeController.getInstance().getTeacherList().get(index));
                         } else {
                             InfoPanel.SelectedObjectType = "";
                         }
-
+                        MainView.getData();
+                        reload();
                     }
                 }
             }
@@ -192,6 +200,12 @@ public class MainPanel extends JPanel implements BaseView {
 
     public void reload() {
         if (SelectedObject != null) {
+            btnAdd.setEnabled(true);
+            if (table.getSelectedRow() == -1) {
+                btnDelete.setEnabled(false);
+            } else {
+                btnDelete.setEnabled(true);
+            }
             if (SelectedObjectType.equals(MyConstants.AdminRole)) {
                 //show admin list
                 Vector<Employee> adminList = new Vector<>();
@@ -201,7 +215,11 @@ public class MainPanel extends JPanel implements BaseView {
                     }
                 }
                 dataModel = EmployeeController.getInstance().getTableModelByList(adminList);
-
+                if (ClientSideMain.CurrentUserRole.equals(Request.AdminObject)) {
+                    btnAdd.setEnabled(true);
+                } else {
+                    btnAdd.setEnabled(false);
+                }
             }
             if (SelectedObjectType.equals(MyConstants.TeacherRole)) {
                 // show list of employee
@@ -213,6 +231,11 @@ public class MainPanel extends JPanel implements BaseView {
                 }
                 //create table model
                 dataModel = EmployeeController.getInstance().getTableModelByList(empList);
+                if (ClientSideMain.CurrentUserRole.equals(Request.AdminObject)) {
+                    btnAdd.setEnabled(true);
+                } else {
+                    btnAdd.setEnabled(false);
+                }
             }
             if (SelectedObjectType.equals("batch")) {
                 //show list of student in batch
@@ -240,8 +263,14 @@ public class MainPanel extends JPanel implements BaseView {
             }
             if (SelectedObjectType.equals(Request.CourseObject)) {
                 Course course = (Course) SelectedObject;
+                btnDelete.setVisible(false);
                 Vector<Batch> batchList = course.getBatchList();
                 dataModel = BatchController.getInstance().getTableModelFromList(batchList);
+                Vector<Course> courseList = CourseController.getInstance().get();
+                System.out.println("ahuhu");
+                if(course.getID().equals(courseList.get(courseList.size()-1).getID())){
+                    btnAdd.setEnabled(true);
+                }else btnAdd.setEnabled(false);
             }
 
             if (dataModel.getDataVector().size() > 0) {
@@ -263,6 +292,11 @@ public class MainPanel extends JPanel implements BaseView {
             table.setModel(dataModel);
             table.getColumnModel().getColumn(0).setWidth(MyConstants.SmallMargin * 5);
             table.getColumnModel().getColumn(table.getColumnCount() - 1).setWidth(MyConstants.SmallMargin * 5);
+            if (table.getSelectedRow() == -1) {
+                btnDelete.setEnabled(false);
+            } else {
+                btnDelete.setEnabled(true);
+            }
         }
         repaint();
     }

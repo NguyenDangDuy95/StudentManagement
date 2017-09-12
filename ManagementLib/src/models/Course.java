@@ -15,6 +15,7 @@ import java.util.Vector;
 public class Course implements Serializable{
     private String ID;
     private String name;
+    private String info;
     private Vector<Batch> batchList; 
     private Vector<Subject> subjectList;
 
@@ -28,9 +29,10 @@ public class Course implements Serializable{
         this.name = name;
     }
 
-    public Course(String ID, String name, Vector<Batch> batchList, Vector<Subject> subjectList) {
+    public Course(String ID, String name,String info, Vector<Batch> batchList, Vector<Subject> subjectList) {
         this.ID = ID;
         this.name = name;
+        this.info = info;
         this.batchList = batchList;
         this.subjectList = subjectList;
     }
@@ -67,6 +69,14 @@ public class Course implements Serializable{
         this.subjectList = subjectList;
     }  
 
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+    
     @Override
     public String toString() {
         return this.name;

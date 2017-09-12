@@ -49,7 +49,7 @@ public class VerificationService {
                     if (profile.getUserRole().equals(Request.StudentObject)) {
                         mgs.setTitle(Request.SuccessMessage);
                         mgs.setBody(Request.StudentObject);
-                        mgs.setEmployee(EmployeeDataService.getEmployeeByID(profile.getUserID()));
+                        mgs.setStudent(StudentDataService.GetStudentByID(profile.getUserID()));
                     }
                     break;
                 } else {

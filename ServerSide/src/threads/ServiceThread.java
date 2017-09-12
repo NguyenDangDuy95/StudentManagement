@@ -17,6 +17,7 @@ import services.BatchDataService;
 import services.CourseDataService;
 import services.EmployeeDataService;
 import services.StudentDataService;
+import services.SubjectDataService;
 import services.VerificationService;
 
 /**
@@ -70,13 +71,46 @@ public class ServiceThread extends Thread {
                         oos.flush();
                         continue;
                     }
-                    
                     if(message.getTitle().equals(Request.GetBatchList)){
                         oos.writeObject(BatchDataService.getFullBatchList());
                         oos.flush();
                         continue;
                     }
-                                       
+                    
+                    if(message.getTitle().equals(Request.DeleteMessage)){
+                        if(message.getBody().equals(Request.StudentObject)){
+                        
+                        }
+                        if(message.getBody().equals(Request.SubjectObject)){
+                        
+                        }
+                        if(message.getBody().equals(Request.EmployeeObject)){
+                        
+                        }
+                    }
+                       
+                    if(message.getTitle().equals(Request.UpdateMessage)){
+                        if(message.getBody().equals(Request.StudentObject)){
+                        
+                        }
+                        if(message.getBody().equals(Request.SubjectObject)){
+                        
+                        }
+                        if(message.getBody().equals(Request.EmployeeObject)){
+                        
+                        }
+                    }
+                    if(message.getTitle().equals(Request.AddMessage)){
+                        if(message.getBody().equals(Request.StudentObject)){
+                        
+                        }
+                        if(message.getBody().equals(Request.SubjectObject)){
+                        
+                        }
+                        if(message.getBody().equals(Request.EmployeeObject)){
+                        
+                        }
+                    }
                     if (message.getTitle().equals(Request.Verification)) {
                         verify(message.getBody());
                         continue;
@@ -92,7 +126,7 @@ public class ServiceThread extends Thread {
             ois.close();
             socketOfServer.close();
         } catch (IOException | ClassNotFoundException | SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage()+ "ahihi");
         }
     }
 

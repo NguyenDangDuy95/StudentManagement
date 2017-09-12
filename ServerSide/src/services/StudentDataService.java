@@ -26,30 +26,36 @@ public class StudentDataService {
 
     public static Student GetStudentByID(String id) throws SQLException {
         ResultSet rs = DatabaseConnection.getExecutedResultSet(SQLHelper.getStudentByID(id));
-        rs.next();
-        Student std = new Student(
-                rs.getString("StudentID"),
-                rs.getString("FirstName"),
-                rs.getString("LastName"),
-                rs.getString("CourseID"),
-                rs.getString("BatchID"),
-                MyConstants.getGender(rs.getString("Gender")),
-                rs.getDate("BirthDay"),
-                rs.getString("Addresss"),
-                rs.getString("BirthPlace"),
-                rs.getString("PersonalID"),
-                rs.getString("PhoneNumber"),
-                rs.getString("Email"),
-                rs.getString("FatherName"),
-                rs.getString("FatherJob"),
-                rs.getString("MotherName"),
-                rs.getString("MotherJob"),
-                rs.getString("ParentPhone"),
-                rs.getString("Scholarship"),
-                rs.getDate("StartDate"),
-                rs.getDate("EndDate")
-        );
-        return std;
+        if (rs.next() == false) {
+        } else {
+
+            Student std = new Student(
+                    rs.getString("StudentID"),
+                    rs.getString("FirstName"),
+                    rs.getString("LastName"),
+                    rs.getString("CourseID"),
+                    rs.getString("BatchID"),
+                    MyConstants.getGender(rs.getString("Gender")),
+                    rs.getDate("BirthDay"),
+                    rs.getString("Addresss"),
+                    rs.getString("BirthPlace"),
+                    rs.getString("PersonalID"),
+                    rs.getString("PhoneNumber"),
+                    rs.getString("Email"),
+                    rs.getString("FatherName"),
+                    rs.getString("FatherJob"),
+                    rs.getString("MotherName"),
+                    rs.getString("MotherJob"),
+                    rs.getString("ParentPhone"),
+                    rs.getString("Scholarship"),
+                    rs.getDate("StartDate"),
+                    rs.getDate("EndDate")
+            );
+
+            return std;
+
+        }
+        return null;
     }
 
     public static Vector<Student> GetStudentList() throws SQLException {
