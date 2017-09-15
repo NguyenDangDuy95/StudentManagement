@@ -120,4 +120,10 @@ public class StudentDataService {
         boolean result = csmt.execute();
         System.out.println(result);
     }
+    
+    public static boolean DeleteStudent(Student std){
+        boolean result = DatabaseConnection.getUpdateResultSet(SQLHelper.DeleteStudent(std.getStudentID()));
+        return result;
+    } 
+    
 }

@@ -79,11 +79,11 @@ public class ServiceThread extends Thread {
                     
                     if(message.getTitle().equals(Request.DeleteMessage)){
                         if(message.getBody().equals(Request.StudentObject)){
-                            
+                            oos.writeBoolean(StudentDataService.DeleteStudent(message.getStudent()));
+                            oos.flush();
+                            continue;
                         }
-                        if(message.getBody().equals(Request.SubjectObject)){
                         
-                        }
                         if(message.getBody().equals(Request.EmployeeObject)){
                         
                         }
