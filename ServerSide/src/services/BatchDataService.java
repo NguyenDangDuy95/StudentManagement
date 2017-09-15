@@ -7,11 +7,15 @@ package services;
 
 import helpers.DatabaseConnection;
 import helpers.SQLHelper;
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 import models.Attendance;
 import models.Batch;
+import models.Gender;
+import models.Score;
+import models.Student;
 
 /**
  *
@@ -53,7 +57,7 @@ public class BatchDataService {
             }
 
             ResultSet currentSubject = DatabaseConnection.getExecutedResultSet(SQLHelper.getCurrentSubject(batch.getId()));
-            if (currentSubject.next()==false) {
+            if (currentSubject.next() == false) {
                 System.out.println("No current Subject");
             } else {
                 do {
@@ -64,26 +68,64 @@ public class BatchDataService {
             batch.setAttList(getCurrentSubjectAttendance(batch));
             batch.setSbList(SubjectDataService.getSubjectListByBatchID(batch.getId()));
             batchList.addElement(batch);
-            
-            
+
         }
         return batchList;
     }
-    private static Vector<Attendance> getCurrentSubjectAttendance(Batch batch) throws SQLException{
+
+    private static Vector<Attendance> getCurrentSubjectAttendance(Batch batch) throws SQLException {
         ResultSet rs = DatabaseConnection.getExecutedResultSet(SQLHelper.getCurrentAttendance(batch.getId(), batch.getCurrentSubject().getID()));
         Vector<Attendance> attList = new Vector<>();
-        if(rs.next()==false){
-        
-        }else{
-            do{
+        if (rs.next() == false) {
+
+        } else {
+            do {
                 Attendance att = new Attendance();
                 att.setStudentID(rs.getString("StudentID"));
                 att.setBatchID(batch.getId());
+                att.setCourseID(rs.getString("CourseID"));
                 att.setSubjectID(batch.getCurrentSubject().getID());
-                att.setStatus(rs.getString("Statuss").equals("1")?"X":"V");
+                String a = rs.getString("Statuss");
+                if(rs.getString("Statuss")== null){
+                    att.setStatus("");
+                }else if(rs.getString("Statuss").equals("1")){
+                    att.setStatus("X");
+                }else att.setStatus("V");
+                
                 attList.add(att);
-            }while(rs.next());
+            } while (rs.next());
         }
         return attList;
+    }
+
+    public static void updateBatch(Batch batch, String type) throws SQLException {
+
+        if (type.equals("attendance")) {
+            for (Student std : batch.getStdList()) {
+                DatabaseConnection.getUpdateResultSet(SQLHelper.deleteAttendance(std.getStudentID(), batch.getCurrentSubject().getID()));
+            }
+            for (Attendance att : batch.getAttList()) {
+                DatabaseConnection.getUpdateResultSet(SQLHelper.insertAttendance(att));
+            }
+        } else {
+            for (Score sc : batch.getScList()) {
+                UpdateScore(sc);
+            }
+        }
+
+    }
+
+    public static void UpdateScore(Score sc) throws SQLException {
+        CallableStatement csmt = DatabaseConnection.con.prepareCall("{call updateScore(?,?,?,?,?)}");
+        csmt.setString(1, sc.getStudentID());
+        csmt.setString(2, sc.getSubjectID());
+        csmt.setInt(3, 1);
+        if(sc.getTheoryScore()!= null){
+            csmt.setDouble(4, Double.parseDouble(sc.getTheoryScore()));
+        }else csmt.setNull(4, java.sql.Types.DECIMAL);
+        if(sc.getActScore()!= null){
+            csmt.setDouble(5, Double.parseDouble(sc.getActScore()));
+        }else csmt.setNull(5, java.sql.Types.DECIMAL);
+        csmt.execute();
     }
 }

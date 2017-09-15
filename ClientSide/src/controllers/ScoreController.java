@@ -14,8 +14,7 @@ import models.Score;
  * @author DUY
  */
 public class ScoreController {
-    public static DefaultTableModel getTableModel(Vector<Score> scList){
+    public static void SendDataToServer(){
         
-        return null;
     }
 }

@@ -18,16 +18,17 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
  * @author DUY
  */
-public class CustomTableView extends JTable{
+public class CustomTableView extends JTable {
 
     public CustomTableView() {
         setRowHeight(MyConstants.LabelHeight);
-        
+
         setFont(MyStyle.TreeLabelFont);
         setOpaque(true);
         setBackground(MyStyle.BackgroundColor);
@@ -42,18 +43,20 @@ public class CustomTableView extends JTable{
                 JLabel lbl = (JLabel) tcr.getTableCellRendererComponent(table,
                         value, isSelected, hasFocus, row, column);
                 lbl.setForeground(Color.WHITE);
-                if(column==0){
+                if (column == 0) {
                     lbl.setPreferredSize(new Dimension(MyConstants.MainPanelButtonWidth, MyConstants.MainPanelButtonHeight));
                     lbl.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
-                }else {
-                    if(column == getColumnCount()-1)lbl.setPreferredSize(new Dimension(MyConstants.MainPanelButtonWidth, MyConstants.MainPanelButtonHeight));
+                } else {
+                    if (column == getColumnCount() - 1) {
+                        lbl.setPreferredSize(new Dimension(MyConstants.MainPanelButtonWidth, MyConstants.MainPanelButtonHeight));
+                    }
                     lbl.setBorder(new MatteBorder(1, 0, 1, 1, Color.BLACK));
                 }
-                lbl.setBackground(MyStyle.PrimaryColor);              
+                lbl.setBackground(MyStyle.PrimaryColor);
                 lbl.setFont(new Font(MyStyle.TreeLabelFont.getName(), MyStyle.TreeLabelFont.getStyle(), MyStyle.TreeLabelFont.getSize() + 2));
                 lbl.setHorizontalAlignment(SwingConstants.CENTER);
                 return lbl;
             }
         });
-    } 
+    }
 }

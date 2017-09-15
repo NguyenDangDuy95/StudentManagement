@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import models.Batch;
+import models.Course;
 import models.Message;
 import models.Request;
 
@@ -83,13 +84,17 @@ public class BatchController {
         return _batchList;
     }
 
-    public void add(Batch batch) {
+    public void add(Course course) {
         //request server to save to database
-
+        Batch lastestBatch = _batchList.get(_batchList.size()-1);
+        String id = lastestBatch.getId().trim();
+        int numberOfBatch = Integer.parseInt(id.substring(1));
+        Batch newBatch = new Batch("B"+numberOfBatch, "Batch "+numberOfBatch, course.getID());
+        
         Message mgs = new Message();
         mgs.setTitle(Request.AddMessage);
         mgs.setBody(Request.BatchObject);
-        mgs.setBatch(batch);
+        mgs.setBatch(newBatch);
         try {
             ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
@@ -97,7 +102,7 @@ public class BatchController {
 
         }
         //save temp to list
-        _batchList.addElement(batch);
+        _batchList.addElement(newBatch);
     }
 
     public void update(Batch batch) {
@@ -122,6 +127,28 @@ public class BatchController {
         }
     }
 
+    public void update(Batch batch,String target) {
+        //request server to update to database
+        Message mgs = new Message();
+        mgs.setTitle(Request.UpdateMessage);
+        mgs.setBody(target);
+        mgs.setBatch(batch);
+        try {
+            ServerConnection.oos.writeObject(mgs);
+            ServerConnection.oos.flush();
+        } catch (IOException ex) {
+
+        }
+
+        //update to list AUTO
+        for (Batch b : _batchList) {
+            if (b.getId().equals(batch.getId())) {
+                b = batch;
+                break;
+            }
+        }
+    }
+    
     public void delete(Batch batch) {
         //request server to delete from database
         Message mgs = new Message(Request.DeleteMessage, Request.BatchObject);

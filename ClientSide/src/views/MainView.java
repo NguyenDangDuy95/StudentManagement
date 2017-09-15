@@ -13,8 +13,9 @@ import helpers.MyConstants;
 import helpers.MyStyle;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.HeadlessException;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
@@ -23,14 +24,11 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import models.Employee;
 import test.ClientSideMain;
 import userControls.CloseButton;
 import userControls.CustomTreeView;
-import userControls.GradientPanel;
 import views.base.BaseView;
 
 /**
@@ -38,6 +36,7 @@ import views.base.BaseView;
  * @author Duy
  */
 public class MainView extends JFrame implements BaseView {
+    public static boolean IsAdd = false;
     private JPanel container, leftPanel, toolbarPanel;
     private BottomPanel bottomPanel;
     private MainPanel mainPanel;
@@ -169,6 +168,14 @@ public class MainView extends JFrame implements BaseView {
                 System.out.println("ahihi");
             }
         });
+        mainPanel.btnAdd.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                infoPanel.reloadDataModel();
+            }
+            
+        });
+        
         /*Info Panel
         * Clear infomation of Object
         * Edit
@@ -179,6 +186,7 @@ public class MainView extends JFrame implements BaseView {
                 MyConstants.InfoPanelWidth,
                 MyConstants.InfoPanelHEight
         );
+        
         /* Bottom Panel
         *  Display all Score of Student
         *  Display Salary of Employee
@@ -195,5 +203,15 @@ public class MainView extends JFrame implements BaseView {
 
     @Override
     public void initCommand() {
+        addPropertyChangeListener("IsAdd", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if(IsAdd){
+                    mainPanel.setEnabled(false);
+                    customTreeView.setEnabled(false);
+                    
+                }
+            }
+        });
     }
 }

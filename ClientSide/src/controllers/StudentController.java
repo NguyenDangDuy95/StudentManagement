@@ -7,9 +7,11 @@ package controllers;
 
 import helpers.ServerConnection;
 import java.io.IOException;
+import java.sql.Date;
 import models.Student;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
+import models.Batch;
 import models.Gender;
 import models.Message;
 import models.Request;
@@ -63,6 +65,32 @@ public class StudentController {
         return dataModel;
     }
 
+    public DefaultTableModel getAddTableModel() {
+        Vector header = new Vector();
+        header.add("Properties");
+        header.add("Value");
+        Vector data = new Vector();
+        getInfoRow(data, "First Name", "");
+        getInfoRow(data, "Last Name", "");
+        getInfoRow(data, "Gender", "");
+        getInfoRow(data, "Birth Day", "");
+        getInfoRow(data, "Birth Place", "");
+        getInfoRow(data, "Address", "");
+        getInfoRow(data, "Personal ID", "");
+        getInfoRow(data, "Phone Number", "");
+        getInfoRow(data, "Email", "");
+        getInfoRow(data, "Father Name", "");
+        getInfoRow(data, "Father Job", "");
+        getInfoRow(data, "Mother Name", "");
+        getInfoRow(data, "Mother Job", "");
+        getInfoRow(data, "Parent Phone", "");
+        getInfoRow(data, "Scholarship", "");
+        getInfoRow(data, "Start Date", "");
+        getInfoRow(data, "End Date", "");
+        DefaultTableModel dataModel = new DefaultTableModel(data, header);
+        return dataModel;
+    }
+    
     private void getInfoRow(Vector data, String prop, Object value) {
         Vector row = new Vector();
         row.add(prop);
@@ -95,7 +123,47 @@ public class StudentController {
         DefaultTableModel dataModel = new DefaultTableModel(data, header);
         return dataModel;
     }
-
+    public Student getStudentFromDataList(Vector<String> data,Batch batch){
+        Date birthDay,startDate,endDate;
+        try{
+            birthDay = Date.valueOf(data.elementAt(3));
+        }catch(Exception e){
+            birthDay = null;
+        }
+        try{
+            startDate = Date.valueOf(data.elementAt(15));
+        }catch(Exception e){
+            startDate = null;
+        }
+        try{
+            endDate = Date.valueOf(data.elementAt(16));
+        }catch(Exception e){
+            endDate = null;
+        }
+        Student std = new Student(
+                "",
+                data.elementAt(0),
+                data.elementAt(1),
+                batch.getCourseID(),
+                batch.getId(),
+                (data.elementAt(2).equals("Male")?Gender.Male:Gender.Female),
+                birthDay,
+                data.elementAt(5),
+                data.elementAt(4),
+                data.elementAt(6),
+                data.elementAt(7),
+                data.elementAt(8),
+                data.elementAt(9),
+                data.elementAt(10),
+                data.elementAt(11),
+                data.elementAt(12),
+                data.elementAt(13),
+                data.elementAt(14),
+                startDate,
+                endDate
+        );
+        return std;       
+    }
     public void load() {
         //request to server to get student list       
         try {
@@ -128,7 +196,7 @@ public class StudentController {
         Message mgs = new Message(Request.AddMessage, Request.StudentObject);
         mgs.setStudent(std);
         try {
-            ServerConnection.oos.writeObject(std);
+            ServerConnection.oos.writeObject(mgs);
             ServerConnection.oos.flush();
         } catch (IOException ex) {
 

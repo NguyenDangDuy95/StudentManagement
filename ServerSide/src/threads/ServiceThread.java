@@ -79,7 +79,7 @@ public class ServiceThread extends Thread {
                     
                     if(message.getTitle().equals(Request.DeleteMessage)){
                         if(message.getBody().equals(Request.StudentObject)){
-                        
+                            
                         }
                         if(message.getBody().equals(Request.SubjectObject)){
                         
@@ -93,16 +93,19 @@ public class ServiceThread extends Thread {
                         if(message.getBody().equals(Request.StudentObject)){
                         
                         }
-                        if(message.getBody().equals(Request.SubjectObject)){
-                        
+                        if(message.getBody().equals("attendance")){
+                            BatchDataService.updateBatch(message.getBatch(), "attendance");
+                        }
+                        if(message.getBody().equals("score")){
+                            BatchDataService.updateBatch(message.getBatch(), "score");
                         }
                         if(message.getBody().equals(Request.EmployeeObject)){
                         
                         }
                     }
                     if(message.getTitle().equals(Request.AddMessage)){
-                        if(message.getBody().equals(Request.StudentObject)){
-                        
+                        if(message.getBody().equals(Request.StudentObject)){                           
+                            StudentDataService.AddStudent(message.getStudent());
                         }
                         if(message.getBody().equals(Request.SubjectObject)){
                         

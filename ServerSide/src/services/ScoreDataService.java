@@ -21,7 +21,7 @@ public class ScoreDataService {
         ResultSet rs = DatabaseConnection.getExecutedResultSet(SQLHelper.getBatchScoreList(id));
         Vector<Score> sList = new Vector<>();
         while(rs.next()){
-            Score sc = new Score(rs.getString("StudentID"), rs.getString("SubjectID"), rs.getInt("NumberOfExams"), rs.getDouble("TheoryScore"), rs.getDouble("TheoryScore"));
+            Score sc = new Score(rs.getString("StudentID"), rs.getString("SubjectID"), rs.getInt("NumberOfExams"),String.valueOf(rs.getDouble("TheoryScore")), String.valueOf(rs.getDouble("PracticalScore")));
             sList.add(sc);
         }
         return sList;

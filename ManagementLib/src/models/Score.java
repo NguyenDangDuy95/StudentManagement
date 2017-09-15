@@ -15,13 +15,13 @@ public class Score implements Serializable{
     private String studentID;
     private String subjectID;
     private int numberOfExam;
-    private double theoryScore;
-    private double actScore;
+    private String theoryScore;
+    private String actScore;
 
     public Score() {
     }
 
-    public Score(String studentID, String subjectID, int numberOfExam, double theoryScore, double actScore) {
+    public Score(String studentID, String subjectID, int numberOfExam, String theoryScore, String actScore) {
         this.studentID = studentID;
         this.subjectID = subjectID;
         this.numberOfExam = numberOfExam;
@@ -53,19 +53,19 @@ public class Score implements Serializable{
         this.numberOfExam = numberOfExam;
     }
 
-    public double getTheoryScore() {
+    public String getTheoryScore() {
         return theoryScore;
     }
 
-    public void setTheoryScore(double theoryScore) {
+    public void setTheoryScore(String theoryScore) {
         this.theoryScore = theoryScore;
     }
 
-    public double getActScore() {
+    public String getActScore() {
         return actScore;
     }
 
-    public void setActScore(double actScore) {
+    public void setActScore(String actScore) {
         this.actScore = actScore;
     }
     

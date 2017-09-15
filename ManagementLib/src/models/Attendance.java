@@ -16,6 +16,7 @@ public class Attendance implements Serializable{
     private String subjectID;
     private String batchID;
     private String status;
+    private String courseID;
 
     public Attendance() {
     }
@@ -53,4 +54,13 @@ public class Attendance implements Serializable{
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(String courseID) {
+        this.courseID = courseID;
+    }
+    
 }

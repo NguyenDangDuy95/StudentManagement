@@ -51,10 +51,11 @@ public class MainPanel extends JPanel implements BaseView {
     private boolean isSelected, hasData;
     private JScrollPane sp;
     private Border border;
-    private CustomButton btnDelete, btnAdd;
+    private CustomButton btnDelete;
     private JPanel noDataPanel;
     private JLabel lbNoData;
-
+    
+    public CustomButton btnAdd;
     public CustomTableView table;
 
     public MainPanel() {
@@ -196,6 +197,27 @@ public class MainPanel extends JPanel implements BaseView {
                 }
             }
         });
+        btnAdd.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                
+                if(SelectedObjectType.equals(Request.CourseObject)){
+                    Course course = (Course) SelectedObject;
+                    boolean result = Control.getResult(MyConstants.OptionDialogType.Confirm, "Add", "Are you sure you want to add new Batch to "+course.getName());
+                    if(result){
+                        
+                        BatchController.getInstance().add(course);
+                        reload();
+                    }
+                }
+                if(SelectedObjectType.equals(Request.BatchObject)){
+                    Batch batch = (Batch) SelectedObject;
+                    InfoPanel.SelectedObjectType = Request.AddMessage;
+                    InfoPanel.SelectedObject = batch;
+                    
+                }
+            }            
+        });
     }
 
     public void reload() {
@@ -263,7 +285,7 @@ public class MainPanel extends JPanel implements BaseView {
             }
             if (SelectedObjectType.equals(Request.CourseObject)) {
                 Course course = (Course) SelectedObject;
-                btnDelete.setVisible(false);
+                
                 Vector<Batch> batchList = course.getBatchList();
                 dataModel = BatchController.getInstance().getTableModelFromList(batchList);
                 Vector<Course> courseList = CourseController.getInstance().get();
@@ -297,6 +319,9 @@ public class MainPanel extends JPanel implements BaseView {
             } else {
                 btnDelete.setEnabled(true);
             }
+        }
+        if(SelectedObjectType.equals(Request.CourseObject)){
+            btnDelete.setVisible(false);
         }
         repaint();
     }
