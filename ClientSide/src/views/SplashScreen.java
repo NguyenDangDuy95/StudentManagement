@@ -58,7 +58,7 @@ public class SplashScreen extends JWindow{
     {
         this.setVisible(true);
         try {
-            Thread.sleep(5000);
+            Thread.sleep(2000);
         } catch (InterruptedException ex) {
             Logger.getLogger(SplashScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
