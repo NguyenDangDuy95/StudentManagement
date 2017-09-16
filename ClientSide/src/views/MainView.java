@@ -14,6 +14,8 @@ import helpers.MyStyle;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
@@ -26,6 +28,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import models.Employee;
+import models.Request;
 import test.ClientSideMain;
 import userControls.CloseButton;
 import userControls.CustomTreeView;
@@ -118,6 +122,24 @@ public class MainView extends JFrame implements BaseView {
                 lbUserSize.width,
                 lbUserSize.height
         );
+        lbUser.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(ClientSideMain.CurrentUserRole.equals(Request.AdminObject)){
+                    InfoPanel.SelectedObjectType = Request.AdminObject;                   
+                    InfoPanel.SelectedObject = ClientSideMain.CurrentUser;
+                }
+                if(ClientSideMain.CurrentUserRole.equals(Request.EmployeeObject)){
+                    InfoPanel.SelectedObjectType = Request.EmployeeObject;                   
+                    InfoPanel.SelectedObject = ClientSideMain.CurrentUser;
+                }
+                if(ClientSideMain.CurrentUserRole.equals(Request.StudentObject)){
+                    InfoPanel.SelectedObjectType = Request.StudentObject;                   
+                    InfoPanel.SelectedObject = ClientSideMain.CurrentUser;
+                }
+                infoPanel.reloadDataModel();
+            }         
+        });
         
         
             
@@ -167,6 +189,12 @@ public class MainView extends JFrame implements BaseView {
                 infoPanel.reloadDataModel();
                 System.out.println("ahihi");
             }
+        });
+        mainPanel.table.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                infoPanel.reloadDataModel();
+            }          
         });
         mainPanel.btnAdd.addMouseListener(new MouseAdapter() {
             @Override

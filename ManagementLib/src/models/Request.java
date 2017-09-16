@@ -33,7 +33,7 @@ public class Request implements Serializable{
     
     public static String StudentObject = "student";
     public static String EmployeeObject = "employee";
-    public static String AdminObject = "adminstrator";
+    public static String AdminObject = "admin";
     public static String BatchObject = "batch";
     public static String CourseObject = "course";
     public static String SubjectObject = "subject";

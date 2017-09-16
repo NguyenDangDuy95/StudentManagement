@@ -35,6 +35,7 @@ import models.Subject;
 import test.ClientSideMain;
 import userControls.Control;
 import userControls.CustomButton;
+import userControls.CustomOptionDialog;
 import userControls.CustomTableView;
 import views.base.BaseView;
 
@@ -48,18 +49,18 @@ public class MainPanel extends JPanel implements BaseView {
     public static String SelectedObjectType;
 
     private DefaultTableModel dataModel;
-    private boolean isSelected, hasData;
+    private boolean hasData;
     private JScrollPane sp;
     private Border border;
     private CustomButton btnDelete;
     private JPanel noDataPanel;
     private JLabel lbNoData;
-    
+
     public CustomButton btnAdd;
     public CustomTableView table;
 
     public MainPanel() {
-        isSelected = false;
+
         initView();
         initCommand();
         draw();
@@ -146,10 +147,8 @@ public class MainPanel extends JPanel implements BaseView {
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-
                 int index = table.getSelectedRow();
                 if (index != -1) {
-                    isSelected = true;
                     btnDelete.setEnabled(true);
                     if (SelectedObjectType.equals("batch")) {
                         //show list of student in batch
@@ -174,8 +173,8 @@ public class MainPanel extends JPanel implements BaseView {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (table.getSelectedRow() > -1) {
-                    boolean result = Control.getResult(MyConstants.OptionDialogType.Confirm, "Delete", "Are you sure to delete?");
-                    if (result) {
+                    Control.getResult(MyConstants.OptionDialogType.Confirm, "Delete", "Are you sure to delete?");
+                    if (CustomOptionDialog.isAccepted) {
                         int index = table.getSelectedRow();
 
                         if (SelectedObjectType.equals("batch")) {
@@ -184,13 +183,19 @@ public class MainPanel extends JPanel implements BaseView {
                             Vector<Student> stdList = new Vector<>();
                             stdList = batch.getStdList();
                             StudentController.getInstance().delete(stdList.get(index));
-                        } else if (SelectedObjectType.equals(MyConstants.AdminRole)) {
-                            EmployeeController.getInstance().delete(EmployeeController.getInstance().getAdminList().get(index));
-                        } else if (SelectedObjectType.equals(MyConstants.TeacherRole)) {
-                            EmployeeController.getInstance().delete(EmployeeController.getInstance().getTeacherList().get(index));
-                        } else {
-                            InfoPanel.SelectedObjectType = "";
+                            stdList.removeElementAt(index);
+                            batch.setStdList(stdList);
+
                         }
+                        if (SelectedObjectType.equals(MyConstants.AdminRole)) {
+                            EmployeeController.getInstance().delete(EmployeeController.getInstance().getAdminList().get(index));
+                        }
+                        if (SelectedObjectType.equals(MyConstants.TeacherRole)) {
+                            EmployeeController.getInstance().delete(EmployeeController.getInstance().getTeacherList().get(index));
+                        }
+
+                        InfoPanel.SelectedObjectType = "";
+
                         MainView.getData();
                         reload();
                     }
@@ -200,23 +205,23 @@ public class MainPanel extends JPanel implements BaseView {
         btnAdd.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                
-                if(SelectedObjectType.equals(Request.CourseObject)){
+
+                if (SelectedObjectType.equals(Request.CourseObject)) {
                     Course course = (Course) SelectedObject;
-                    boolean result = Control.getResult(MyConstants.OptionDialogType.Confirm, "Add", "Are you sure you want to add new Batch to "+course.getName());
-                    if(result){
+                    Control.getResult(MyConstants.OptionDialogType.Confirm, "Add", "Are you sure you want to add new Batch to "+course.getName());
+                    if(CustomOptionDialog.isAccepted){
                         
                         BatchController.getInstance().add(course);
                         reload();
                     }
                 }
-                if(SelectedObjectType.equals(Request.BatchObject)){
+                if (SelectedObjectType.equals(Request.BatchObject)) {
                     Batch batch = (Batch) SelectedObject;
                     InfoPanel.SelectedObjectType = Request.AddMessage;
                     InfoPanel.SelectedObject = batch;
-                    
+
                 }
-            }            
+            }
         });
     }
 
@@ -255,8 +260,10 @@ public class MainPanel extends JPanel implements BaseView {
                 dataModel = EmployeeController.getInstance().getTableModelByList(empList);
                 if (ClientSideMain.CurrentUserRole.equals(Request.AdminObject)) {
                     btnAdd.setEnabled(true);
+                    btnDelete.setEnabled(true);
                 } else {
                     btnAdd.setEnabled(false);
+                    btnDelete.setEnabled(false);
                 }
             }
             if (SelectedObjectType.equals("batch")) {
@@ -280,19 +287,22 @@ public class MainPanel extends JPanel implements BaseView {
                         subList.add(sub);
                     }
                 }
+                btnAdd.setEnabled(false);
                 //create table model
                 dataModel = SubjectController.getTableModelByList(subList);
             }
             if (SelectedObjectType.equals(Request.CourseObject)) {
                 Course course = (Course) SelectedObject;
-                
+
                 Vector<Batch> batchList = course.getBatchList();
                 dataModel = BatchController.getInstance().getTableModelFromList(batchList);
                 Vector<Course> courseList = CourseController.getInstance().get();
                 System.out.println("ahuhu");
-                if(course.getID().equals(courseList.get(courseList.size()-1).getID())){
+                if (course.getID().equals(courseList.get(courseList.size() - 1).getID()) && ClientSideMain.CurrentUserRole.equals(Request.AdminObject)) {
                     btnAdd.setEnabled(true);
-                }else btnAdd.setEnabled(false);
+                } else {
+                    btnAdd.setEnabled(false);
+                }
             }
 
             if (dataModel.getDataVector().size() > 0) {
@@ -319,10 +329,14 @@ public class MainPanel extends JPanel implements BaseView {
             } else {
                 btnDelete.setEnabled(true);
             }
+
+            if (ClientSideMain.CurrentUserRole.equals(Request.AdminObject)) {
+                btnDelete.setVisible(true);
+            } else {
+                btnDelete.setVisible(false);
+            }
         }
-        if(SelectedObjectType.equals(Request.CourseObject)){
-            btnDelete.setVisible(false);
-        }
+
         repaint();
     }
 }

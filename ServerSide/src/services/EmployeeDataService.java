@@ -8,10 +8,14 @@ package services;
 import helpers.DatabaseConnection;
 import helpers.MyConstants;
 import helpers.SQLHelper;
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLType;
 import java.util.Vector;
 import models.Employee;
+import models.Gender;
+import models.Student;
 
 /**
  *
@@ -76,5 +80,31 @@ public class EmployeeDataService {
                 rs.getDate("EndDate")
         );
         return emp;
+    }
+        public static void UpdateEmployee(Employee emp) throws SQLException{
+        CallableStatement csmt = DatabaseConnection.con.prepareCall("{call updateEmployee(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+        csmt.setString(1, emp.getEmployeeID());
+        csmt.setString(2, emp.getFirstName());
+        csmt.setString(3,emp.getLastName());
+        csmt.setString(4, emp.getPositionName());
+        csmt.setString(5, String.valueOf(emp.getSalaryValue()));
+        csmt.setString(6, ((emp.getGender()==Gender.Male)?"Male":"Female"));
+        csmt.setDate(7, java.sql.Date.valueOf(emp.getBirthDay().toString()));
+        csmt.setString(8, emp.getPersonalID());
+        csmt.setString(9, emp.getEmail());
+        csmt.setString(10, emp.getPhoneNumber());
+        csmt.setString(11, emp.getAddress());
+        csmt.setString(12, emp.getBirthPlace());
+        csmt.setString(13, emp.getFatherName());
+        csmt.setString(14, emp.getMotherName());
+        csmt.setString(15, emp.getFatherJob());       
+        csmt.setString(16, emp.getMotherJob());
+        csmt.setString(17, emp.getParentPhone());
+        if(emp.getStartDate()!= null)csmt.setDate(18, java.sql.Date.valueOf(emp.getStartDate().toString()));
+        else csmt.setNull(18, java.sql.Types.DATE);
+        if(emp.getEndDate()!= null)csmt.setDate(18, java.sql.Date.valueOf(emp.getEndDate().toString()));
+        else csmt.setNull(19, java.sql.Types.DATE);
+        boolean result = csmt.execute();
+        System.out.println(result);
     }
 }

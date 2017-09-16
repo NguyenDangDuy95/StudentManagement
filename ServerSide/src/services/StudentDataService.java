@@ -119,11 +119,22 @@ public class StudentDataService {
         csmt.setDate(19, java.sql.Date.valueOf(std.getEndDate().toString()));
         boolean result = csmt.execute();
         System.out.println(result);
+        sendEmail(std);
+        
     }
     
     public static boolean DeleteStudent(Student std){
         boolean result = DatabaseConnection.getUpdateResultSet(SQLHelper.DeleteStudent(std.getStudentID()));
         return result;
     } 
+
+    private static void sendEmail(Student std) throws SQLException {
+        ResultSet rs = DatabaseConnection.getExecutedResultSet(SQLHelper.GetUserPassOfStudent(std));
+        if(rs.next()==false){}
+        else{
+            String content = "<h3>Welcome to Aptech!</h3><br/><p>This is your account in Aptech</p><br/><p><b>Username :</b> <span>"+rs.getString("Username")+"</span></p><br/><p><b>Password :</b> <span>"+rs.getString("Password")+"</span></p>";
+            EmailService.sendEmail(std.getEmail(), "Welcome to Aptech", content);
+        }     
+    }
     
 }

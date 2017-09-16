@@ -8,6 +8,7 @@ package controllers;
 import helpers.MyConstants;
 import helpers.ServerConnection;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import models.Employee;
@@ -72,6 +73,46 @@ public class EmployeeController {
         return dataModel;
     }
 
+    public Employee getEmployeeFromDataList(Vector<String> data,Employee user){
+        Date birthDay,startDate,endDate;
+        try{
+            birthDay = Date.valueOf(data.elementAt(5));
+        }catch(Exception e){
+            birthDay = null;
+        }
+        try{
+            startDate = Date.valueOf(data.elementAt(16));
+        }catch(Exception e){
+            startDate = null;
+        }
+        try{
+            endDate = Date.valueOf(data.elementAt(17));
+        }catch(Exception e){
+            endDate = null;
+        }
+        Employee emp = new Employee(
+                user.getEmployeeID(),
+                data.elementAt(0),
+                data.elementAt(1),
+                data.elementAt(2),
+                Integer.valueOf(data.elementAt(3)),
+                (data.elementAt(4).equals("Male")?Gender.Male:Gender.Female),
+                birthDay,
+                data.elementAt(8),
+                data.elementAt(10),
+                data.elementAt(9),
+                data.elementAt(7),
+                data.elementAt(6),
+                data.elementAt(11),
+                data.elementAt(13),
+                data.elementAt(12),
+                data.elementAt(14),
+                data.elementAt(15),
+                startDate,
+                endDate);
+        return emp;
+    }
+    
     private void getInfoRow(Vector data, String prop, Object value) {
         Vector row = new Vector();
         row.add(prop);

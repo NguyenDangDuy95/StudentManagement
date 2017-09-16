@@ -7,6 +7,8 @@ package userControls;
 
 import helpers.MyConstants;
 import helpers.MyStyle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JLabel;
@@ -27,27 +29,9 @@ public class Control {
     {
         //int result = JOptionPane.showConfirmDialog(null, createCenterLabel(MyConstants.QuitMessage), null, JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null);
         CustomOptionDialog ahihi = new CustomOptionDialog(type, title, message);
-        ahihi.addPropertyChangeListener("isClicked", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if (type == MyConstants.OptionDialogType.Message) {
-                    return;
-                }
-                System.exit(0);
-            }
-        });
+
     }
-    public static boolean getResult(MyConstants.OptionDialogType type,String title,String message){
+    public static void getResult(MyConstants.OptionDialogType type,String title,String message){
         CustomOptionDialog ahihi = new CustomOptionDialog(type, title, message);
-        ahihi.addPropertyChangeListener("isClicked", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if (type == MyConstants.OptionDialogType.Message) {
-                    return;
-                }
-                rs = true;
-            }
-        });
-        return rs;
     }
 }

@@ -44,6 +44,7 @@ public class CloseButton extends JButton{
             @Override
             public void mouseClicked(MouseEvent e) {
                 Control.createCustomDialog(MyConstants.OptionDialogType.Confirm, MyConstants.ExitTitle, MyConstants.QuitMessage);
+                if(CustomOptionDialog.isAccepted)System.exit(0);
             }
 
             @Override

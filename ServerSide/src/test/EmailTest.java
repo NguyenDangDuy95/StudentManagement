@@ -13,6 +13,9 @@ import services.EmailService;
  */
 public class EmailTest {
     public static void main(String[] args) {
-        System.out.println(EmailService.sendEmail("duy2112@gmail.com", "ahihi", "hello duy"));
+        String content = "<h3>Welcome to Aptech!</h3><br/><p>This is your account in Aptech</p><br/><p><b>Username :</b> <span></span></p><br/><p><b>Password :</b> <span></span></p><br/>";
+        
+        //EmailService.sendEmail(std.getEmail(), "Welcome to Aptech", content);
+        System.out.println(EmailService.sendEmail("duy2112@gmail.com", "ahihi", content));
     }
 }

@@ -114,10 +114,18 @@ public class SQLHelper {
     }
 
     public static String DeleteStudent(String id) {
-        return "DELETE FROM InformationStudent WHERE StudentID = \'"+id+"\'\n"
-                + "DELETE FROM Score WHERE StudentID = \'"+id+"\'\n"
-                + "DELETE FROM Attendance WHERE StudentID = \'"+id+"\'\n"
-                + "DELETE FROM StudentList WHERE StudentID = \'"+id+"\'";
+        return "DELETE FROM InformationStudent WHERE StudentID = \'" + id + "\'\n"
+                + "DELETE FROM Score WHERE StudentID = \'" + id + "\'\n"
+                + "DELETE FROM Attendance WHERE StudentID = \'" + id + "\'\n"
+                + "DELETE FROM StudentList WHERE StudentID = \'" + id + "\'";
+    }
+
+    public static String GetUserPassOfStudent(Student std) {
+        return "SELECT Username, Password \n"
+                + "FROM LoginAccount,StudentList\n"
+                + "WHERE LoginAccount.UserID = StudentList.StudentID \n"
+                + "AND PersonalID = \'"+std.getPersonalID()+"\' \n"
+                + "AND BatchID = \'"+std.getBatch()+"\'";
     }
 
     //employee
@@ -146,23 +154,25 @@ public class SQLHelper {
         return "SELECT *\n"
                 + "FROM Course";
     }
-    
-    
+
     //update attendance
-    public static String insertAttendance(Attendance att){
+    public static String insertAttendance(Attendance att) {
         String status;
-        if(att.getStatus().equals("X")||att.getStatus().equals("x")){
+        if (att.getStatus().equals("X") || att.getStatus().equals("x")) {
             status = "1";
-        }else if(att.getStatus().equals("V")||att.getStatus().equals("v")){
+        } else if (att.getStatus().equals("V") || att.getStatus().equals("v")) {
             status = "0";
-        }else status = "NULL";
-        return "INSERT INTO Attendance VALUES (\'"+att.getStudentID()+"\',\'"+att.getSubjectID()+"\',\'"+att.getCourseID()+"\',\'"+att.getBatchID()+"\',"+status+") ";
+        } else {
+            status = "NULL";
+        }
+        return "INSERT INTO Attendance VALUES (\'" + att.getStudentID() + "\',\'" + att.getSubjectID() + "\',\'" + att.getCourseID() + "\',\'" + att.getBatchID() + "\'," + status + ") ";
     }
-    public static String deleteAttendance(String studentId, String subjectId){
-        return "DELETE FROM Attendance WHERE StudentID=\'"+studentId+"\' AND SubjectID=\'"+subjectId+"\'";
+
+    public static String deleteAttendance(String studentId, String subjectId) {
+        return "DELETE FROM Attendance WHERE StudentID=\'" + studentId + "\' AND SubjectID=\'" + subjectId + "\'";
     }
-    
-    public static String deleteScore(Score sc){
-        return "DELETE FROM Score WHERE StudentID = \'"+sc.getStudentID()+"\' AND SubjectID= \'"+sc.getSubjectID()+"\'";
+
+    public static String deleteScore(Score sc) {
+        return "DELETE FROM Score WHERE StudentID = \'" + sc.getStudentID() + "\' AND SubjectID= \'" + sc.getSubjectID() + "\'";
     }
 }

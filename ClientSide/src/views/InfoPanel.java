@@ -5,6 +5,7 @@
  */
 package views;
 
+import controllers.BatchController;
 import controllers.EmployeeController;
 import controllers.StudentController;
 import helpers.MyConstants;
@@ -31,8 +32,10 @@ import models.Batch;
 import models.Employee;
 import models.Request;
 import models.Student;
+import test.ClientSideMain;
 import userControls.Control;
 import userControls.CustomButton;
+import userControls.CustomOptionDialog;
 import userControls.CustomTableView;
 import views.base.BaseView;
 
@@ -70,7 +73,21 @@ public class InfoPanel extends JPanel implements BaseView {
         table = new CustomTableView() {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return column != 0;
+                if ((SelectedObjectType.equals(Request.AdminObject) && ClientSideMain.CurrentUserRole.equals(Request.AdminObject)) || (SelectedObjectType.equals(Request.EmployeeObject) && ClientSideMain.CurrentUserRole.equals(Request.EmployeeObject))) {
+                    Employee emp = (Employee) SelectedObject;
+                    Employee user = (Employee) ClientSideMain.CurrentUser;
+                    if (emp.getEmployeeID().equals(user.getEmployeeID())) {
+                        return column != 0;
+                    }
+                }
+                if (SelectedObjectType.equals(Request.StudentObject) && ClientSideMain.CurrentUserRole.equals(Request.StudentObject)) {
+                    Student std = (Student) SelectedObject;
+                    Student user = (Student) ClientSideMain.CurrentUser;
+                    if (std.getStudentID().equals(user.getStudentID())) {
+                        return column != 0;
+                    }
+                }
+                return false;
             }
         };
         sp = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -141,8 +158,8 @@ public class InfoPanel extends JPanel implements BaseView {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (isTableChanged) {
-                    boolean result = Control.getResult(MyConstants.OptionDialogType.Confirm, "Cancel", "Do you want to cancel");
-                    if (result) {
+                    Control.getResult(MyConstants.OptionDialogType.Confirm, "Cancel", "Do you want to cancel");
+                    if (CustomOptionDialog.isAccepted) {
                         SelectedObjectType = "";
                         reloadDataModel();
                     }
@@ -170,6 +187,32 @@ public class InfoPanel extends JPanel implements BaseView {
                     }
                     Student std = StudentController.getInstance().getStudentFromDataList(valueList, batch);
                     StudentController.getInstance().add(std);
+                } else {
+                    int rowCount = table.getRowCount();
+                    Vector<String> valueList = new Vector();
+                    for (int i = 0; i < rowCount; i++) {
+                        Object value = table.getValueAt(i, 1);
+                        if (value.toString().equals("")) {
+                            Control.createCustomDialog(MyConstants.OptionDialogType.Message, "Warning", "You have to input all information");
+                            return;
+                        } else {
+                            valueList.addElement(value.toString());
+                        }
+                    }
+                    if (ClientSideMain.CurrentUserRole.equals(Request.EmployeeObject) || ClientSideMain.CurrentUserRole.equals(Request.AdminObject)) {
+                        Employee user = (Employee) ClientSideMain.CurrentUser;
+                        Employee emp = EmployeeController.getInstance().getEmployeeFromDataList(valueList, user);
+                        EmployeeController.getInstance().update(emp);
+                    }
+                    if (ClientSideMain.CurrentUserRole.equals(Request.StudentObject)) {
+                        Student user = (Student) ClientSideMain.CurrentUser;
+                        Student std = StudentController.getInstance().getStudentFromDataList(valueList, BatchController.getInstance().getBatchByID(user.getStudentID()));
+                        StudentController.getInstance().add(std);
+                    }
+
+                    btnSave.setEnabled(false);
+                    MainView.getData();
+                    reloadDataModel();
                 }
             }
 
@@ -182,10 +225,10 @@ public class InfoPanel extends JPanel implements BaseView {
             if (SelectedObjectType.equals(Request.AdminObject) || SelectedObjectType.equals(Request.EmployeeObject)) {
                 Employee emp = (Employee) SelectedObject;
                 dataModel = EmployeeController.getInstance().getInfoTableModel(emp);
-
             }
             if (SelectedObjectType.equals(Request.StudentObject)) {
                 Student std = (Student) SelectedObject;
+                Student user;
                 dataModel = StudentController.getInstance().getInfoTableModel(std);
             }
             if (SelectedObjectType.equals("")) {
@@ -213,12 +256,14 @@ public class InfoPanel extends JPanel implements BaseView {
                         btnSave.setEnabled(true);
                     }
                 });
+
             } else {
                 btnSave.setVisible(false);
                 btnCancel.setVisible(false);
                 sp.setVisible(false);
                 noDataPanel.setVisible(true);
             }
+
             System.out.println("done");
             repaint();
         }

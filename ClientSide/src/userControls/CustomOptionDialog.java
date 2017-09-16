@@ -29,6 +29,8 @@ import views.base.BaseView;
  */
 public class CustomOptionDialog extends JDialog implements BaseView {
 
+    public static boolean isAccepted;
+    
     private MyConstants.OptionDialogType type;
     private JPanel containter;
     private JLabel lbMessage, lbTitle;
@@ -39,6 +41,7 @@ public class CustomOptionDialog extends JDialog implements BaseView {
     private boolean isClicked = false;
 
     public CustomOptionDialog(MyConstants.OptionDialogType type, String title, String message) {
+        setModal(true);
         this.type = type;
         this.title = title;
         this.message = message;
@@ -139,6 +142,7 @@ public class CustomOptionDialog extends JDialog implements BaseView {
             @Override
             public void mouseClicked(MouseEvent e) {
                 firePropertyChange("isClicked", true, false);
+                isAccepted = true;
                 setVisible(false);
             }
 
@@ -156,6 +160,7 @@ public class CustomOptionDialog extends JDialog implements BaseView {
             @Override
             public void mouseClicked(MouseEvent e) {
                 isClicked = true;
+                isAccepted = false;
                 setVisible(false);
             }
             @Override
