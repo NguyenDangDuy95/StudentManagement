@@ -62,6 +62,7 @@ public class MainView extends JFrame implements BaseView {
 
     public MainView() throws HeadlessException {
         ClientSideMain.CurrentState = "MainView";
+        System.out.println(ClientSideMain.CurrentUserRole);
         getData();
         initView();
         initCommand();

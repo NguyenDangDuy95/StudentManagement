@@ -73,7 +73,7 @@ public class InfoPanel extends JPanel implements BaseView {
         table = new CustomTableView() {
             @Override
             public boolean isCellEditable(int row, int column) {
-                if(SelectedObjectType.equals(Request.AdminObject) && ClientSideMain.CurrentUserRole.equals(Request.AdminObject)){
+                if(ClientSideMain.CurrentUserRole.equals(Request.AdminObject)){
                     return column != 0;               
                 }
                 if (SelectedObjectType.equals(Request.EmployeeObject) && ClientSideMain.CurrentUserRole.equals(Request.EmployeeObject)) {
