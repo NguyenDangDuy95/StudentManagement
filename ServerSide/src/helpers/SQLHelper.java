@@ -119,6 +119,11 @@ public class SQLHelper {
                 + "DELETE FROM Attendance WHERE StudentID = \'" + id + "\'\n"
                 + "DELETE FROM StudentList WHERE StudentID = \'" + id + "\'";
     }
+    
+    public static String DeleteEmployee(String id){
+        return "DELETE FROM InformationEmployee WHERE EmployeeID = \'"+id+"\'\n"
+                + "DELETE FROM EmployeeList WHERE EmployeeID = \'"+id+"\'";
+    }
 
     public static String GetUserPassOfStudent(Student std) {
         return "SELECT Username, Password \n"

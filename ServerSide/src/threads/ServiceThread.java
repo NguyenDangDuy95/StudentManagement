@@ -85,13 +85,13 @@ public class ServiceThread extends Thread {
                         }
                         
                         if(message.getBody().equals(Request.EmployeeObject)){
-                        
+                            
                         }
                     }
                        
                     if(message.getTitle().equals(Request.UpdateMessage)){
                         if(message.getBody().equals(Request.StudentObject)){
-                            //have not handle yet
+                            StudentDataService.UpdateStudent(message.getStudent());
                         }
                         if(message.getBody().equals("attendance")){
                             BatchDataService.updateBatch(message.getBatch(), "attendance");
@@ -111,7 +111,7 @@ public class ServiceThread extends Thread {
                         
                         }
                         if(message.getBody().equals(Request.EmployeeObject)){
-                        
+                            EmployeeDataService.AddEmployee(message.getEmployee());
                         }
                     }
                     if (message.getTitle().equals(Request.Verification)) {

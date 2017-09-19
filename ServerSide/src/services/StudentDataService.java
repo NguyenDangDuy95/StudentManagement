@@ -115,8 +115,52 @@ public class StudentDataService {
         csmt.setString(15, std.getMotherJob());
         csmt.setString(16, std.getParentPhone());
         csmt.setFloat(17, 0);
-        csmt.setDate(18, java.sql.Date.valueOf(std.getStartDate().toString()));
-        csmt.setDate(19, java.sql.Date.valueOf(std.getEndDate().toString()));
+        if (std.getStartDate() != null) {
+            csmt.setDate(18, java.sql.Date.valueOf(std.getStartDate().toString()));
+        } else {
+            csmt.setNull(18, java.sql.Types.DATE);
+        }
+        if (std.getEndDate() != null) {
+            csmt.setDate(19, java.sql.Date.valueOf(std.getEndDate().toString()));
+        } else {
+            csmt.setNull(19, java.sql.Types.DATE);
+        }
+        boolean result = csmt.execute();
+        System.out.println(result);
+        sendEmail(std);
+        
+    }
+    
+    public static void UpdateStudent(Student std) throws SQLException{
+        CallableStatement csmt = DatabaseConnection.con.prepareCall("{call updateStudent(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+        csmt.setString(1, std.getStudentID());
+        csmt.setString(2, std.getFirstName());
+        csmt.setString(3, std.getLastName());
+        csmt.setString(4, std.getCourse());
+        csmt.setString(5, std.getBatch());
+        csmt.setString(6, ((std.getGender()==Gender.Male)?"Male":"Female"));
+        csmt.setDate(7, java.sql.Date.valueOf(std.getBirthDay().toString()));
+        csmt.setString(8, std.getAddress());
+        csmt.setString(9, std.getBirthPlace());
+        csmt.setString(10, std.getPersonalID());
+        csmt.setString(11, std.getPhoneNumber());
+        csmt.setString(12, std.getEmail());
+        csmt.setString(13, std.getFatherName());
+        csmt.setString(14, std.getFatherJob());
+        csmt.setString(15, std.getMotherName());
+        csmt.setString(16, std.getMotherJob());
+        csmt.setString(17, std.getParentPhone());
+        csmt.setFloat(18, 0);
+        if (std.getStartDate() != null) {
+            csmt.setDate(19, java.sql.Date.valueOf(std.getStartDate().toString()));
+        } else {
+            csmt.setNull(19, java.sql.Types.DATE);
+        }
+        if (std.getEndDate() != null) {
+            csmt.setDate(20, java.sql.Date.valueOf(std.getEndDate().toString()));
+        } else {
+            csmt.setNull(20, java.sql.Types.DATE);
+        }
         boolean result = csmt.execute();
         System.out.println(result);
         sendEmail(std);

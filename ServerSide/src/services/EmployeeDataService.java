@@ -81,14 +81,15 @@ public class EmployeeDataService {
         );
         return emp;
     }
-        public static void UpdateEmployee(Employee emp) throws SQLException{
+
+    public static void UpdateEmployee(Employee emp) throws SQLException {
         CallableStatement csmt = DatabaseConnection.con.prepareCall("{call updateEmployee(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
         csmt.setString(1, emp.getEmployeeID());
         csmt.setString(2, emp.getFirstName());
-        csmt.setString(3,emp.getLastName());
+        csmt.setString(3, emp.getLastName());
         csmt.setString(4, emp.getPositionName());
         csmt.setString(5, String.valueOf(emp.getSalaryValue()));
-        csmt.setString(6, ((emp.getGender()==Gender.Male)?"Male":"Female"));
+        csmt.setString(6, ((emp.getGender() == Gender.Male) ? "Male" : "Female"));
         csmt.setDate(7, java.sql.Date.valueOf(emp.getBirthDay().toString()));
         csmt.setString(8, emp.getPersonalID());
         csmt.setString(9, emp.getEmail());
@@ -97,13 +98,55 @@ public class EmployeeDataService {
         csmt.setString(12, emp.getBirthPlace());
         csmt.setString(13, emp.getFatherName());
         csmt.setString(14, emp.getMotherName());
-        csmt.setString(15, emp.getFatherJob());       
+        csmt.setString(15, emp.getFatherJob());
         csmt.setString(16, emp.getMotherJob());
         csmt.setString(17, emp.getParentPhone());
-        if(emp.getStartDate()!= null)csmt.setDate(18, java.sql.Date.valueOf(emp.getStartDate().toString()));
-        else csmt.setNull(18, java.sql.Types.DATE);
-        if(emp.getEndDate()!= null)csmt.setDate(18, java.sql.Date.valueOf(emp.getEndDate().toString()));
-        else csmt.setNull(19, java.sql.Types.DATE);
+        if (emp.getStartDate() != null) {
+            csmt.setDate(18, java.sql.Date.valueOf(emp.getStartDate().toString()));
+        } else {
+            csmt.setNull(18, java.sql.Types.DATE);
+        }
+        if (emp.getEndDate() != null) {
+            csmt.setDate(18, java.sql.Date.valueOf(emp.getEndDate().toString()));
+        } else {
+            csmt.setNull(19, java.sql.Types.DATE);
+        }
+        boolean result = csmt.execute();
+        System.out.println(result);
+    }
+    
+    public static void DeleteEmployee(Employee emp){
+        DatabaseConnection.getUpdateResultSet(SQLHelper.DeleteEmployee(emp.getEmployeeID()));
+    }
+    
+    public static void AddEmployee(Employee emp) throws SQLException {
+        CallableStatement csmt = DatabaseConnection.con.prepareCall("{call addEmployee(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+        csmt.setString(1, emp.getFirstName());
+        csmt.setString(2, emp.getLastName());
+        csmt.setString(3, emp.getPositionName());
+        csmt.setString(4, String.valueOf(emp.getSalaryValue()));
+        csmt.setString(5, ((emp.getGender() == Gender.Male) ? "Male" : "Female"));
+        csmt.setDate(6, java.sql.Date.valueOf(emp.getBirthDay().toString()));
+        csmt.setString(7, emp.getPersonalID());
+        csmt.setString(8, emp.getEmail());
+        csmt.setString(9, emp.getPhoneNumber());
+        csmt.setString(10, emp.getAddress());
+        csmt.setString(11, emp.getBirthPlace());
+        csmt.setString(12, emp.getFatherName());
+        csmt.setString(13, emp.getMotherName());
+        csmt.setString(14, emp.getFatherJob());
+        csmt.setString(15, emp.getMotherJob());
+        csmt.setString(16, emp.getParentPhone());
+        if (emp.getStartDate() != null) {
+            csmt.setDate(17, java.sql.Date.valueOf(emp.getStartDate().toString()));
+        } else {
+            csmt.setNull(17, java.sql.Types.DATE);
+        }
+        if (emp.getEndDate() != null) {
+            csmt.setDate(18, java.sql.Date.valueOf(emp.getEndDate().toString()));
+        } else {
+            csmt.setNull(18, java.sql.Types.DATE);
+        }
         boolean result = csmt.execute();
         System.out.println(result);
     }
