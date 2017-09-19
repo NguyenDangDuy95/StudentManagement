@@ -186,6 +186,7 @@ public class BottomPanel extends JPanel implements BaseView {
                     }
                     batch.setAttList(data);
                     BatchController.getInstance().update(batch, "attendance");
+                    Control.getResult(MyConstants.OptionDialogType.Message, "Result", "Adding success!");
                     try {
                         reload();
                     } catch (IOException ex) {
@@ -257,6 +258,7 @@ public class BottomPanel extends JPanel implements BaseView {
                     }
                     batch.setScList(scList);
                     BatchController.getInstance().update(batch, "score");
+                    Control.getResult(MyConstants.OptionDialogType.Message, "Result", "Adding success!");
                     try {
                         reload();
                     } catch (IOException ex) {

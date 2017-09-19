@@ -73,7 +73,10 @@ public class InfoPanel extends JPanel implements BaseView {
         table = new CustomTableView() {
             @Override
             public boolean isCellEditable(int row, int column) {
-                if ((SelectedObjectType.equals(Request.AdminObject) && ClientSideMain.CurrentUserRole.equals(Request.AdminObject)) || (SelectedObjectType.equals(Request.EmployeeObject) && ClientSideMain.CurrentUserRole.equals(Request.EmployeeObject))) {
+                if(SelectedObjectType.equals(Request.AdminObject) && ClientSideMain.CurrentUserRole.equals(Request.AdminObject)){
+                    return column != 0;               
+                }
+                if (SelectedObjectType.equals(Request.EmployeeObject) && ClientSideMain.CurrentUserRole.equals(Request.EmployeeObject)) {
                     Employee emp = (Employee) SelectedObject;
                     Employee user = (Employee) ClientSideMain.CurrentUser;
                     if (emp.getEmployeeID().equals(user.getEmployeeID())) {
@@ -187,6 +190,7 @@ public class InfoPanel extends JPanel implements BaseView {
                     }
                     Student std = StudentController.getInstance().getStudentFromDataList(valueList, batch);
                     StudentController.getInstance().add(std);
+                    Control.getResult(MyConstants.OptionDialogType.Message, "Result", "Adding success!");
                 } else {
                     int rowCount = table.getRowCount();
                     Vector<String> valueList = new Vector();
@@ -213,6 +217,7 @@ public class InfoPanel extends JPanel implements BaseView {
                     btnSave.setEnabled(false);
                     MainView.getData();
                     reloadDataModel();
+                    Control.getResult(MyConstants.OptionDialogType.Message, "Result", "Adding success!");
                 }
             }
 
