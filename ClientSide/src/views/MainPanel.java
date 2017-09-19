@@ -195,7 +195,7 @@ public class MainPanel extends JPanel implements BaseView {
                         }
 
                         InfoPanel.SelectedObjectType = "";
-
+                        Control.getResult(MyConstants.OptionDialogType.Message, "Result", "Success!");
                         MainView.getData();
                         reload();
                     }
